@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Автовокзал Каракол - Главный экран</title>
+    <title>Каракол Автобекети</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -15,390 +15,293 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #ffffff;
+            background: #000;
+            color: #fff;
             min-height: 100vh;
-            position: relative;
             overflow: hidden;
         }
 
-        /* Фон в стиле аэропорта */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.03) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.03) 75%);
-            background-size: 50px 50px;
-            background-position: 0 0, 0 25px, 25px -25px, -25px 0px;
-            animation: move 20s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes move {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(50px); }
-        }
-
-        /* Заголовок в стиле аэропорта */
+        /* HEADER */
         .header {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            background: #1e3a8a;
             padding: 20px 40px;
-            border-bottom: 2px solid #00d4ff;
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
+            border-bottom: 3px solid #3b82f6;
         }
 
-        .station-title {
+        .station-info {
             display: flex;
             align-items: center;
             gap: 25px;
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #00d4ff, #0099cc);
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 32px;
+        }
+
+        .station-text h1 {
             font-size: 36px;
-            color: white;
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .title-text h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            color: #ffffff;
+            font-weight: 700;
+            color: #071955;
             margin-bottom: 8px;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0, 212, 255, 0.5);
         }
 
-        .title-text p {
-            font-size: 1.2rem;
-            color: #b0c4de;
-            font-weight: 300;
+        .station-text p {
+            font-size: 16px;
+            color: #071955;
+            font-weight: 500;
         }
 
-        .time-display {
+        .time-info {
             text-align: right;
         }
 
         .current-time {
-            font-size: 4rem;
-            font-weight: 200;
-            color: #00d4ff;
-            font-variant-numeric: tabular-nums;
+            font-size: 48px;
+            font-weight: 300;
+            color: #fff;
+            font-family: 'Inter', monospace;
             line-height: 1;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
         }
 
         .current-date {
-            font-size: 1.2rem;
-            color: #b0c4de;
+            font-size: 18px;
+            color: #94a3b8;
             margin-top: 8px;
-            font-weight: 300;
         }
 
-        /* Основная таблица */
-        .main-container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 40px;
+        .weather {
+            position: absolute;
+            top: 25px;
+            right: 200px;
+            background: rgba(30, 64, 175, 0.9);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        .buses-table {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 212, 255, 0.2);
+        .weather-temp {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
         }
 
+        .weather-city {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* ЗАГОЛОВКИ ТАБЛИЦЫ */
         .table-header {
-            background: linear-gradient(135deg, #1a2a4a, #2d4a73);
-            border-bottom: 2px solid #00d4ff;
-        }
-
-        .table-header-row {
+            background: #1e293b;
+            padding: 15px 40px;
+            border-bottom: 2px solid #3b82f6;
             display: grid;
-            grid-template-columns: 2.5fr 1fr 1.2fr 0.8fr 1.5fr 1.2fr;
-            gap: 15px;
-            padding: 25px 30px;
+            grid-template-columns: 300px 120px 180px 100px 200px 150px 120px;
+            gap: 30px;
             align-items: center;
         }
 
         .header-cell {
+            font-size: 14px;
             font-weight: 600;
-            color: #00d4ff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1rem;
-        }
-
-        .table-body {
-            max-height: calc(100vh - 300px);
-            overflow: hidden;
-        }
-
-        .bus-row {
-            display: grid;
-            grid-template-columns: 2.5fr 1fr 1.2fr 0.8fr 1.5fr 1.2fr;
-            gap: 15px;
-            padding: 25px 30px;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            min-height: 100px;
-        }
-
-        .bus-row:hover {
-            background: rgba(0, 212, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .bus-row::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-
-        /* Цвета статусов в стиле аэропорта */
-        .bus-row.waiting::before {
-            background: linear-gradient(to bottom, #ffd700, #ffb347);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .bus-row.boarding::before {
-            background: linear-gradient(to bottom, #32cd32, #00ff00);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        .bus-row.delayed::before {
-            background: linear-gradient(to bottom, #ff4500, #dc143c);
-            box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
-        }
-
-        .bus-row.departed::before {
-            background: linear-gradient(to bottom, #708090, #556b2f);
-            box-shadow: 0 0 10px rgba(112, 128, 144, 0.3);
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(50, 205, 50, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(50, 205, 50, 0.8); }
-        }
-
-        .route-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .route-name {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 8px;
-            line-height: 1.1;
-        }
-
-        .route-detail {
-            font-size: 1rem;
-            color: #b0c4de;
-        }
-
-        .time-cell {
-            font-size: 2.5rem;
-            font-weight: 400;
-            color: #00d4ff;
-            font-variant-numeric: tabular-nums;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-        }
-
-        .status-badge {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-align: center;
+            color: #3b82f6;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: 2px solid;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* РЕЙСЫ */
+        .departures {
+            height: calc(100vh - 230px);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .route {
+            display: grid;
+            grid-template-columns: 300px 120px 180px 100px 200px 150px 120px;
+            gap: 30px;
+            align-items: center;
+            padding: 5px 50px;
+            min-height: 80px;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .route:nth-child(odd) {
+            background: #111827;
+        }
+
+        .route:nth-child(even) {
+            background: #374151;
+        }
+
+        /* УБРАНА АНИМАЦИЯ ПРИ НАВЕДЕНИИ */
+
+        .route-destination {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .route-time {
+            font-size: 32px;
+            font-weight: 500;
+            color: #fbbf24;
+            font-family: 'Inter', monospace;
+        }
+
+        .route-status {
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-align: center;
+            text-transform: uppercase;
         }
 
         .status-waiting {
-            background: rgba(255, 215, 0, 0.2);
-            color: #ffd700;
-            border-color: #ffd700;
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid #fbbf24;
         }
 
         .status-boarding {
-            background: rgba(50, 205, 50, 0.2);
-            color: #32cd32;
-            border-color: #32cd32;
-            animation: status-pulse 2s ease-in-out infinite;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+            animation: pulse 2s infinite;
         }
 
         .status-delayed {
-            background: rgba(255, 69, 0, 0.2);
-            color: #ff4500;
-            border-color: #ff4500;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
         }
 
         .status-departed {
-            background: rgba(112, 128, 144, 0.2);
-            color: #708090;
-            border-color: #708090;
+            background: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+            border: 1px solid #6b7280;
         }
 
-        @keyframes status-pulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(50, 205, 50, 0.4); }
-            50% { box-shadow: 0 0 20px rgba(50, 205, 50, 0.6); }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .seats-count {
-            font-size: 1.3rem;
-            color: #ffffff;
+        .route-seats {
+            font-size: 18px;
+            color: #fff;
             font-weight: 500;
         }
 
-        .carrier-info, .driver-info {
-            font-size: 1.1rem;
-            color: #b0c4de;
-            line-height: 1.4;
+        .route-carrier {
+            font-size: 16px;
+            color: #d1d5db;
+        }
+
+        .route-driver {
+            font-size: 16px;
+            color: #d1d5db;
+        }
+
+        .route-price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #22c55e;
+        }
+
+        /* БЕГУЩАЯ СТРОКА */
+        .ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #374151;
+            height: 50px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-text {
+            white-space: nowrap;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            animation: scroll 45s linear infinite;
+            padding-left: 100%;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
 
         .empty-state {
-            text-align: center;
-            padding: 100px 20px;
-            color: #b0c4de;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: #6b7280;
         }
 
-        .empty-state-icon {
-            font-size: 6rem;
-            margin-bottom: 30px;
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
             opacity: 0.5;
         }
 
-        .empty-state p {
-            font-size: 1.5rem;
-        }
-
-        /* Анимации */
-        .bus-row.entering {
-            animation: slideInFromBottom 0.8s ease-out;
-        }
-
-        .bus-row.removing {
-            opacity: 0;
-            transform: translateY(-30px);
-            pointer-events: none;
-        }
-
-        @keyframes slideInFromBottom {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Адаптивность */
-        @media (min-width: 1920px) {
-            .title-text h1 { font-size: 4rem; }
-            .current-time { font-size: 5rem; }
-            .route-name { font-size: 2.5rem; }
-            .time-cell { font-size: 3rem; }
-        }
-
-        @media (max-width: 1200px) {
-            .title-text h1 { font-size: 2.5rem; }
-            .current-time { font-size: 3rem; }
-            .route-name { font-size: 1.5rem; }
-            .time-cell { font-size: 2rem; }
+        .empty-text {
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="header-content">
-            <div class="station-title">
-                <div class="logo">🚌</div>
-                <div class="title-text">
-                    <h1>Каракол Автобекети</h1>
-                    <p>Кетүүлөр • Отправления • Departures</p>
-                </div>
+        <div class="station-info">
+            <div class="logo"><img src="logobus.png" alt="КАРАКОЛ АВТОБЕКЕТИ" style="width: 100px; height: 100px;"/></div>
+            <div class="station-text">
+                <h1>КАРАКОЛ АВТОБЕКЕТИ</h1>
+                <p>КЕТҮҮЛӨР • ОТПРАВЛЕНИЯ • DEPARTURES</p>
             </div>
-            <div class="time-display">
-                <div class="current-time" id="current-time"></div>
-                <div class="current-date" id="current-date"></div>
-            </div>
+        </div>
+        <div class="time-info">
+            <div class="current-time" id="current-time"></div>
+            <div class="current-date" id="current-date"></div>
+        </div>
+        <div class="weather">
+            <div class="weather-temp" id="weather-temp">+18°</div>
+            <div class="weather-city">Каракол</div>
         </div>
     </div>
 
-    <div class="main-container">
-        <div class="buses-table">
-            <div class="table-header">
-                <div class="table-header-row">
-                    <div class="header-cell">Багыт • Маршрут</div>
-                    <div class="header-cell">Убакыт • Время</div>
-                    <div class="header-cell">Абалы • Статус</div>
-                    <div class="header-cell">Орундар</div>
-                    <div class="header-cell">Ташуучу • Перевозчик</div>
-                    <div class="header-cell">Айдоочу • Водитель</div>
-                </div>
-            </div>
-            <div class="table-body" id="buses-container">
-            </div>
+    <div class="table-header">
+        <div class="header-cell">БАГЫТ • НАПРАВЛЕНИЕ</div>
+        <div class="header-cell">УБАКЫТ • ВРЕМЯ</div>
+        <div class="header-cell">АБАЛЫ • СТАТУС</div>
+        <div class="header-cell">ОРУНДАР • МЕСТА</div>
+        <div class="header-cell">ТАШУУЧУ • ПЕРЕВОЗЧИК</div>
+        <div class="header-cell">АЙДООЧУ • ВОДИТЕЛЬ</div>
+        <div class="header-cell">БААСЫ • ЦЕНА</div>
+    </div>
+
+    <div class="departures" id="departures-container">
+        <!-- Рейсы будут добавляться сюда -->
+    </div>
+
+    <div class="ticker">
+        <div class="ticker-text" id="ticker-text">
+            КАРАКОЛ АВТОБЕКЕТИ • КЕТҮҮЛӨР КҮНДӨ 06:00дөн 22:00гө чейин • БИЛЕТТЕРДИ КАССАДА АЛЫҢЫЗ • БАГАЖДЫ КАМАККА ТОПТОО МИЛДЕТТҮҮ • КООПСУЗДУК ЭРЕЖЕЛЕРИН САКТАҢЫЗ
         </div>
     </div>
 
@@ -407,10 +310,13 @@
         let speechQueue = [];
         let isSpeaking = false;
         let lastAnnouncedBus = null;
-        const MAX_VISIBLE_BUSES = 5;
+        let tickerIndex = 0;
+        let lastDataHash = '';
+        const MAX_VISIBLE_ROUTES = 10;
 
         const languages = {
             kg: {
+                voice: 'ru-RU',
                 announcements: {
                     fiveMinutes: '{route} багытына автобус 5 мүнөттөн кийин кетет. Жолоочулар даярданыңыз',
                     boarding: '{route} багытына автобус отургузуу башталды. Жолоочулар отургузууга өтүңүз',
@@ -418,6 +324,7 @@
                 }
             },
             ru: {
+                voice: 'ru-RU',
                 announcements: {
                     fiveMinutes: 'Автобус по направлению {route} отправляется через 5 минут. Пассажиры готовьтесь к посадке',
                     boarding: 'Начинается посадка на автобус по направлению {route}. Пассажиры проходите на посадку',
@@ -425,13 +332,22 @@
                 }
             },
             en: {
+                voice: 'en-US',
                 announcements: {
                     fiveMinutes: 'Bus to {route} departs in 5 minutes. Passengers please prepare for boarding',
-                    boarding: 'Bus to {route} is now boarding. Passengers please proceed to gate',
+                    boarding: 'Bus to {route} is now boarding. Passengers please proceed to boarding',
                     departed: 'Bus to {route} has departed'
                 }
             }
         };
+
+        const tickerMessages = [
+            'КАРАКОЛ АВТОБЕКЕТИ • КЕТҮҮЛӨР КҮНДӨ 06:00дөн 22:00гө чейин',
+            'БИЛЕТТЕРДИ КАССАДА АЛЫҢЫЗ • НОМЕР 1-2 • БИЛЕТЫ В КАССЕ №1-2',
+            'БАГАЖДЫ КАМАККА ТОПТОО МИЛДЕТТҮҮ • БАГАЖ СДАВАТЬ В КАМЕРУ ХРАНЕНИЯ',
+            'МААЛЫМАТ ҮЧҮН: +996 3922 5-15-15 • СПРАВКИ ПО ТЕЛЕФОНУ',
+            'КООПСУЗДУК ЭРЕЖЕЛЕРИН САКТАҢЫЗ • СОБЛЮДАЙТЕ ПРАВИЛА БЕЗОПАСНОСТИ'
+        ];
 
         function updateTime() {
             const now = new Date();
@@ -448,48 +364,86 @@
                 });
         }
 
-        function renderBuses() {
-            const container = document.getElementById('buses-container');
+        async function updateWeather() {
+            try {
+                const response = await fetch(`https://wttr.in/Karakol?format=j1`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const temp = Math.round(data.current_condition[0].temp_C);
+                    const sign = temp > 0 ? '+' : '';
+                    document.getElementById('weather-temp').textContent = `${sign}${temp}°`;
+                } else {
+                    useLocalWeather();
+                }
+            } catch (error) {
+                useLocalWeather();
+            }
+        }
+
+        function useLocalWeather() {
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const hour = now.getHours();
+            let temp;
+            
+            if (month >= 12 || month <= 2) { 
+                temp = Math.floor(Math.random() * 15) - 10;
+                if (hour >= 22 || hour <= 6) temp -= 3;
+            } else if (month >= 3 && month <= 5) { 
+                temp = Math.floor(Math.random() * 20) + 5;
+                if (hour >= 12 && hour <= 16) temp += 3;
+            } else if (month >= 6 && month <= 8) { 
+                temp = Math.floor(Math.random() * 15) + 15;
+                if (hour >= 12 && hour <= 16) temp += 5;
+            } else { 
+                temp = Math.floor(Math.random() * 20) + 0;
+                if (hour >= 22 || hour <= 6) temp -= 2;
+            }
+            
+            const sign = temp > 0 ? '+' : '';
+            document.getElementById('weather-temp').textContent = `${sign}${temp}°`;
+        }
+
+        function updateTicker() {
+            const text = tickerMessages[tickerIndex];
+            document.getElementById('ticker-text').textContent = text;
+            tickerIndex = (tickerIndex + 1) % tickerMessages.length;
+        }
+
+        function renderRoutes() {
+            const container = document.getElementById('departures-container');
             
             if (buses.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">🚌</div>
-                        <p>Автобустар жок • Нет автобусов</p>
+                        <div class="empty-icon">🚌</div>
+                        <div class="empty-text">Автобустар жок • Нет автобусов</div>
                     </div>
                 `;
                 return;
             }
 
-            const sorted = [...buses].sort((a, b) => {
-                const statusOrder = { 'departed': 0, 'boarding': 1, 'waiting': 2, 'delayed': 3 };
-                
-                if (statusOrder[a.status] !== statusOrder[b.status]) {
-                    return statusOrder[a.status] - statusOrder[b.status];
-                }
-                
-                const timeA = parseTimeToMinutes(a.time);
-                const timeB = parseTimeToMinutes(b.time);
-                return timeA - timeB;
-            });
+            const sorted = [...buses]
+                .filter(bus => bus.status !== 'departed')
+                .sort((a, b) => {
+                    const timeA = parseTimeToMinutes(a.time);
+                    const timeB = parseTimeToMinutes(b.time);
+                    return timeA - timeB;
+                })
+                .slice(0, MAX_VISIBLE_ROUTES);
 
-            const visibleBuses = sorted.slice(0, MAX_VISIBLE_BUSES);
-
-            container.innerHTML = visibleBuses.map(bus => `
-                <div class="bus-row ${bus.status}">
-                    <div class="route-info">
-                        <div class="route-name">${bus.route}</div>
-                        <div class="route-detail">${bus.carrier}</div>
+            container.innerHTML = sorted.map(bus => `
+                <div class="route">
+                    <div class="route-destination">${bus.route}</div>
+                    <div class="route-time">${bus.time}</div>
+                    <div class="route-status status-${bus.status}">
+                        ${getStatusText(bus.status)}
                     </div>
-                    <div class="time-cell">${bus.time}</div>
-                    <div>
-                        <span class="status-badge status-${bus.status}">
-                            ${getStatusText(bus.status)}
-                        </span>
-                    </div>
-                    <div class="seats-count">${bus.seats}</div>
-                    <div class="carrier-info">${bus.carrier}</div>
-                    <div class="driver-info">${bus.driver}</div>
+                    <div class="route-seats">${bus.seats}</div>
+                    <div class="route-carrier">${bus.carrier}</div>
+                    <div class="route-driver">${bus.driver}</div>
+                    <div class="route-price">${bus.price || '---'} сом</div>
                 </div>
             `).join('');
         }
@@ -509,45 +463,42 @@
             return hours * 60 + minutes;
         }
 
-        // ИСПРАВЛЕНО: Объявления строго по очереди без повторов
         function makeTrilingualAnnouncement(type, route, busId) {
-            // Проверяем, не делали ли уже объявление для этого автобуса
             const announceKey = `${busId}_${type}`;
-            if (lastAnnouncedBus === announceKey) {
-                return;
-            }
+            if (lastAnnouncedBus === announceKey) return;
             lastAnnouncedBus = announceKey;
             
-            // Кыргызский
-            const kgText = languages.kg.announcements[type].replace('{route}', route);
-            addSpeech(kgText, 'kg');
+            console.log(`🔊 Объявление: ${type} для маршрута ${route}`);
             
-            // Русский (через 5 секунд)
+            const kgText = languages.kg.announcements[type].replace('{route}', route);
+            addSpeech(kgText, languages.kg.voice, 'Кыргызский');
+            
             setTimeout(() => {
                 const ruText = languages.ru.announcements[type].replace('{route}', route);
-                addSpeech(ruText, 'ru');
-            }, 5000);
+                addSpeech(ruText, languages.ru.voice, 'Русский');
+            }, 6000);
             
-            // Английский (через 10 секунд)
             setTimeout(() => {
                 const enText = languages.en.announcements[type].replace('{route}', route);
-                addSpeech(enText, 'en');
-            }, 10000);
+                addSpeech(enText, languages.en.voice, 'Английский');
+            }, 12000);
         }
 
-        function addSpeech(text, lang) {
-            speechQueue.push({ text, lang });
+        function addSpeech(text, voice, language) {
+            speechQueue.push({ text, voice, language });
+            console.log(`📝 Добавлено в очередь [${language}]: "${text}"`);
         }
 
         function processSpeech() {
             if (!isSpeaking && speechQueue.length > 0) {
                 const speech = speechQueue.shift();
-                speak(speech.text, speech.lang);
+                speak(speech.text, speech.voice, speech.language);
             }
         }
 
-        function speak(text, lang) {
+        function speak(text, voiceLang, language) {
             if (!('speechSynthesis' in window)) {
+                console.log('❌ Speech synthesis не поддерживается');
                 isSpeaking = false;
                 return;
             }
@@ -557,29 +508,82 @@
             
             const utterance = new SpeechSynthesisUtterance(text);
             
-            if (lang === 'kg') utterance.lang = 'ru-RU';
-            else if (lang === 'en') utterance.lang = 'en-US';
-            else utterance.lang = 'ru-RU';
+            if (voiceLang === 'en-US') {
+                utterance.lang = 'en-US';
+                utterance.rate = 0.7;
+                utterance.pitch = 1.0;
+            } else {
+                utterance.lang = 'ru-RU';
+                utterance.rate = 0.75;
+                utterance.pitch = 1.0;
+            }
             
-            utterance.volume = 1.0;
-            utterance.rate = 0.8;
-            utterance.pitch = 1.0;
-            
-            utterance.onend = () => {
-                isSpeaking = false;
+            const setVoice = () => {
+                const voices = speechSynthesis.getVoices();
+                let selectedVoice = null;
+                
+                if (voiceLang === 'en-US') {
+                    selectedVoice = voices.find(voice => 
+                        voice.lang === 'en-US' && (
+                            voice.name.includes('Google') || 
+                            voice.name.includes('Microsoft') ||
+                            voice.name.includes('Samantha') ||
+                            voice.name.includes('Karen') ||
+                            voice.name.includes('Daniel')
+                        )
+                    ) || voices.find(voice => voice.lang === 'en-US') 
+                      || voices.find(voice => voice.lang.startsWith('en'));
+                } else {
+                    selectedVoice = voices.find(voice => 
+                        voice.lang === 'ru-RU' && (
+                            voice.name.includes('Google') || 
+                            voice.name.includes('Microsoft') ||
+                            voice.name.includes('Yandex')
+                        )
+                    ) || voices.find(voice => voice.lang === 'ru-RU') 
+                      || voices.find(voice => voice.lang.startsWith('ru'));
+                }
+                
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                    console.log(`🎤 Голос: ${selectedVoice.name} [${language}]`);
+                } else {
+                    console.log(`⚠️ Голос для ${voiceLang} не найден [${language}]`);
+                }
+                
+                utterance.volume = 0.9;
+                
+                utterance.onstart = () => {
+                    console.log(`🔊 Произношу [${language}]: "${text}"`);
+                };
+                
+                utterance.onend = () => {
+                    console.log(`✅ Завершено [${language}]: "${text}"`);
+                    isSpeaking = false;
+                };
+                
+                utterance.onerror = (event) => {
+                    console.error(`❌ Ошибка speech [${language}]:`, event.error);
+                    isSpeaking = false;
+                };
+                
+                speechSynthesis.speak(utterance);
             };
             
-            utterance.onerror = () => {
-                isSpeaking = false;
-            };
-            
-            speechSynthesis.speak(utterance);
+            if (speechSynthesis.getVoices().length === 0) {
+                speechSynthesis.addEventListener('voiceschanged', setVoice, { once: true });
+            } else {
+                setVoice();
+            }
         }
 
-        // ИСПРАВЛЕНО: Проверка объявлений без дублирования
         function checkAnnouncements() {
             const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const currentHours = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentTotalMinutes = currentHours * 60 + currentMinutes;
+            
+            console.log(`⏰ Проверка объявлений: ${currentHours}:${currentMinutes.toString().padStart(2, '0')}`);
             
             buses.forEach(bus => {
                 if (!bus.announcements) {
@@ -590,30 +594,53 @@
                     };
                 }
                 
-                const busMinutes = parseTimeToMinutes(bus.time);
-                const diffMinutes = busMinutes - currentMinutes;
+                const [busHours, busMinutes] = bus.time.split(':').map(Number);
+                const busTotalMinutes = busHours * 60 + busMinutes;
+                const diffMinutes = busTotalMinutes - currentTotalMinutes;
 
-                // За 5 минут - объявление предупреждение (только один раз)
+                // За 5 минут до отправления
                 if (diffMinutes === 5 && !bus.announcements.fiveMinutes && bus.status === 'waiting') {
+                    console.log(`📢 Объявление за 5 минут: ${bus.route}`);
                     bus.announcements.fiveMinutes = true;
                     makeTrilingualAnnouncement('fiveMinutes', bus.route, bus.id);
                 }
 
-                // При посадке - объявление (только один раз)
+                // При статусе "посадка"
                 if (bus.status === 'boarding' && !bus.announcements.boarding) {
+                    console.log(`📢 Объявление о посадке: ${bus.route}`);
                     bus.announcements.boarding = true;
                     makeTrilingualAnnouncement('boarding', bus.route, bus.id);
                 }
 
-                // При отправлении - объявление (только один раз)
+                // При статусе "отправлен"
                 if (bus.status === 'departed' && !bus.announcements.departed) {
+                    console.log(`📢 Объявление об отправлении: ${bus.route}`);
                     bus.announcements.departed = true;
                     makeTrilingualAnnouncement('departed', bus.route, bus.id);
                 }
             });
         }
 
-        // ИСПРАВЛЕНО: Загрузка данных без глюков
+        function removeOldBuses() {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            
+            const initialCount = buses.length;
+            buses = buses.filter(bus => {
+                if (bus.status === 'departed') {
+                    const busMinutes = parseTimeToMinutes(bus.time);
+                    const diffMinutes = currentMinutes - busMinutes;
+                    return diffMinutes < 1;
+                }
+                return true;
+            });
+
+            if (buses.length < initialCount) {
+                console.log(`🗑️ Удалено ${initialCount - buses.length} старых автобусов`);
+                renderRoutes();
+            }
+        }
+
         function loadDataFromStorage() {
             try {
                 const savedData = localStorage.getItem('karakol-bus-station-display');
@@ -621,18 +648,27 @@
                     const data = JSON.parse(savedData);
                     const newBuses = data.buses || [];
                     
-                    // Проверяем реальные изменения
-                    const busesChanged = JSON.stringify(buses.map(b => ({id: b.id, status: b.status}))) !== 
-                                       JSON.stringify(newBuses.map(b => ({id: b.id, status: b.status})));
+                    // Создаем хэш для сравнения изменений
+                    const newDataHash = JSON.stringify(newBuses.map(b => ({
+                        id: b.id, 
+                        route: b.route,
+                        time: b.time,
+                        status: b.status, 
+                        seats: b.seats,
+                        carrier: b.carrier,
+                        driver: b.driver,
+                        price: b.price
+                    })));
                     
-                    if (busesChanged) {
+                    if (newDataHash !== lastDataHash) {
+                        console.log('🔄 Данные обновлены из админ-панели');
                         buses = newBuses;
-                        renderBuses();
-                        console.log('Данные обновлены с админ-панели');
+                        renderRoutes();
+                        lastDataHash = newDataHash;
                     }
                 }
             } catch (error) {
-                console.error('Ошибка при загрузке данных:', error);
+                console.error('❌ Ошибка при загрузке данных:', error);
             }
         }
 
@@ -643,16 +679,31 @@
         });
 
         function init() {
+            console.log('🚌 Главный экран Каракол автобекети запущен');
+            
             updateTime();
+            updateWeather();
+            updateTicker();
+            
             setInterval(updateTime, 1000);
+            setInterval(updateWeather, 600000);
+            setInterval(updateTicker, 20000);
             
             loadDataFromStorage();
-            setInterval(loadDataFromStorage, 3000);
+            setInterval(loadDataFromStorage, 1000); // Каждую секунду для мгновенного обновления
+            setInterval(removeOldBuses, 60000);
             
-            setInterval(processSpeech, 2000);
-            setInterval(checkAnnouncements, 60000);
+            setInterval(processSpeech, 1500);
+            setInterval(checkAnnouncements, 15000); // Каждые 15 секунд для точности
             
-            console.log('🚌 Главный экран автовокзала запущен');
+            if ('speechSynthesis' in window) {
+                speechSynthesis.getVoices();
+                if (speechSynthesis.onvoiceschanged !== undefined) {
+                    speechSynthesis.onvoiceschanged = () => {
+                        console.log('🎤 Голоса загружены:', speechSynthesis.getVoices().length);
+                    };
+                }
+            }
         }
 
         window.addEventListener('load', init);
