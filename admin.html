@@ -20,28 +20,44 @@
             min-height: 100vh;
         }
 
-        /* LOGIN SCREEN */
         .login-screen {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #1e3a8a, #1e40af, #3b82f6);
+            background: #0f172a;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+            filter: blur(40px);
         }
 
         .login-box {
-            background: rgba(30, 41, 138, 0.9);
-            padding: 40px;
-            border-radius: 20px;
+            position: relative;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 50px;
+            border-radius: 24px;
             text-align: center;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 450px;
+            width: 90%;
         }
 
         .login-logo {
@@ -50,66 +66,76 @@
         }
 
         .login-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .login-subtitle {
             font-size: 16px;
             color: #94a3b8;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            font-weight: 400;
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            min-width: 300px;
+            gap: 24px;
+            min-width: 320px;
         }
 
         .login-input {
-            padding: 15px 20px;
-            background: rgba(30, 64, 175, 0.3);
-            border: 1px solid #3b82f6;
-            border-radius: 10px;
+            padding: 16px 24px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
             color: #fff;
             font-size: 16px;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
         .login-input::placeholder {
-            color: #94a3b8;
+            color: #64748b;
         }
 
         .login-input:focus {
             outline: none;
-            border-color: #60a5fa;
-            background: rgba(30, 64, 175, 0.5);
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .login-btn {
-            padding: 15px 30px;
-            background: #22c55e;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .login-btn:hover {
-            background: #16a34a;
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
         }
 
         .login-error {
             color: #ef4444;
             margin-top: 10px;
             font-weight: 500;
+            font-size: 14px;
         }
 
         .admin-screen {
@@ -120,7 +146,6 @@
             display: block;
         }
 
-        /* HEADER */
         .header {
             background: #1e3a8a;
             padding: 20px 40px;
@@ -215,7 +240,6 @@
             border: 1px solid #6b7280;
         }
 
-        /* NAVIGATION */
         .nav {
             background: #1e293b;
             padding: 0;
@@ -250,7 +274,6 @@
             color: #fff;
         }
 
-        /* CONTENT */
         .content {
             padding: 30px 40px;
             max-width: 1400px;
@@ -275,7 +298,6 @@
             border-bottom: 2px solid #1e293b;
         }
 
-        /* FORMS */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -319,7 +341,6 @@
             color: #64748b;
         }
 
-        /* BUTTONS */
         .btn {
             background: #3b82f6;
             border: none;
@@ -371,7 +392,6 @@
             background: #d97706;
         }
 
-        /* ROUTES LIST */
         .routes-list {
             background: #1e293b;
             border-radius: 8px;
@@ -461,7 +481,6 @@
             margin: 0;
         }
 
-        /* STATS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -491,10 +510,9 @@
             letter-spacing: 0.5px;
         }
 
-        /* TEMPLATES */
         .templates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -544,7 +562,6 @@
             border-bottom: none;
         }
 
-        /* NOTIFICATIONS */
         .notification {
             position: fixed;
             top: 20px;
@@ -571,7 +588,6 @@
             background: #f59e0b;
         }
 
-        /* MODAL */
         .modal {
             position: fixed;
             top: 0;
@@ -594,9 +610,9 @@
             padding: 30px;
             border-radius: 8px;
             border: 1px solid #334155;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
+            max-width: 95vw;
+            width: 95%;
+            max-height: 95vh;
             overflow-y: auto;
         }
 
@@ -616,16 +632,17 @@
 
         .template-route-editor {
             display: grid;
-            grid-template-columns: 1fr 100px 80px 80px 30px;
+            grid-template-columns: 1fr 100px 80px 80px 100px 120px 100px 30px;
             gap: 10px;
             align-items: center;
             margin-bottom: 10px;
-            padding: 10px;
+            padding: 15px;
             background: #374151;
             border-radius: 6px;
         }
 
-        .template-route-editor input {
+        .template-route-editor input,
+        .template-route-editor select {
             padding: 8px 12px;
             background: #1e293b;
             border: 1px solid #334155;
@@ -634,7 +651,98 @@
             font-size: 14px;
         }
 
-        /* RESPONSIVE */
+        .template-route-editor label {
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .history-list {
+            background: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .history-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item:hover {
+            background: #262d3d;
+        }
+
+        .history-timestamp {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .history-action {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .history-details {
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .report-container {
+            background: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .report-section {
+            margin-bottom: 30px;
+        }
+
+        .report-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .report-stat {
+            background: #374151;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .report-stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #22c55e;
+            margin-bottom: 5px;
+        }
+
+        .report-stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 768px) {
             .content {
                 padding: 20px;
@@ -657,16 +765,25 @@
             .route-item.header {
                 display: none;
             }
+
+            .template-route-editor {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 98vw;
+                width: 98%;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
     <div class="login-screen" id="login-screen">
         <div class="login-box">
             <div class="login-logo">🚌</div>
             <div class="login-title">КАРАКОЛ АВТОБЕКЕТИ</div>
-            <div class="login-subtitle">Администратор панели</div>
+            <div class="login-subtitle">Башкаруу панели • Панель управления</div>
             <div class="login-form">
                 <input type="text" class="login-input" id="username" placeholder="Колдонуучу аты • Имя пользователя">
                 <input type="password" class="login-input" id="password" placeholder="Сыр сөз • Пароль">
@@ -676,7 +793,6 @@
         </div>
     </div>
 
-    <!-- ADMIN SCREEN -->
     <div class="admin-screen" id="admin-screen">
         <div class="header">
             <div class="day-controls">
@@ -755,7 +871,6 @@
 
                 <div style="margin-bottom: 30px;">
                     <button class="btn" onclick="addBus()">➕ Кошуу</button>
-                    <button class="btn btn-secondary" onclick="addRandomBus()">🎲 Кокустук</button>
                     <button class="btn btn-success" onclick="clearForm()">🔄 Тазалоо</button>
                     <button class="btn btn-danger" onclick="clearAll()">🗑️ Баарын өчүрүү</button>
                 </div>
@@ -784,7 +899,7 @@
                     </div>
                 </div>
 
-                <div class="section-title">Учурдагы транспорт</div>
+                <div class="section-title">Транспорты в данный момент</div>
                 <div class="routes-list">
                     <div class="route-item header">
                         <div>Багыт</div>
@@ -792,7 +907,7 @@
                         <div>Абалы</div>
                         <div>Вид</div>
                         <div>Орундар</div>
-                        <div>Бошток</div>
+                        <div>Бош орундар</div>
                         <div>Айдоочу</div>
                         <div>Ташуучу</div>
                         <div>Баасы</div>
@@ -804,7 +919,7 @@
                 </div>
             </div>
 
-            <!-- ШАБЛОНЫ И МАССОВЫЕ ОПЕРАЦИИ -->
+            <!-- ШАБЛОНЫ -->
             <div class="section" id="templates-section">
                 <div class="section-title">Шаблондор жана массалык аракеттер</div>
                 
@@ -877,7 +992,7 @@
                 
                 <div style="margin-bottom: 30px;">
                     <button class="btn" onclick="generateReport()">📊 Отчет түзүү</button>
-                    <button class="btn btn-secondary" onclick="exportToPDF()">📄 PDF</button>
+                    <button class="btn btn-warning" onclick="exportToText()">📄 Текст файл</button>
                     <button class="btn btn-success" onclick="exportToExcel()">📊 Excel</button>
                 </div>
                 
@@ -902,20 +1017,42 @@
                     </div>
                     <div class="form-group">
                         <label>Авто өчүрүү (мүнөт)</label>
-                        <input type="number" id="auto-remove" value="1" min="1" max="60">
+                        <input type="number" id="auto-remove" value="2" min="1" max="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Объявлений интервал (сек)</label>
+                        <input type="number" id="announcement-interval" value="10" min="5" max="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Админ пароль (жаңы)</label>
+                        <input type="password" id="admin-password" placeholder="Жаңы пароль">
+                    </div>
+                    <div class="form-group">
+                        <label>Админ пароль (тастыктоо)</label>
+                        <input type="password" id="admin-password-confirm" placeholder="Паролду кайталаңыз">
+                    </div>
+                    <div class="form-group">
+                        <label>Оператор пароль (жаңы)</label>
+                        <input type="password" id="operator-password" placeholder="Жаңы пароль">
+                    </div>
+                    <div class="form-group">
+                        <label>Оператор пароль (тастыктоо)</label>
+                        <input type="password" id="operator-password-confirm" placeholder="Паролду кайталаңыз">
                     </div>
                 </div>
 
                 <div style="margin-bottom: 30px;">
                     <button class="btn" onclick="saveSettings()">💾 Сактоо</button>
                     <button class="btn btn-secondary" onclick="testAnnouncement()">🔊 Добуш тести</button>
+                    <button class="btn btn-warning" onclick="showCurrentUsers()">👥 Колдонуучулар</button>
+                    <button class="btn btn-success" onclick="changePasswords()">🔐 Паролдорду өзгөртүү</button>
                     <button class="btn btn-danger" onclick="resetSystem()">🔄 Системаны баштапкы абалга келтирүү</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL -->
+    <!-- МОДАЛЬНОЕ ОКНО -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-title">Модал</div>
@@ -929,10 +1066,9 @@
         </div>
     </div>
 
-    <!-- NOTIFICATION -->
     <div class="notification" id="notification"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
         let buses = [];
@@ -950,64 +1086,94 @@
             days: []
         };
 
-        // СИСТЕМА АВТОРИЗАЦИИ
-        const users = {
-            admin: { password: 'admin123', role: 'admin', name: 'Администратор' },
-            operator: { password: 'display123', role: 'display', name: 'Оператор' }
-        };
+        function checkAdminAccess() {
+            const savedSession = JSON.parse(localStorage.getItem('karakol-admin-session') || 'null');
+            if (!savedSession) {
+                goToLogin();
+                return false;
+            }
+
+            if (savedSession.expires < Date.now()) {
+                localStorage.removeItem('karakol-admin-session');
+                goToLogin();
+                return false;
+            }
+
+            if (savedSession.role !== 'admin') {
+                goToLogin();
+                return false;
+            }
+
+            currentUser = savedSession;
+            return true;
+        }
+
+        function goToLogin() {
+            window.location.href = 'index.html';
+        }
 
         function login() {
             const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('login-error');
+            const password = document.getElementById('password').value.trim();
+            const errorEl = document.getElementById('login-error');
 
             if (!username || !password) {
-                showLoginError('Колдонуучу аты жана сыр сөздү киргизиңиз!');
+                errorEl.textContent = 'Колдонуучу аты жана сыр сөз киргизиңиз!';
                 return;
             }
 
-            const user = users[username];
-            if (!user || user.password !== password) {
-                showLoginError('Туура эмес колдонуучу аты же сыр сөз!');
-                return;
-            }
-
-            if (user.role !== 'admin') {
-                showLoginError('Бул панель администраторлор үчүн гана!');
-                return;
-            }
-
-            currentUser = { ...user, username };
+            const savedUsers = getUsers();
             
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('admin-screen').classList.add('active');
-            init();
+            if (savedUsers[username] && savedUsers[username].password === password) {
+                if (savedUsers[username].role !== 'admin') {
+                    errorEl.textContent = 'Админ укуктары жок!';
+                    return;
+                }
+
+                const sessionData = {
+                    username: username,
+                    role: savedUsers[username].role,
+                    name: savedUsers[username].name,
+                    loginTime: Date.now(),
+                    expires: Date.now() + (24 * 60 * 60 * 1000)
+                };
+
+                localStorage.setItem('karakol-admin-session', JSON.stringify(sessionData));
+                currentUser = sessionData;
+
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-screen').classList.add('active');
+                init();
+            } else {
+                errorEl.textContent = 'Туура эмес колдонуучу аты же сыр сөз!';
+            }
         }
 
         function logout() {
-            currentUser = null;
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('admin-screen').classList.remove('active');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('login-error').textContent = '';
+            localStorage.removeItem('karakol-admin-session');
+            localStorage.removeItem('karakol-session');
+            window.location.href = 'index.html';
         }
 
-        function showLoginError(message) {
-            document.getElementById('login-error').textContent = message;
-            setTimeout(() => {
-                document.getElementById('login-error').textContent = '';
-            }, 5000);
+        function getUsers() {
+            const savedUsers = JSON.parse(localStorage.getItem('karakol-users') || '{}');
+            if (Object.keys(savedUsers).length === 0) {
+                const defaultUsers = {
+                    admin: { password: 'admin123', role: 'admin', name: 'Администратор' },
+                    operator: { password: 'display123', role: 'operator', name: 'Оператор' }
+                };
+                localStorage.setItem('karakol-users', JSON.stringify(defaultUsers));
+                return defaultUsers;
+            }
+            return savedUsers;
         }
 
-        // Обработка Enter в форме логина
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
                 login();
             }
         });
 
-        // УПРАВЛЕНИЕ ДНЯМИ
         function startDay() {
             if (dayStarted) {
                 showNotification('Күн мурда башталган!', 'warning');
@@ -1027,6 +1193,13 @@
             
             database.days.push(dayData);
             addToHistory('day_start', null, { dayId: currentDayId });
+            
+            // Сигнализируем о начале дня
+            const displayData = JSON.parse(localStorage.getItem('karakol-bus-station-display') || '{}');
+            displayData.dayStarted = true;
+            displayData.dayEnded = false;
+            displayData.buses = getCurrentBuses();
+            localStorage.setItem('karakol-bus-station-display', JSON.stringify(displayData));
             
             updateDayStatus();
             saveData();
@@ -1052,16 +1225,22 @@
                 totalRevenue: calculateTotalRevenue() 
             });
 
-            // Все автобусы переводим в статус "отправлено"
             buses.forEach(bus => {
                 if (bus.status !== 'departed') {
                     bus.status = 'departed';
+                    bus.departedTime = new Date();
                     addToHistory('status', bus, { oldStatus: bus.status, newStatus: 'departed', reason: 'day_end' });
                 }
             });
 
             dayStarted = false;
             currentDayId = null;
+            
+            // Сигнализируем об окончании дня
+            const displayData = JSON.parse(localStorage.getItem('karakol-bus-station-display') || '{}');
+            displayData.dayEnded = true;
+            displayData.buses = getCurrentBuses();
+            localStorage.setItem('karakol-bus-station-display', JSON.stringify(displayData));
             
             updateDayStatus();
             updateDisplay();
@@ -1081,7 +1260,8 @@
         }
 
         function calculateTotalRevenue() {
-            return buses.reduce((sum, bus) => {
+            const currentBuses = getCurrentBuses();
+            return currentBuses.reduce((sum, bus) => {
                 const occupiedSeats = bus.seats - (bus.available || 0);
                 return sum + (occupiedSeats * (bus.price || 0));
             }, 0);
@@ -1124,6 +1304,11 @@
             const now = new Date();
             const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
             document.getElementById('time').value = oneHourLater.toTimeString().slice(0, 5);
+        }
+
+        function parseTimeToMinutes(timeString) {
+            const [hours, minutes] = timeString.split(':').map(Number);
+            return hours * 60 + minutes;
         }
 
         function validateDateTime() {
@@ -1208,7 +1393,8 @@
                 announcements: {
                     fiveMinutes: false,
                     boarding: false,
-                    departed: false
+                    departed: false,
+                    statusManual: false
                 }
             };
 
@@ -1223,146 +1409,6 @@
 
         function getVehicleText(vehicle) {
             return vehicle === 'bus' ? 'автобус' : 'маршрутка';
-        }
-
-        function addRandomBus() {
-            if (!dayStarted) {
-                showNotification('Алгач күндү башатыңыз!', 'error');
-                return;
-            }
-
-            const routes = ['Бишкек', 'Алматы', 'Ош', 'Нарын', 'Чолпон-Ата', 'Балыкчы', 'Токмок'];
-            const carriers = ['Каракол Транс', 'Ала-Тоо Экспресс', 'Түштүк Жол', 'Көл Тур'];
-            const drivers = ['Эмилбек уулу', 'Нурлан уулу', 'Бакыт уулу', 'Медет уулу'];
-            const prices = [120, 150, 200, 280, 350, 800, 1200];
-            const vehicles = ['bus', 'minibus'];
-
-            const now = new Date();
-            const future = new Date(now.getTime() + Math.random() * 6 * 60 * 60 * 1000);
-            const selectedVehicle = vehicles[Math.floor(Math.random() * vehicles.length)];
-            const totalSeats = selectedVehicle === 'bus' 
-                ? Math.floor(Math.random() * 40) + 30 
-                : Math.floor(Math.random() * 15) + 10;
-            const availableSeats = Math.floor(Math.random() * totalSeats);
-
-            const newBus = {
-                id: busCounter++,
-                route: routes[Math.floor(Math.random() * routes.length)],
-                time: future.toTimeString().slice(0, 5),
-                vehicle: selectedVehicle,
-                seats: totalSeats,
-                available: availableSeats,
-                driver: drivers[Math.floor(Math.random() * drivers.length)],
-                carrier: carriers[Math.floor(Math.random() * carriers.length)],
-                price: prices[Math.floor(Math.random() * prices.length)],
-                status: 'waiting',
-                date: getTodayDate(),
-                created: new Date(),
-                dayId: currentDayId,
-                announcements: {
-                    fiveMinutes: false,
-                    boarding: false,
-                    departed: false
-                }
-            };
-
-            buses.push(newBus);
-            addToHistory('add', newBus, { type: 'random' });
-            saveData();
-            updateDisplay();
-            showNotification(`Кокустук ${getVehicleText(selectedVehicle)} ${newBus.route} кошулду!`);
-        }
-
-        function editBus(busId) {
-            const bus = buses.find(b => b.id === busId);
-            if (!bus) return;
-
-            const modalBody = document.getElementById('modal-body');
-            modalBody.innerHTML = `
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Багыт</label>
-                        <input type="text" id="edit-route" value="${bus.route}">
-                    </div>
-                    <div class="form-group">
-                        <label>Убакыт</label>
-                        <input type="time" id="edit-time" value="${bus.time}">
-                    </div>
-                    <div class="form-group">
-                        <label>Транспорт түрү</label>
-                        <select id="edit-vehicle">
-                            <option value="bus" ${bus.vehicle === 'bus' ? 'selected' : ''}>Автобус</option>
-                            <option value="minibus" ${bus.vehicle === 'minibus' ? 'selected' : ''}>Маршрутка</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Орундар</label>
-                        <input type="number" id="edit-seats" value="${bus.seats}" min="10" max="80">
-                    </div>
-                    <div class="form-group">
-                        <label>Бош орундар</label>
-                        <input type="number" id="edit-available" value="${bus.available}" min="0" max="80">
-                    </div>
-                    <div class="form-group">
-                        <label>Айдоочу</label>
-                        <input type="text" id="edit-driver" value="${bus.driver}">
-                    </div>
-                    <div class="form-group">
-                        <label>Ташуучу</label>
-                        <input type="text" id="edit-carrier" value="${bus.carrier}">
-                    </div>
-                    <div class="form-group">
-                        <label>Баасы</label>
-                        <input type="number" id="edit-price" value="${bus.price}" min="50">
-                    </div>
-                    <div class="form-group">
-                        <label>Абалы</label>
-                        <select id="edit-status">
-                            <option value="waiting" ${bus.status === 'waiting' ? 'selected' : ''}>Күтүүдө</option>
-                            <option value="boarding" ${bus.status === 'boarding' ? 'selected' : ''}>Отургузуу</option>
-                            <option value="delayed" ${bus.status === 'delayed' ? 'selected' : ''}>Кечигүү</option>
-                            <option value="departed" ${bus.status === 'departed' ? 'selected' : ''}>Кетти</option>
-                        </select>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('modal-title').textContent = 'Транспортты өзгөртүү';
-            document.getElementById('modal-confirm').onclick = () => confirmEditBus(busId);
-            showModal();
-        }
-
-        function confirmEditBus(busId) {
-            const bus = buses.find(b => b.id === busId);
-            if (!bus) return;
-
-            const oldData = { ...bus };
-            
-            bus.route = document.getElementById('edit-route').value.trim();
-            bus.time = document.getElementById('edit-time').value;
-            bus.vehicle = document.getElementById('edit-vehicle').value;
-            bus.seats = parseInt(document.getElementById('edit-seats').value);
-            bus.available = parseInt(document.getElementById('edit-available').value);
-            bus.driver = document.getElementById('edit-driver').value.trim();
-            bus.carrier = document.getElementById('edit-carrier').value.trim();
-            bus.price = parseInt(document.getElementById('edit-price').value);
-            bus.status = document.getElementById('edit-status').value;
-
-            if (!bus.route || !bus.time || !bus.seats || !bus.driver || !bus.carrier || !bus.price) {
-                showNotification('Бардык талааларды толтуруңуз!', 'error');
-                return;
-            }
-
-            if (bus.available > bus.seats) {
-                showNotification('Бош орундар жалпы орундардан көп болбошу керек!', 'error');
-                return;
-            }
-
-            addToHistory('edit', bus, { oldData, newData: { ...bus } });
-            saveData();
-            updateDisplay();
-            closeModal();
-            showNotification('Транспорт маалыматы өзгөртүлдү!');
         }
 
         function deleteBus(busId) {
@@ -1388,17 +1434,44 @@
             const bus = buses.find(b => b.id === busId);
             if (!bus) return;
 
-            const statuses = ['waiting', 'boarding', 'delayed', 'departed'];
-            const currentIndex = statuses.indexOf(bus.status);
-            const nextIndex = (currentIndex + 1) % statuses.length;
+            // Правильная логика: не возвращаем departed обратно в waiting
+            let newStatus;
+            switch(bus.status) {
+                case 'waiting':
+                    newStatus = 'boarding';
+                    break;
+                case 'boarding':
+                    newStatus = 'departed';
+                    break;
+                case 'delayed':
+                    newStatus = 'boarding';
+                    break;
+                case 'departed':
+                    // Departed остается departed
+                    showNotification('Кеткен транспортты кайра башкарууга болбойт!', 'warning');
+                    return;
+                default:
+                    newStatus = 'waiting';
+            }
             
             const oldStatus = bus.status;
-            bus.status = statuses[nextIndex];
+            bus.status = newStatus;
             
-            addToHistory('status', bus, { oldStatus, newStatus: bus.status });
+            // Если переходим в departed, запоминаем время
+            if (newStatus === 'departed') {
+                bus.departedTime = new Date();
+            }
+            
+            // Помечаем как ручное изменение для озвучивания
+            bus.statusChanged = true;
+            if (bus.announcements) {
+                bus.announcements.statusManual = false;
+            }
+            
+            addToHistory('status', bus, { oldStatus, newStatus: bus.status, manual: true });
             saveData();
             updateDisplay();
-            showNotification(`${bus.route} статусу өзгөртүлдү`);
+            showNotification(`${bus.route} статусу өзгөртүлдү: ${getStatusText(newStatus)}`);
         }
 
         function clearAll() {
@@ -1430,15 +1503,6 @@
             document.getElementById('status').value = 'waiting';
             document.getElementById('bus-date').value = getTodayDate();
             setDefaultTime();
-
-            // Синхронизация доступных мест с общими местами
-            document.getElementById('seats').addEventListener('input', function() {
-                const seatsValue = this.value;
-                const availableInput = document.getElementById('available');
-                if (seatsValue && !availableInput.value) {
-                    availableInput.value = seatsValue;
-                }
-            });
         }
 
         function updateDisplay() {
@@ -1446,26 +1510,47 @@
             renderRoutes();
         }
 
-        function updateStats() {
-            document.getElementById('total-count').textContent = buses.length;
-            document.getElementById('waiting-count').textContent = buses.filter(b => b.status === 'waiting').length;
-            document.getElementById('boarding-count').textContent = buses.filter(b => b.status === 'boarding').length;
-            document.getElementById('departed-count').textContent = buses.filter(b => b.status === 'departed').length;
+        function getCurrentBuses() {
+            const now = new Date();
             
-            // Расчет общей выручки
-            const revenue = calculateTotalRevenue();
+            return buses.filter(bus => {
+                // Исключаем автобусы которые исчезли с главного экрана (departed > 2 минут)
+                if (bus.status === 'departed' && bus.departedTime) {
+                    const timeSinceDeparted = (now - new Date(bus.departedTime)) / (1000 * 60);
+                    return timeSinceDeparted < 2; // Показываем только если прошло менее 2 минут
+                }
+                return true; // Показываем все остальные
+            });
+        }
+
+        function updateStats() {
+            const currentBuses = getCurrentBuses();
+            
+            document.getElementById('total-count').textContent = currentBuses.length;
+            document.getElementById('waiting-count').textContent = currentBuses.filter(b => b.status === 'waiting').length;
+            document.getElementById('boarding-count').textContent = currentBuses.filter(b => b.status === 'boarding').length;
+            document.getElementById('departed-count').textContent = currentBuses.filter(b => b.status === 'departed').length;
+            
+            const revenue = currentBuses.reduce((sum, bus) => {
+                const occupiedSeats = bus.seats - (bus.available || 0);
+                return sum + (occupiedSeats * (bus.price || 0));
+            }, 0);
+            
             document.getElementById('total-revenue').textContent = revenue.toLocaleString();
         }
 
         function renderRoutes() {
             const container = document.getElementById('routes-container');
             
-            if (buses.length === 0) {
-                container.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b;">Транспорт жок</div>';
+            // Показываем только автобусы "в данный момент" (не те которые исчезли с главного экрана)
+            const currentBuses = getCurrentBuses();
+            
+            if (currentBuses.length === 0) {
+                container.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b;">Учурда транспорт жок</div>';
                 return;
             }
 
-            container.innerHTML = buses.map(bus => `
+            container.innerHTML = currentBuses.map(bus => `
                 <div class="route-item">
                     <div class="route-field">${bus.route}</div>
                     <div class="route-field route-time">${bus.time}</div>
@@ -1477,7 +1562,6 @@
                     <div class="route-field">${bus.carrier}</div>
                     <div class="route-field">${bus.price} сом</div>
                     <div class="route-actions">
-                        <button class="btn btn-small" onclick="editBus(${bus.id})">✏️</button>
                         <button class="btn btn-small btn-secondary" onclick="changeStatus(${bus.id})">🔄</button>
                         <button class="btn btn-small btn-danger" onclick="deleteBus(${bus.id})">🗑️</button>
                     </div>
@@ -1502,97 +1586,207 @@
                 action: action,
                 bus: busData ? { ...busData } : null,
                 details: details,
-                dayId: currentDayId
+                dayId: currentDayId,
+                user: currentUser ? currentUser.username : 'system'
             };
             database.history.push(historyEntry);
+            
+            // Ограничиваем историю последними 1000 записями
+            if (database.history.length > 1000) {
+                database.history = database.history.slice(-1000);
+            }
         }
 
-        function loadHistory() {
-            const selectedDate = document.getElementById('history-date').value;
-            const filter = document.getElementById('history-filter').value;
-            
-            if (!selectedDate) {
-                showNotification('Күн тандаңыз!', 'error');
-                return;
-            }
-            
-            const date = new Date(selectedDate);
-            const dateStr = date.toDateString();
-            
-            let history = database.history.filter(h => 
-                new Date(h.timestamp).toDateString() === dateStr
-            );
-            
-            if (filter) {
-                history = history.filter(h => h.action === filter);
-            }
-            
-            const container = document.getElementById('history-container');
-            
-            if (history.length === 0) {
-                container.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b;">Бул күндө эч кандай аракет жок</div>';
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="routes-list">
-                    <div class="route-item header" style="grid-template-columns: 100px 150px 200px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
-                        <div>Убакыт</div>
-                        <div>Аракет</div>
-                        <div>Багыт</div>
-                        <div>Детали</div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+        // ШАБЛОНЫ
+        function showCreateTemplateModal() {
+            templateRouteCounter = 0;
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Шаблон аты</label>
+                        <input type="text" id="template-name" placeholder="Жаңы шаблон">
                     </div>
-                    ${history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).map(h => `
-                        <div class="route-item" style="grid-template-columns: 100px 150px 200px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;">
-                            <div class="route-field route-time">${new Date(h.timestamp).toLocaleTimeString('ru-RU')}</div>
-                            <div class="route-field">${getActionText(h.action)}</div>
-                            <div class="route-field">${h.bus ? h.bus.route : '-'}</div>
-                            <div class="route-field">${getDetailsText(h.action, h.details)}</div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    `).join('')}
+                    <div class="form-group">
+                        <label>Сүрөттөмө</label>
+                        <textarea id="template-desc" placeholder="Шаблон жөнүндө маалымат" rows="3"></textarea>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h4 style="color: #3b82f6; margin-bottom: 15px;">Рейстер:</h4>
+                    <div id="template-routes-container">
+                        ${buses.length > 0 ? '<p style="color: #64748b; margin-bottom: 15px;">Учурдагы транспорттардан шаблон түзө аласыз же жаңы рейстерди кошо аласыз</p>' : ''}
+                    </div>
+                    <button class="btn btn-small" onclick="addTemplateRoute()">➕ Рейс кошуу</button>
+                </div>
+                ${buses.length > 0 ? '<div style="margin-top: 15px;"><button class="btn btn-success btn-small" onclick="addCurrentBusesToTemplate()">📋 Учурдагы транспорттарды кошуу</button></div>' : ''}
+            `;
+
+            document.getElementById('modal-title').textContent = 'Жаңы шаблон түзүү';
+            document.getElementById('modal-confirm').onclick = createTemplate;
+            showModal();
+        }
+
+        function addTemplateRoute() {
+            const container = document.getElementById('template-routes-container');
+            const routeDiv = document.createElement('div');
+            routeDiv.className = 'template-route-editor';
+            routeDiv.id = `template-route-${templateRouteCounter}`;
+            
+            routeDiv.innerHTML = `
+                <div>
+                    <label>Багыт</label>
+                    <input type="text" placeholder="Бишкек" id="route-${templateRouteCounter}">
+                </div>
+                <div>
+                    <label>Убакыт</label>
+                    <input type="time" id="time-${templateRouteCounter}">
+                </div>
+                <div>
+                    <label>Транспорт</label>
+                    <select id="vehicle-${templateRouteCounter}">
+                        <option value="bus">Автобус</option>
+                        <option value="minibus">Маршрутка</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Орундар</label>
+                    <input type="number" placeholder="45" id="seats-${templateRouteCounter}" min="10" max="80">
+                </div>
+                <div>
+                    <label>Айдоочу</label>
+                    <input type="text" placeholder="Эмилбек уулу" id="driver-${templateRouteCounter}">
+                </div>
+                <div>
+                    <label>Ташуучу</label>
+                    <input type="text" placeholder="Каракол Транс" id="carrier-${templateRouteCounter}">
+                </div>
+                <div>
+                    <label>Баасы</label>
+                    <input type="number" placeholder="350" id="price-${templateRouteCounter}" min="50">
+                </div>
+                <div>
+                    <button class="btn btn-small btn-danger" onclick="removeTemplateRoute(${templateRouteCounter})">🗑️</button>
                 </div>
             `;
+            
+            container.appendChild(routeDiv);
+            templateRouteCounter++;
         }
 
-        function getActionText(action) {
-            const actions = {
-                'add': 'Кошулду',
-                'edit': 'Өзгөртүлдү',
-                'delete': 'Өчүрүлдү',
-                'status': 'Статус өзгөрдү',
-                'day_start': 'Күн башталды',
-                'day_end': 'Күн аяктады'
+        function addCurrentBusesToTemplate() {
+            const container = document.getElementById('template-routes-container');
+            
+            buses.forEach((bus, index) => {
+                const routeDiv = document.createElement('div');
+                routeDiv.className = 'template-route-editor';
+                routeDiv.id = `template-route-${templateRouteCounter}`;
+                
+                routeDiv.innerHTML = `
+                    <div>
+                        <label>Багыт</label>
+                        <input type="text" value="${bus.route}" id="route-${templateRouteCounter}">
+                    </div>
+                    <div>
+                        <label>Убакыт</label>
+                        <input type="time" value="${bus.time}" id="time-${templateRouteCounter}">
+                    </div>
+                    <div>
+                        <label>Транспорт</label>
+                        <select id="vehicle-${templateRouteCounter}">
+                            <option value="bus" ${(bus.vehicle || 'bus') === 'bus' ? 'selected' : ''}>Автобус</option>
+                            <option value="minibus" ${bus.vehicle === 'minibus' ? 'selected' : ''}>Маршрутка</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Орундар</label>
+                        <input type="number" value="${bus.seats}" id="seats-${templateRouteCounter}" min="10" max="80">
+                    </div>
+                    <div>
+                        <label>Айдоочу</label>
+                        <input type="text" value="${bus.driver}" id="driver-${templateRouteCounter}">
+                    </div>
+                    <div>
+                        <label>Ташуучу</label>
+                        <input type="text" value="${bus.carrier}" id="carrier-${templateRouteCounter}">
+                    </div>
+                    <div>
+                        <label>Баасы</label>
+                        <input type="number" value="${bus.price}" id="price-${templateRouteCounter}" min="50">
+                    </div>
+                    <div>
+                        <button class="btn btn-small btn-danger" onclick="removeTemplateRoute(${templateRouteCounter})">🗑️</button>
+                    </div>
+                `;
+                
+                container.appendChild(routeDiv);
+                templateRouteCounter++;
+            });
+            
+            showNotification('Учурдагы транспорттар шаблонго кошулду!');
+        }
+
+        function removeTemplateRoute(index) {
+            const routeDiv = document.getElementById(`template-route-${index}`);
+            if (routeDiv) {
+                routeDiv.remove();
+            }
+        }
+
+        function createTemplate() {
+            const name = document.getElementById('template-name').value.trim();
+            const desc = document.getElementById('template-desc').value.trim();
+
+            if (!name) {
+                showNotification('Шаблон атын жазыңыз!', 'error');
+                return;
+            }
+
+            let routes = [];
+            
+            for (let i = 0; i < templateRouteCounter; i++) {
+                const routeInput = document.getElementById(`route-${i}`);
+                const timeInput = document.getElementById(`time-${i}`);
+                const vehicleInput = document.getElementById(`vehicle-${i}`);
+                const seatsInput = document.getElementById(`seats-${i}`);
+                const driverInput = document.getElementById(`driver-${i}`);
+                const carrierInput = document.getElementById(`carrier-${i}`);
+                const priceInput = document.getElementById(`price-${i}`);
+                
+                if (routeInput && timeInput && vehicleInput && seatsInput && driverInput && carrierInput && priceInput && 
+                    routeInput.value.trim() && timeInput.value && seatsInput.value && driverInput.value.trim() && 
+                    carrierInput.value.trim() && priceInput.value) {
+                    routes.push({
+                        route: routeInput.value.trim(),
+                        time: timeInput.value,
+                        vehicle: vehicleInput.value,
+                        seats: parseInt(seatsInput.value) || 40,
+                        available: parseInt(seatsInput.value) || 40,
+                        driver: driverInput.value.trim(),
+                        carrier: carrierInput.value.trim(),
+                        price: parseInt(priceInput.value) || 100
+                    });
+                }
+            }
+
+            if (routes.length === 0) {
+                showNotification('Шаблон үчүн рейстер кошуңуз!', 'error');
+                return;
+            }
+
+            const templateKey = Date.now().toString();
+            const template = {
+                name: name,
+                description: desc || 'Колдонуучу шаблону',
+                routes: routes,
+                created: new Date()
             };
-            return actions[action] || action;
-        }
 
-        function getDetailsText(action, details) {
-            if (!details) return '-';
-            if (action === 'status') {
-                return `${getStatusText(details.oldStatus)} → ${getStatusText(details.newStatus)}`;
-            }
-            if (action === 'day_start') {
-                return 'Жумуш күнү башталды';
-            }
-            if (action === 'day_end') {
-                return `Күн аяктады (${details.totalBuses} транспорт, ${details.totalRevenue} сом)`;
-            }
-            if (details.type) {
-                return details.type === 'random' ? 'Кокустук' : details.type;
-            }
-            return '-';
+            database.templates[templateKey] = template;
+            saveData();
+            renderTemplates();
+            closeModal();
+            showNotification(`${name} шаблону сакталды!`);
         }
 
         function renderTemplates() {
@@ -1613,7 +1807,6 @@
                         `).join('')}
                     </div>
                     <div style="margin-top: 15px;">
-                        <button class="btn btn-small" onclick="event.stopPropagation(); editTemplate('${key}')">✏️</button>
                         <button class="btn btn-small btn-danger" onclick="event.stopPropagation(); deleteTemplate('${key}')">🗑️</button>
                     </div>
                 </div>
@@ -1661,232 +1854,6 @@
             });
         }
 
-        function showCreateTemplateModal() {
-            templateRouteCounter = 0;
-            const modalBody = document.getElementById('modal-body');
-            modalBody.innerHTML = `
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Шаблон аты</label>
-                        <input type="text" id="template-name" placeholder="Жаңы шаблон">
-                    </div>
-                    <div class="form-group">
-                        <label>Сүрөттөмө</label>
-                        <textarea id="template-desc" placeholder="Шаблон жөнүндө маалымат" rows="3"></textarea>
-                    </div>
-                </div>
-                <div style="margin-top: 20px;">
-                    <h4 style="color: #3b82f6; margin-bottom: 15px;">Рейстер:</h4>
-                    <div id="template-routes-container">
-                        ${buses.length > 0 ? '' : '<p style="color: #94a3b8;">Учурдагы транспорттордон же жаңыларды кошуп шаблон түзө аласыз</p>'}
-                    </div>
-                    <button class="btn btn-small" onclick="addTemplateRoute()">➕ Рейс кошуу</button>
-                </div>
-                ${buses.length > 0 ? '<p style="color: #64748b; margin-top: 15px;">Же учурдагы транспорттар шаблон катары сакталат</p>' : ''}
-            `;
-
-            document.getElementById('modal-title').textContent = 'Жаңы шаблон түзүү';
-            document.getElementById('modal-confirm').onclick = createTemplate;
-            showModal();
-        }
-
-        function addTemplateRoute() {
-            const container = document.getElementById('template-routes-container');
-            const routeDiv = document.createElement('div');
-            routeDiv.className = 'template-route-editor';
-            routeDiv.id = `template-route-${templateRouteCounter}`;
-            
-            routeDiv.innerHTML = `
-                <input type="text" placeholder="Багыт" id="route-${templateRouteCounter}">
-                <input type="time" id="time-${templateRouteCounter}">
-                <select id="vehicle-${templateRouteCounter}">
-                    <option value="bus">Автобус</option>
-                    <option value="minibus">Маршрутка</option>
-                </select>
-                <input type="number" placeholder="Орун" id="seats-${templateRouteCounter}" min="10" max="80">
-                <input type="number" placeholder="Баа" id="price-${templateRouteCounter}" min="50">
-                <button class="btn btn-small btn-danger" onclick="removeTemplateRoute(${templateRouteCounter})">🗑️</button>
-            `;
-            
-            container.appendChild(routeDiv);
-            templateRouteCounter++;
-        }
-
-        function removeTemplateRoute(index) {
-            const routeDiv = document.getElementById(`template-route-${index}`);
-            if (routeDiv) {
-                routeDiv.remove();
-            }
-        }
-
-        function createTemplate() {
-            const name = document.getElementById('template-name').value.trim();
-            const desc = document.getElementById('template-desc').value.trim();
-
-            if (!name) {
-                showNotification('Шаблон атын жазыңыз!', 'error');
-                return;
-            }
-
-            // Собираем рейсы из формы
-            let routes = [];
-            
-            // Добавляем рейсы из формы
-            for (let i = 0; i < templateRouteCounter; i++) {
-                const routeInput = document.getElementById(`route-${i}`);
-                const timeInput = document.getElementById(`time-${i}`);
-                const vehicleInput = document.getElementById(`vehicle-${i}`);
-                const seatsInput = document.getElementById(`seats-${i}`);
-                const priceInput = document.getElementById(`price-${i}`);
-                
-                if (routeInput && timeInput && vehicleInput && seatsInput && priceInput && 
-                    routeInput.value.trim() && timeInput.value && seatsInput.value && priceInput.value) {
-                    routes.push({
-                        route: routeInput.value.trim(),
-                        time: timeInput.value,
-                        vehicle: vehicleInput.value,
-                        seats: parseInt(seatsInput.value) || 40,
-                        available: parseInt(seatsInput.value) || 40,
-                        driver: 'Айдоочу',
-                        carrier: 'Ташуучу',
-                        price: parseInt(priceInput.value) || 100
-                    });
-                }
-            }
-
-            // Если нет добавленных рейсов, используем текущие автобусы
-            if (routes.length === 0 && buses.length > 0) {
-                routes = buses.map(bus => ({
-                    route: bus.route,
-                    time: bus.time,
-                    vehicle: bus.vehicle,
-                    seats: bus.seats,
-                    available: bus.available,
-                    driver: bus.driver,
-                    carrier: bus.carrier,
-                    price: bus.price
-                }));
-            }
-
-            if (routes.length === 0) {
-                showNotification('Шаблон үчүн рейстер кошуңуз!', 'error');
-                return;
-            }
-
-            const templateKey = Date.now().toString();
-            const template = {
-                name: name,
-                description: desc || 'Колдонуучу шаблону',
-                routes: routes,
-                created: new Date()
-            };
-
-            database.templates[templateKey] = template;
-            saveData();
-            renderTemplates();
-            closeModal();
-            showNotification(`${name} шаблону сакталды!`);
-        }
-
-        function editTemplate(templateKey) {
-            const template = database.templates[templateKey];
-            if (!template) return;
-
-            templateRouteCounter = 0;
-            const modalBody = document.getElementById('modal-body');
-            modalBody.innerHTML = `
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Шаблон аты</label>
-                        <input type="text" id="edit-template-name" value="${template.name}">
-                    </div>
-                    <div class="form-group">
-                        <label>Сүрөттөмө</label>
-                        <textarea id="edit-template-desc" rows="3">${template.description}</textarea>
-                    </div>
-                </div>
-                <div style="margin-top: 20px;">
-                    <h4 style="color: #3b82f6; margin-bottom: 15px;">Рейстер:</h4>
-                    <div id="template-routes-container">
-                        ${template.routes.map((route, index) => {
-                            const routeId = templateRouteCounter++;
-                            return `
-                                <div class="template-route-editor" id="template-route-${routeId}">
-                                    <input type="text" value="${route.route}" id="route-${routeId}">
-                                    <input type="time" value="${route.time}" id="time-${routeId}">
-                                    <select id="vehicle-${routeId}">
-                                        <option value="bus" ${(route.vehicle || 'bus') === 'bus' ? 'selected' : ''}>Автобус</option>
-                                        <option value="minibus" ${route.vehicle === 'minibus' ? 'selected' : ''}>Маршрутка</option>
-                                    </select>
-                                    <input type="number" value="${route.seats}" id="seats-${routeId}" min="10" max="80">
-                                    <input type="number" value="${route.price}" id="price-${routeId}" min="50">
-                                    <button class="btn btn-small btn-danger" onclick="removeTemplateRoute(${routeId})">🗑️</button>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                    <button class="btn btn-small" onclick="addTemplateRoute()">➕ Рейс кошуу</button>
-                </div>
-            `;
-
-            document.getElementById('modal-title').textContent = 'Шаблонду өзгөртүү';
-            document.getElementById('modal-confirm').onclick = () => confirmEditTemplate(templateKey);
-            showModal();
-        }
-
-        function confirmEditTemplate(templateKey) {
-            const name = document.getElementById('edit-template-name').value.trim();
-            const desc = document.getElementById('edit-template-desc').value.trim();
-
-            if (!name) {
-                showNotification('Шаблон атын жазыңыз!', 'error');
-                return;
-            }
-
-            // Собираем обновленные рейсы
-            const routes = [];
-            const routeElements = document.querySelectorAll('.template-route-editor');
-            
-            routeElements.forEach((element) => {
-                const routeInput = element.querySelector('input[type="text"]');
-                const timeInput = element.querySelector('input[type="time"]');
-                const vehicleSelect = element.querySelector('select');
-                const seatsInput = element.querySelector('input[min="10"]');
-                const priceInput = element.querySelector('input[min="50"]');
-                
-                if (routeInput && timeInput && vehicleSelect && seatsInput && priceInput && 
-                    routeInput.value.trim() && timeInput.value && seatsInput.value && priceInput.value) {
-                    routes.push({
-                        route: routeInput.value.trim(),
-                        time: timeInput.value,
-                        vehicle: vehicleSelect.value,
-                        seats: parseInt(seatsInput.value) || 40,
-                        available: parseInt(seatsInput.value) || 40,
-                        driver: 'Айдоочу',
-                        carrier: 'Ташуучу',
-                        price: parseInt(priceInput.value) || 100
-                    });
-                }
-            });
-
-            if (routes.length === 0) {
-                showNotification('Шаблон үчүн рейстер кошуңуз!', 'error');
-                return;
-            }
-
-            database.templates[templateKey] = {
-                ...database.templates[templateKey],
-                name: name,
-                description: desc,
-                routes: routes
-            };
-
-            saveData();
-            renderTemplates();
-            closeModal();
-            showNotification('Шаблон өзгөртүлдү!');
-        }
-
         function deleteTemplate(templateKey) {
             const template = database.templates[templateKey];
             if (!template) return;
@@ -1905,9 +1872,13 @@
                 return;
             }
 
-            buses.forEach(bus => {
+            const currentBuses = getCurrentBuses();
+            currentBuses.forEach(bus => {
                 const oldStatus = bus.status;
                 bus.status = newStatus;
+                if (newStatus === 'departed') {
+                    bus.departedTime = new Date();
+                }
                 addToHistory('status', bus, { oldStatus, newStatus, type: 'bulk' });
             });
 
@@ -1916,6 +1887,7 @@
             showNotification(`Бардык транспорттун статусу "${getStatusText(newStatus)}" болуп өзгөрдү`);
         }
 
+        // ИМПОРТ/ЭКСПОРТ
         function importFromFile() {
             const input = document.createElement('input');
             input.type = 'file';
@@ -1944,8 +1916,6 @@
                                 updateDisplay();
                                 showNotification(`${data.buses.length} транспорт импорт болду!`);
                             }
-                        } else if (file.name.endsWith('.csv')) {
-                            importFromCSV(e.target.result);
                         }
                     } catch (error) {
                         showNotification('Файл окууда ката!', 'error');
@@ -1954,48 +1924,6 @@
                 reader.readAsText(file);
             };
             input.click();
-        }
-
-        function importFromCSV(content) {
-            const lines = content.split('\n');
-            const headers = lines[0].split(',').map(h => h.trim());
-            
-            let imported = 0;
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (!line) continue;
-
-                const values = line.split(',').map(v => v.trim());
-                if (values.length < 5) continue;
-
-                const newBus = {
-                    id: busCounter++,
-                    route: values[0] || 'Багыт',
-                    time: values[1] || '12:00',
-                    vehicle: values[2] || 'bus',
-                    seats: parseInt(values[3]) || 40,
-                    available: parseInt(values[4]) || parseInt(values[3]) || 40,
-                    driver: values[5] || 'Айдоочу',
-                    carrier: values[6] || 'Ташуучу',
-                    price: parseInt(values[7]) || 200,
-                    status: 'waiting',
-                    date: getTodayDate(),
-                    created: new Date(),
-                    dayId: currentDayId,
-                    announcements: {
-                        fiveMinutes: false,
-                        boarding: false,
-                        departed: false
-                    }
-                };
-
-                buses.push(newBus);
-                imported++;
-            }
-
-            saveData();
-            updateDisplay();
-            showNotification(`CSV файлынан ${imported} транспорт импорт болду!`);
         }
 
         function exportToFile() {
@@ -2018,208 +1946,416 @@
             showNotification('Маалыматтар экспорт болду!');
         }
 
-        function generateReport() {
-            const date = document.getElementById('report-date').value;
-            const type = document.getElementById('report-type').value;
+        // ИСТОРИЯ
+        function loadHistory() {
+            const selectedDate = document.getElementById('history-date').value;
+            const filterType = document.getElementById('history-filter').value;
+            const container = document.getElementById('history-container');
 
-            if (!date) {
-                showNotification('Отчет күнүн тандаңыз!', 'error');
+            if (!selectedDate) {
+                showNotification('Күнүн тандаңыз!', 'error');
                 return;
             }
 
-            const totalBuses = buses.length;
-            const totalSeats = buses.reduce((sum, bus) => sum + bus.seats, 0);
-            const totalAvailable = buses.reduce((sum, bus) => sum + (bus.available || 0), 0);
-            const totalOccupied = totalSeats - totalAvailable;
-            const totalRevenue = buses.reduce((sum, bus) => {
-                const occupiedSeats = bus.seats - (bus.available || 0);
-                return sum + (occupiedSeats * (bus.price || 0));
-            }, 0);
-            const delays = buses.filter(b => b.status === 'delayed').length;
-            const busesByType = {
-                bus: buses.filter(b => b.vehicle === 'bus').length,
-                minibus: buses.filter(b => b.vehicle === 'minibus').length
-            };
+            const selectedDateObj = new Date(selectedDate);
+            selectedDateObj.setHours(0, 0, 0, 0);
+            const nextDay = new Date(selectedDateObj);
+            nextDay.setDate(nextDay.getDate() + 1);
 
-            const container = document.getElementById('report-container');
-            container.innerHTML = `
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">${totalBuses}</div>
-                        <div class="stat-label">Бардыгы транспорт</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${busesByType.bus}</div>
-                        <div class="stat-label">Автобус</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${busesByType.minibus}</div>
-                        <div class="stat-label">Маршрутка</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${totalSeats}</div>
-                        <div class="stat-label">Бардыгы орундар</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${totalOccupied}</div>
-                        <div class="stat-label">Сатылган орундар</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${totalAvailable}</div>
-                        <div class="stat-label">Бош орундар</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${totalRevenue.toLocaleString()}</div>
-                        <div class="stat-label">Киреше (сом)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${delays}</div>
-                        <div class="stat-label">Кечигүүлөр</div>
-                    </div>
-                </div>
-                <div class="routes-list">
-                    <div class="route-item header">
-                        <div>Багыт</div>
-                        <div>Убакыт</div>
-                        <div>Вид</div>
-                        <div>Орундар</div>
-                        <div>Сатылган</div>
-                        <div>Баасы</div>
-                        <div>Киреше</div>
-                        <div>Абалы</div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                    ${buses.map(bus => {
-                        const occupiedSeats = bus.seats - (bus.available || 0);
-                        const revenue = occupiedSeats * (bus.price || 0);
-                        return `
-                            <div class="route-item">
-                                <div class="route-field">${bus.route}</div>
-                                <div class="route-field route-time">${bus.time}</div>
-                                <div class="route-field">${getVehicleText(bus.vehicle)}</div>
-                                <div class="route-field">${bus.seats}</div>
-                                <div class="route-field">${occupiedSeats}</div>
-                                <div class="route-field">${bus.price} сом</div>
-                                <div class="route-field">${revenue.toLocaleString()} сом</div>
-                                <div class="route-status status-${bus.status}">${getStatusText(bus.status)}</div>
-                                <div></div>
-                                <div></div>
+            let filteredHistory = database.history.filter(entry => {
+                const entryDate = new Date(entry.timestamp);
+                return entryDate >= selectedDateObj && entryDate < nextDay;
+            });
+
+            if (filterType) {
+                filteredHistory = filteredHistory.filter(entry => entry.action === filterType);
+            }
+
+            if (filteredHistory.length === 0) {
+                container.innerHTML = `
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-action" style="text-align: center; color: #6b7280;">
+                                Тандалган күнү үчүн тарых табылган жок
                             </div>
-                        `;
-                    }).join('')}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            const historyHtml = filteredHistory.map(entry => {
+                const date = new Date(entry.timestamp);
+                const timeStr = date.toLocaleTimeString('ru-RU', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                const actionText = getActionText(entry.action);
+                const busInfo = entry.bus ? `${entry.bus.route} (${getVehicleText(entry.bus.vehicle)})` : '';
+                const userInfo = entry.user ? ` [${entry.user}]` : '';
+                
+                return `
+                    <div class="history-item">
+                        <div class="history-timestamp">${timeStr}${userInfo}</div>
+                        <div class="history-action">${actionText} ${busInfo}</div>
+                        <div class="history-details">${getHistoryDetails(entry)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="history-list">
+                    ${historyHtml}
                 </div>
             `;
 
-            showNotification('Отчет даярдалды!');
+            showNotification(`${filteredHistory.length} тарых жазуусу жүктөлдү`);
         }
 
-        function exportToPDF() {
-            if (!window.jsPDF) {
-                showNotification('jsPDF китепканасы жүктөлө элек!', 'error');
+        function getActionText(action) {
+            const texts = {
+                'add': '➕ Кошулду',
+                'edit': '✏️ Өзгөртүлдү',
+                'delete': '🗑️ Өчүрүлдү',
+                'status': '🔄 Статус өзгөрдү',
+                'day_start': '🌅 Күн башталды',
+                'day_end': '🌙 Күн аяктады',
+                'password_change': '🔐 Паролдор өзгөртүлдү'
+            };
+            return texts[action] || action;
+        }
+
+        function getHistoryDetails(entry) {
+            if (entry.details && entry.details.oldStatus && entry.details.newStatus) {
+                return `${getStatusText(entry.details.oldStatus)} → ${getStatusText(entry.details.newStatus)}`;
+            }
+            if (entry.details && entry.details.type === 'clear_all') {
+                return 'Массалык өчүрүү';
+            }
+            if (entry.details && entry.details.dayId) {
+                return `Күн ID: ${entry.details.dayId}`;
+            }
+            if (entry.action === 'password_change' && entry.details) {
+                let details = [];
+                if (entry.details.adminChanged) details.push('админ');
+                if (entry.details.operatorChanged) details.push('оператор');
+                return `Өзгөртүлгөн: ${details.join(', ')}`;
+            }
+            return '';
+        }
+
+        // ОТЧЕТЫ
+        function generateReport() {
+            const selectedDate = document.getElementById('report-date').value;
+            const reportType = document.getElementById('report-type').value;
+            const container = document.getElementById('report-container');
+
+            if (!selectedDate) {
+                showNotification('Күнүн тандаңыз!', 'error');
+                return;
+            }
+
+            const reportData = calculateReportData(selectedDate, reportType);
+            
+            container.innerHTML = `
+                <div class="report-container">
+                    <div class="report-section">
+                        <div class="report-title">${getReportTitle(reportType)} отчет - ${selectedDate}</div>
+                        <div class="report-stats">
+                            <div class="report-stat">
+                                <div class="report-stat-value">${reportData.totalBuses}</div>
+                                <div class="report-stat-label">Жалпы транспорт</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-stat-value">${reportData.departedBuses}</div>
+                                <div class="report-stat-label">Кеткен транспорт</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-stat-value">${reportData.totalRevenue.toLocaleString()}</div>
+                                <div class="report-stat-label">Киреше (сом)</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-stat-value">${reportData.totalPassengers}</div>
+                                <div class="report-stat-label">Жолоочулар</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-section">
+                        <div class="report-title">Детальная информация</div>
+                        <div style="background: #374151; padding: 15px; border-radius: 6px;">
+                            ${reportData.busesData.length > 0 ? `
+                                <table style="width: 100%; color: white;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #6b7280;">
+                                            <th style="text-align: left; padding: 8px;">Багыт</th>
+                                            <th style="text-align: left; padding: 8px;">Убакыт</th>
+                                            <th style="text-align: left; padding: 8px;">Транспорт</th>
+                                            <th style="text-align: left; padding: 8px;">Орундар</th>
+                                            <th style="text-align: left; padding: 8px;">Айдоочу</th>
+                                            <th style="text-align: left; padding: 8px;">Баасы</th>
+                                            <th style="text-align: left; padding: 8px;">Статус</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${reportData.busesData.map(bus => `
+                                            <tr style="border-bottom: 1px solid #4b5563;">
+                                                <td style="padding: 8px;">${bus.route}</td>
+                                                <td style="padding: 8px;">${bus.time}</td>
+                                                <td style="padding: 8px;">${getVehicleText(bus.vehicle)}</td>
+                                                <td style="padding: 8px;">${bus.seats}</td>
+                                                <td style="padding: 8px;">${bus.driver}</td>
+                                                <td style="padding: 8px;">${bus.price} сом</td>
+                                                <td style="padding: 8px;">${getStatusText(bus.status)}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: #9ca3af; text-align: center;">Маалыматтар жок</p>'}
+                        </div>
+                    </div>
+                    
+                    ${reportData.popularRoutes.length > 0 ? `
+                        <div class="report-section">
+                            <div class="report-title">Популярдуу багыттар</div>
+                            <div style="background: #374151; padding: 15px; border-radius: 6px;">
+                                ${reportData.popularRoutes.map(route => `
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: white;">
+                                        <span>${route.route}</span>
+                                        <span>${route.count} рейс</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            showNotification('Отчет түзүлдү!');
+        }
+
+        function calculateReportData(selectedDate, reportType) {
+            const filteredBuses = buses.filter(bus => {
+                if (bus.date) {
+                    return bus.date === selectedDate;
+                }
+                if (bus.created) {
+                    const createdDate = new Date(bus.created).toISOString().split('T')[0];
+                    return createdDate === selectedDate;
+                }
+                return false;
+            });
+
+            const historyBuses = database.history
+                .filter(entry => {
+                    const entryDate = new Date(entry.timestamp).toISOString().split('T')[0];
+                    return entryDate === selectedDate && entry.action === 'add' && entry.bus;
+                })
+                .map(entry => entry.bus);
+
+            const allBuses = [...filteredBuses];
+            historyBuses.forEach(historyBus => {
+                if (!allBuses.find(bus => bus.id === historyBus.id)) {
+                    allBuses.push(historyBus);
+                }
+            });
+
+            const routeStats = {};
+            let totalRevenue = 0;
+            let totalPassengers = 0;
+
+            allBuses.forEach(bus => {
+                const route = bus.route;
+                routeStats[route] = (routeStats[route] || 0) + 1;
+                
+                const occupiedSeats = bus.seats - (bus.available || 0);
+                totalPassengers += occupiedSeats;
+                totalRevenue += occupiedSeats * (bus.price || 0);
+            });
+
+            const popularRoutes = Object.entries(routeStats)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+                .map(([route, count]) => ({ route, count }));
+
+            return {
+                totalBuses: allBuses.length,
+                departedBuses: allBuses.filter(bus => bus.status === 'departed').length,
+                totalRevenue,
+                totalPassengers,
+                popularRoutes,
+                busesData: allBuses
+            };
+        }
+
+        function getReportTitle(reportType) {
+            const titles = {
+                'daily': 'Күндүк',
+                'weekly': 'Жумалык',
+                'monthly': 'Айлык'
+            };
+            return titles[reportType] || 'Күндүк';
+        }
+
+        function exportToText() {
+            if (buses.length === 0) {
+                showNotification('Экспорт үчүн маалыматтар жок!', 'error');
                 return;
             }
 
             try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
+                let reportText = '';
+                reportText += '=== КАРАКОЛ АВТОБЕКЕТИ - ОТЧЕТ ===\n\n';
+                reportText += `Дата создания: ${new Date().toLocaleDateString('ru-RU')}\n`;
+                reportText += `Общее количество транспорта: ${buses.length}\n`;
+                reportText += `Ожидают: ${buses.filter(b => b.status === 'waiting').length}\n`;
+                reportText += `Посадка: ${buses.filter(b => b.status === 'boarding').length}\n`;
+                reportText += `Отправлены: ${buses.filter(b => b.status === 'departed').length}\n`;
+                reportText += `Общая выручка: ${calculateTotalRevenue().toLocaleString()} сом\n\n`;
                 
-                // Заголовок
-                doc.setFontSize(16);
-                doc.text('Каракол Автобекети - Отчет', 20, 20);
-                doc.setFontSize(12);
-                doc.text(`Дата: ${new Date().toLocaleDateString('ru-RU')}`, 20, 30);
+                reportText += '=== ДЕТАЛЬНАЯ ИНФОРМАЦИЯ ===\n\n';
+                reportText += 'Багыт'.padEnd(15) + 'Убакыт'.padEnd(10) + 'Транспорт'.padEnd(12) + 'Орундар'.padEnd(10) + 'Айдоочу'.padEnd(15) + 'Ташуучу'.padEnd(20) + 'Баасы'.padEnd(10) + 'Статус\n';
+                reportText += '='.repeat(100) + '\n';
                 
-                // Статистика
-                let y = 50;
-                doc.text('Статистика:', 20, y);
-                y += 10;
-                doc.text(`Всего транспорта: ${buses.length}`, 20, y);
-                y += 7;
-                doc.text(`Автобусов: ${buses.filter(b => b.vehicle === 'bus').length}`, 20, y);
-                y += 7;
-                doc.text(`Маршруток: ${buses.filter(b => b.vehicle === 'minibus').length}`, 20, y);
-                y += 7;
-                doc.text(`Общий доход: ${calculateTotalRevenue().toLocaleString()} сом`, 20, y);
-                
-                // Таблица рейсов
-                y += 20;
-                doc.text('Рейсы:', 20, y);
-                y += 10;
-                
-                buses.forEach((bus, index) => {
-                    if (y > 250) { // Новая страница
-                        doc.addPage();
-                        y = 20;
-                    }
-                    
-                    const occupiedSeats = bus.seats - (bus.available || 0);
-                    const revenue = occupiedSeats * (bus.price || 0);
-                    
-                    doc.text(`${index + 1}. ${bus.route} - ${bus.time} - ${getVehicleText(bus.vehicle)}`, 20, y);
-                    y += 7;
-                    doc.text(`   Места: ${occupiedSeats}/${bus.seats}, Доход: ${revenue.toLocaleString()} сом`, 20, y);
-                    y += 10;
+                buses.forEach(bus => {
+                    reportText += bus.route.padEnd(15);
+                    reportText += bus.time.padEnd(10);
+                    reportText += getVehicleText(bus.vehicle).padEnd(12);
+                    reportText += bus.seats.toString().padEnd(10);
+                    reportText += bus.driver.padEnd(15);
+                    reportText += bus.carrier.padEnd(20);
+                    reportText += (bus.price + ' сом').padEnd(10);
+                    reportText += getStatusText(bus.status);
+                    reportText += '\n';
                 });
                 
-                doc.save(`karakol-report-${getTodayDate()}.pdf`);
-                showNotification('PDF отчет сохранен!');
+                const routeStats = {};
+                buses.forEach(bus => {
+                    const route = bus.route;
+                    if (routeStats[route]) {
+                        routeStats[route]++;
+                    } else {
+                        routeStats[route] = 1;
+                    }
+                });
+                
+                reportText += '\n=== СТАТИСТИКА ПО МАРШРУТАМ ===\n\n';
+                Object.entries(routeStats)
+                    .sort((a, b) => b[1] - a[1])
+                    .forEach(([route, count]) => {
+                        reportText += `${route}: ${count} рейсов\n`;
+                    });
+                
+                const blob = new Blob([reportText], { type: 'text/plain; charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `karakol-report-${getTodayDate()}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showNotification('Текстовый отчет сакталды!');
             } catch (error) {
-                console.error('Ошибка при создании PDF:', error);
-                showNotification('PDF түзүүдө ката!', 'error');
+                console.error('Text export error:', error);
+                showNotification('Текст экспорттоодо ката!', 'error');
             }
         }
 
         function exportToExcel() {
-            const data = [
-                ['Багыт', 'Убакыт', 'Вид транспорта', 'Всего мест', 'Свободные места', 'Занятые места', 'Цена за место', 'Доход', 'Водитель', 'Перевозчик', 'Статус'],
-                ...buses.map(bus => {
-                    const occupiedSeats = bus.seats - (bus.available || 0);
-                    const revenue = occupiedSeats * (bus.price || 0);
-                    return [
+            if (buses.length === 0) {
+                showNotification('Экспорт үчүн маалыматтар жок!', 'error');
+                return;
+            }
+
+            try {
+                const workbook = XLSX.utils.book_new();
+                
+                const reportData = [];
+                reportData.push(['КАРАКОЛ АВТОБЕКЕТИ - ОТЧЕТ']);
+                reportData.push([]);
+                reportData.push(['Дата создания:', new Date().toLocaleDateString('ru-RU')]);
+                reportData.push(['Общее количество транспорта:', buses.length]);
+                reportData.push(['Ожидают:', buses.filter(b => b.status === 'waiting').length]);
+                reportData.push(['Посадка:', buses.filter(b => b.status === 'boarding').length]);
+                reportData.push(['Отправлены:', buses.filter(b => b.status === 'departed').length]);
+                reportData.push(['Общая выручка (сом):', calculateTotalRevenue()]);
+                reportData.push([]);
+                reportData.push(['ДЕТАЛЬНАЯ ИНФОРМАЦИЯ:']);
+                reportData.push(['Багыт', 'Убакыт', 'Транспорт', 'Орундар', 'Бош орундар', 'Айдоочу', 'Ташуучу', 'Баасы (сом)', 'Статус']);
+                
+                buses.forEach(bus => {
+                    reportData.push([
                         bus.route,
                         bus.time,
                         getVehicleText(bus.vehicle),
                         bus.seats,
                         bus.available || 0,
-                        occupiedSeats,
-                        bus.price,
-                        revenue,
                         bus.driver,
                         bus.carrier,
+                        bus.price,
                         getStatusText(bus.status)
-                    ];
-                }),
-                [], // Пустая строка
-                ['ИТОГО:'],
-                ['Всего транспорта:', buses.length],
-                ['Автобусов:', buses.filter(b => b.vehicle === 'bus').length],
-                ['Маршруток:', buses.filter(b => b.vehicle === 'minibus').length],
-                ['Общий доход:', calculateTotalRevenue()]
-            ];
+                    ]);
+                });
 
-            let csvContent = '\ufeff'; // BOM для корректного отображения кириллицы
-            data.forEach(row => {
-                csvContent += row.map(cell => `"${cell}"`).join(',') + '\n';
-            });
+                const worksheet = XLSX.utils.aoa_to_sheet(reportData);
+                worksheet['!cols'] = [
+                    {wch: 15}, {wch: 10}, {wch: 12}, {wch: 8}, {wch: 12}, 
+                    {wch: 15}, {wch: 18}, {wch: 12}, {wch: 12}
+                ];
+                
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Отчет");
+                
+                const routeStats = {};
+                buses.forEach(bus => {
+                    const route = bus.route;
+                    if (routeStats[route]) {
+                        routeStats[route].count++;
+                        routeStats[route].revenue += (bus.seats - (bus.available || 0)) * (bus.price || 0);
+                    } else {
+                        routeStats[route] = {
+                            count: 1,
+                            revenue: (bus.seats - (bus.available || 0)) * (bus.price || 0)
+                        };
+                    }
+                });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `karakol-report-${getTodayDate()}.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            showNotification('Excel файлы экспорт болду!');
+                const statsData = [];
+                statsData.push(['СТАТИСТИКА ПО МАРШРУТАМ']);
+                statsData.push([]);
+                statsData.push(['Маршрут', 'Количество рейсов', 'Выручка (сом)']);
+                
+                Object.entries(routeStats).forEach(([route, stats]) => {
+                    statsData.push([route, stats.count, stats.revenue]);
+                });
+
+                const statsWorksheet = XLSX.utils.aoa_to_sheet(statsData);
+                statsWorksheet['!cols'] = [{wch: 20}, {wch: 18}, {wch: 15}];
+                XLSX.utils.book_append_sheet(workbook, statsWorksheet, "Статистика");
+                
+                XLSX.writeFile(workbook, `karakol-report-${getTodayDate()}.xlsx`);
+                showNotification('Excel отчет сакталды!');
+            } catch (error) {
+                console.error('Excel ката:', error);
+                showNotification('Excel түзүүдө ката!', 'error');
+            }
         }
 
+        // НАСТРОЙКИ
         function saveSettings() {
+            const updateInterval = document.getElementById('update-interval').value;
+            const volume = document.getElementById('volume').value;
+            const autoRemove = document.getElementById('auto-remove').value;
+            const announcementInterval = document.getElementById('announcement-interval').value;
+
             const settings = {
-                updateInterval: document.getElementById('update-interval').value,
-                volume: document.getElementById('volume').value,
-                autoRemove: document.getElementById('auto-remove').value,
-                updated: new Date()
+                updateInterval: parseInt(updateInterval),
+                volume: parseFloat(volume),
+                autoRemove: parseInt(autoRemove),
+                announcementInterval: parseInt(announcementInterval),
+                saved: new Date()
             };
 
             localStorage.setItem('karakol-settings', JSON.stringify(settings));
@@ -2227,25 +2363,142 @@
         }
 
         function testAnnouncement() {
+            const text = 'Бишкек багытына автобус 5 мүнөттөн кийин кетет. Жолоочулар даярданыңыз.';
+            
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance('Каракол автобекетинин система тести');
+                const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ru-RU';
-                utterance.volume = 0.8;
+                utterance.rate = 0.75;
+                utterance.pitch = 1.0;
+                utterance.volume = parseFloat(document.getElementById('volume').value) || 0.8;
+                
                 speechSynthesis.speak(utterance);
-                showNotification('Добуш тести иштетилди!');
+                showNotification('Добуш тести башталды!');
             } else {
-                showNotification('Браузер добушту колдобойт!', 'error');
+                showNotification('Добуш тести колдоого алынбайт!', 'error');
+            }
+        }
+
+        function showCurrentUsers() {
+            const users = getUsers();
+            const modalBody = document.getElementById('modal-body');
+            
+            modalBody.innerHTML = `
+                <div style="background: #374151; padding: 20px; border-radius: 8px;">
+                    <h4 style="color: #3b82f6; margin-bottom: 15px;">Учурдагы колдонуучулар:</h4>
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #22c55e;">👑 Администратор (admin)</strong><br>
+                        <span style="color: #94a3b8;">Роль: ${users.admin.role}</span><br>
+                        <span style="color: #94a3b8;">Аты: ${users.admin.name}</span><br>
+                        <span style="color: #fbbf24;">Пароль: ${'*'.repeat(users.admin.password.length)} (${users.admin.password.length} символ)</span>
+                    </div>
+                    <div>
+                        <strong style="color: #60a5fa;">👤 Оператор (operator)</strong><br>
+                        <span style="color: #94a3b8;">Роль: ${users.operator.role}</span><br>
+                        <span style="color: #94a3b8;">Аты: ${users.operator.name}</span><br>
+                        <span style="color: #fbbf24;">Пароль: ${'*'.repeat(users.operator.password.length)} (${users.operator.password.length} символ)</span>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; padding: 10px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; border-left: 4px solid #fbbf24;">
+                    <small style="color: #fbbf24;">⚠️ Паролдорду өзгөртүүдөн кийин системадан чыгып, жаңы пароль менен кириңиз.</small>
+                </div>
+            `;
+
+            document.getElementById('modal-title').textContent = 'Колдонуучулар маалыматы';
+            document.getElementById('modal-confirm').style.display = 'none';
+            showModal();
+        }
+
+        function changePasswords() {
+            const adminPassword = document.getElementById('admin-password').value.trim();
+            const adminPasswordConfirm = document.getElementById('admin-password-confirm').value.trim();
+            const operatorPassword = document.getElementById('operator-password').value.trim();
+            const operatorPasswordConfirm = document.getElementById('operator-password-confirm').value.trim();
+
+            // Проверяем что хотя бы один пароль введен
+            if (!adminPassword && !operatorPassword) {
+                showNotification('Кеминде бир парольду киргизиңиз!', 'error');
+                return;
+            }
+
+            const users = getUsers();
+            let changed = false;
+
+            // Изменяем пароль админа
+            if (adminPassword) {
+                if (adminPassword.length < 6) {
+                    showNotification('Админ пароль кеминде 6 символдон турушу керек!', 'error');
+                    return;
+                }
+                
+                if (adminPassword !== adminPasswordConfirm) {
+                    showNotification('Админ паролдор дал келбейт!', 'error');
+                    return;
+                }
+
+                users.admin.password = adminPassword;
+                changed = true;
+            }
+
+            // Изменяем пароль оператора
+            if (operatorPassword) {
+                if (operatorPassword.length < 6) {
+                    showNotification('Оператор пароль кеминде 6 символдон турушу керек!', 'error');
+                    return;
+                }
+                
+                if (operatorPassword !== operatorPasswordConfirm) {
+                    showNotification('Оператор паролдор дал келбейт!', 'error');
+                    return;
+                }
+
+                users.operator.password = operatorPassword;
+                changed = true;
+            }
+
+            if (changed) {
+                localStorage.setItem('karakol-users', JSON.stringify(users));
+                addToHistory('password_change', null, { 
+                    adminChanged: !!adminPassword, 
+                    operatorChanged: !!operatorPassword 
+                });
+                
+                // Очищаем поля
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-password-confirm').value = '';
+                document.getElementById('operator-password').value = '';
+                document.getElementById('operator-password-confirm').value = '';
+                
+                showNotification('Паролдор ийгиликтүү өзгөртүлдү! 🔐');
+                
+                // Принудительный выход через 3 секунды
+                setTimeout(() => {
+                    if (confirm('Коопсуздук үчүн системадан чыгып, жаңы пароль менен кириңиз.')) {
+                        logout();
+                    }
+                }, 3000);
             }
         }
 
         function resetSystem() {
-            if (confirm('Системаны толугу менен баштапкы абалга келтиресизби? Бардык маалыматтар жоголот!')) {
+            if (confirm('Системаны баштапкы абалга келтиресизби? Бардык маалыматтар өчөт!')) {
+                localStorage.removeItem('karakol-bus-station-display');
+                localStorage.removeItem('karakol-bus-station-admin');
+                localStorage.removeItem('karakol-bus-station-db');
+                localStorage.removeItem('karakol-settings');
+                
                 buses = [];
-                database = { buses: [], deleted: [], history: [], templates: {}, days: [] };
                 busCounter = 1;
                 dayStarted = false;
                 currentDayId = null;
-                localStorage.clear();
+                database = {
+                    buses: [],
+                    deleted: [],
+                    history: [],
+                    templates: {},
+                    days: []
+                };
+                
                 updateDisplay();
                 updateDayStatus();
                 renderTemplates();
@@ -2253,6 +2506,7 @@
             }
         }
 
+        // МОДАЛЬНЫЕ ОКНА
         function showModal() {
             document.getElementById('modal').classList.add('show');
         }
@@ -2265,66 +2519,96 @@
             // Placeholder function
         }
 
+        // СОХРАНЕНИЕ И ЗАГРУЗКА ДАННЫХ
         function saveData() {
             try {
+                // Для главного экрана сохраняем только те автобусы которые должны отображаться
                 const displayData = {
-                    buses: buses,
+                    buses: getCurrentBuses(), // Только актуальные автобусы
                     busCounter: busCounter,
                     dayStarted: dayStarted,
                     currentDayId: currentDayId,
                     lastUpdate: new Date().toISOString()
                 };
+                
+                // Для админки сохраняем все автобусы (полная история)
+                const adminData = {
+                    buses: buses, // Все автобусы включая исчезнувшие
+                    busCounter: busCounter,
+                    dayStarted: dayStarted,
+                    currentDayId: currentDayId,
+                    lastUpdate: new Date().toISOString()
+                };
+                
                 localStorage.setItem('karakol-bus-station-display', JSON.stringify(displayData));
+                localStorage.setItem('karakol-bus-station-admin', JSON.stringify(adminData));
                 localStorage.setItem('karakol-bus-station-db', JSON.stringify(database));
-                console.log('Маалыматтар сакталды');
+                
+                console.log('💾 Данные сохранены');
             } catch (error) {
-                console.error('Сактоодо ката:', error);
+                console.error('❌ Ошибка сохранения:', error);
                 showNotification('Сактоодо ката!', 'error');
             }
         }
 
         function loadData() {
             try {
-                const saved = localStorage.getItem('karakol-bus-station-display');
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    buses = data.buses || [];
-                    busCounter = data.busCounter || 1;
-                    dayStarted = data.dayStarted || false;
-                    currentDayId = data.currentDayId || null;
-                }
+                // Загружаем данные для админки (все автобусы)
+                const adminSaved = JSON.parse(localStorage.getItem('karakol-bus-station-admin') || '{}');
+                const displaySaved = JSON.parse(localStorage.getItem('karakol-bus-station-display') || '{}');
                 
-                const savedDb = localStorage.getItem('karakol-bus-station-db');
-                if (savedDb) {
-                    const loadedDb = JSON.parse(savedDb);
-                    database = { ...database, ...loadedDb };
-                }
+                // Используем админские данные если есть, иначе обычные
+                const saved = Object.keys(adminSaved).length > 0 ? adminSaved : displaySaved;
+                
+                buses = saved.buses || [];
+                busCounter = saved.busCounter || 1;
+                dayStarted = saved.dayStarted || false;
+                currentDayId = saved.currentDayId || null;
+                
+                const savedDb = JSON.parse(localStorage.getItem('karakol-bus-station-db') || '{}');
+                database = { 
+                    buses: [],
+                    deleted: [],
+                    history: [],
+                    templates: {},
+                    days: [],
+                    ...savedDb 
+                };
                 
                 updateDisplay();
                 updateDayStatus();
                 renderTemplates();
+                
+                console.log('📋 Данные загружены в админку');
             } catch (error) {
-                console.error('Жүктөөдө ката:', error);
+                console.error('❌ Ошибка загрузки:', error);
                 showNotification('Маалыматтарды жүктөөдө ката!', 'error');
             }
         }
 
-        // Громкость контрол
-        document.addEventListener('DOMContentLoaded', function() {
-            const volumeSlider = document.getElementById('volume');
-            const volumeDisplay = document.getElementById('volume-display');
-            
-            if (volumeSlider && volumeDisplay) {
-                volumeSlider.addEventListener('input', function() {
-                   const value = Math.round(this.value * 100);
-                    volumeDisplay.textContent = value + '%';
-                });
+        function loadSettings() {
+            try {
+                const savedSettings = JSON.parse(localStorage.getItem('karakol-settings') || '{}');
+                
+                if (savedSettings.updateInterval) document.getElementById('update-interval').value = savedSettings.updateInterval;
+                if (savedSettings.volume) {
+                    document.getElementById('volume').value = savedSettings.volume;
+                    const volumeDisplay = document.getElementById('volume-display');
+                    if (volumeDisplay) {
+                        volumeDisplay.textContent = Math.round(savedSettings.volume * 100) + '%';
+                    }
+                }
+                if (savedSettings.autoRemove) document.getElementById('auto-remove').value = savedSettings.autoRemove;
+                if (savedSettings.announcementInterval) document.getElementById('announcement-interval').value = savedSettings.announcementInterval;
+                
+                console.log('⚙️ Настройки загружены');
+            } catch (error) {
+                console.error('Ошибка загрузки настроек:', error);
             }
-        });
+        }
 
-        // Инициализация
+        // ИНИЦИАЛИЗАЦИЯ
         function init() {
-            // Устанавливаем значения по умолчанию
             document.getElementById('bus-date').value = getTodayDate();
             document.getElementById('bus-date').min = getTodayDate();
             document.getElementById('history-date').value = getTodayDate();
@@ -2332,8 +2616,9 @@
             
             loadData();
             setDefaultTime();
+            initDefaultTemplates();
+            loadSettings();
             
-            // Синхронизация доступных мест с общими местами
             const seatsInput = document.getElementById('seats');
             const availableInput = document.getElementById('available');
             
@@ -2343,7 +2628,16 @@
                 }
             });
             
-            // Обновляем минимальную дату каждый час
+            // Обновление громкости
+            const volumeSlider = document.getElementById('volume');
+            const volumeDisplay = document.getElementById('volume-display');
+            
+            if (volumeSlider && volumeDisplay) {
+                volumeSlider.addEventListener('input', function() {
+                    volumeDisplay.textContent = Math.round(this.value * 100) + '%';
+                });
+            }
+            
             setInterval(() => {
                 const dateInput = document.getElementById('bus-date');
                 if (dateInput) {
@@ -2355,66 +2649,7 @@
             showNotification('Админ панель ийгиликтүү жүктөлдү!');
         }
 
-        // Проверяем, есть ли сохраненная сессия
-        window.addEventListener('load', function() {
-            const savedSession = localStorage.getItem('karakol-admin-session');
-            if (savedSession) {
-                try {
-                    const session = JSON.parse(savedSession);
-                    if (session.role === 'admin' && session.expires > Date.now()) {
-                        currentUser = session;
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('admin-screen').classList.add('active');
-                        init();
-                        return;
-                    }
-                } catch (e) {
-                    localStorage.removeItem('karakol-admin-session');
-                }
-            }
-            
-            // Показываем экран логина
-            document.getElementById('login-screen').style.display = 'flex';
-        });
-
-        // Сохраняем сессию при успешном входе
-        function saveSession() {
-            if (currentUser && currentUser.role === 'admin') {
-                const session = {
-                    ...currentUser,
-                    expires: Date.now() + (8 * 60 * 60 * 1000) // 8 часов
-                };
-                localStorage.setItem('karakol-admin-session', JSON.stringify(session));
-            }
-        }
-
-        // Автосохранение каждые 30 секунд
-        setInterval(() => {
-            if (buses.length > 0 || dayStarted) {
-                saveData();
-            }
-        }, 30000);
-
-        // Закрытие модала по клику вне его
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Обработка клавиш
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-            if (e.ctrlKey && e.key === 's') {
-                e.preventDefault();
-                saveData();
-                showNotification('Маалыматтар сакталды!');
-            }
-        });
-
-        // Инициализация шаблонов по умолчанию (только если их нет)
+        // ИНИЦИАЛИЗАЦИЯ ШАБЛОНОВ ПО УМОЛЧАНИЮ
         function initDefaultTemplates() {
             if (Object.keys(database.templates).length === 0) {
                 database.templates = {
@@ -2441,8 +2676,47 @@
             }
         }
 
-        // Запускаем инициализацию шаблонов при загрузке
-        setTimeout(initDefaultTemplates, 1000);
+        // ПРОВЕРКА СЕССИИ
+        window.addEventListener('load', function() {
+            if (!checkAdminAccess()) {
+                return;
+            }
+            
+            // Скрываем экран логина и показываем админ панель
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-screen').classList.add('active');
+            init();
+        });
+
+        // Проверка доступа каждые 5 минут
+        setInterval(() => {
+            checkAdminAccess();
+        }, 300000);
+
+        // АВТОСОХРАНЕНИЕ
+        setInterval(() => {
+            if (buses.length > 0 || dayStarted) {
+                saveData();
+            }
+        }, 30000);
+
+        // ОБРАБОТКА СОБЫТИЙ
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveData();
+                showNotification('Маалыматтар сакталды!');
+            }
+        });
     </script>
 </body>
 </html>

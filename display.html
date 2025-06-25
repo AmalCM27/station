@@ -21,93 +21,6 @@
             overflow: hidden;
         }
 
-        /* LOGIN SCREEN */
-        .login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #1e3a8a, #1e40af, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .login-box {
-            background: rgba(30, 41, 138, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-        }
-
-        .login-logo {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-
-        .login-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 30px;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 300px;
-        }
-
-        .login-input {
-            padding: 15px 20px;
-            background: rgba(30, 64, 175, 0.3);
-            border: 1px solid #3b82f6;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .login-input::placeholder {
-            color: #94a3b8;
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: #60a5fa;
-            background: rgba(30, 64, 175, 0.5);
-        }
-
-        .login-btn {
-            padding: 15px 30px;
-            background: #22c55e;
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-        }
-
-        .login-error {
-            color: #ef4444;
-            margin-top: 10px;
-            font-weight: 500;
-        }
-
-        /* HEADER */
         .header {
             background: #1e3a8a;
             padding: 20px 40px;
@@ -189,38 +102,20 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: #ef4444;
+            background: #374151;
             color: #fff;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         .logout-btn:hover {
             background: #dc2626;
         }
 
-        .admin-btn {
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background: #3b82f6;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 12px;
-        }
-
-        .admin-btn:hover {
-            background: #2563eb;
-        }
-
-        /* ЗАГОЛОВКИ ТАБЛИЦЫ */
         .table-header {
             background: #1e293b;
             padding: 15px 40px;
@@ -239,7 +134,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* РЕЙСЫ */
         .departures {
             height: calc(100vh - 230px);
             overflow: hidden;
@@ -350,7 +244,6 @@
             color: #22c55e;
         }
 
-        /* БЕГУЩАЯ СТРОКА */
         .ticker {
             position: fixed;
             bottom: 0;
@@ -396,32 +289,72 @@
             font-size: 24px;
         }
 
-        .display-screen {
-            display: none;
+        .access-denied {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .display-screen.active {
-            display: block;
+        .access-box {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            max-width: 400px;
+        }
+
+        .access-icon {
+            font-size: 60px;
+            color: #ef4444;
+            margin-bottom: 20px;
+        }
+
+        .access-title {
+            font-size: 24px;
+            color: #ef4444;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .access-text {
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .access-btn {
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .access-btn:hover {
+            background: #2563eb;
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="login-screen">
-        <div class="login-box">
-            <div class="login-logo">🚌</div>
-            <div class="login-title">КАРАКОЛ АВТОБЕКЕТИ</div>
-            <div class="login-form">
-                <input type="text" class="login-input" id="username" placeholder="Колдонуучу аты • Имя пользователя">
-                <input type="password" class="login-input" id="password" placeholder="Сыр сөз • Пароль">
-                <button class="login-btn" onclick="login()">КИРҮҮ • ВОЙТИ</button>
-                <div class="login-error" id="login-error"></div>
-            </div>
+    <div class="access-denied" id="access-denied" style="display: none;">
+        <div class="access-box">
+            <div class="access-icon">🚫</div>
+            <div class="access-title">Мүмкүнчүлүк жок</div>
+            <div class="access-text">Бул бетке кирүү үчүн авторизация талап кылынат</div>
+            <button class="access-btn" onclick="goToLogin()">Кирүү формасына өтүү</button>
         </div>
     </div>
 
-    <!-- DISPLAY SCREEN -->
-    <div class="display-screen" id="display-screen">
+    <div id="display-screen">
         <div class="header">
             <div class="station-info">
                 <div class="logo">🚌</div>
@@ -439,7 +372,6 @@
                 <div class="weather-city">Каракол</div>
             </div>
             <button class="logout-btn" onclick="logout()">ЧЫГУУ</button>
-            <button class="admin-btn" onclick="goToAdmin()" id="admin-btn" style="display: none;">АДМИН</button>
         </div>
 
         <div class="table-header">
@@ -469,116 +401,44 @@
         let buses = [];
         let speechQueue = [];
         let isSpeaking = false;
-        let lastAnnouncedBus = null;
+        let announcedEvents = new Set();
         let tickerIndex = 0;
         let lastDataHash = '';
         let currentUser = null;
         const MAX_VISIBLE_ROUTES = 10;
 
-        // СИСТЕМА АВТОРИЗАЦИИ
-        const users = {
-            admin: { password: 'admin123', role: 'admin', name: 'Администратор' },
-            operator: { password: 'display123', role: 'display', name: 'Оператор' }
-        };
-
-        function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('login-error');
-
-            if (!username || !password) {
-                showLoginError('Колдонуучу аты жана сыр сөздү киргизиңиз!');
-                return;
-            }
-
-            const user = users[username];
-            if (!user || user.password !== password) {
-                showLoginError('Туура эмес колдонуучу аты же сыр сөз!');
-                return;
-            }
-
-            currentUser = { ...user, username };
-            
-            // Показать главный экран для всех пользователей
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('display-screen').classList.add('active');
-            
-            // Показать кнопку "АДМИН" только для администраторов
-            if (user.role === 'admin') {
-                document.getElementById('admin-btn').style.display = 'block';
-            }
-            
-            saveSession();
-            init();
-        }
-
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('karakol-session');
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('display-screen').classList.remove('active');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('login-error').textContent = '';
-            document.getElementById('admin-btn').style.display = 'none';
-        }
-
-        function goToAdmin() {
-            if (currentUser && currentUser.role === 'admin') {
-                // Здесь можно либо открыть админ-панель в новой вкладке,
-                // либо перенаправить на admin.html
-                window.open('admin.html', '_blank');
-            }
-        }
-
-        function showLoginError(message) {
-            document.getElementById('login-error').textContent = message;
-            setTimeout(() => {
-                document.getElementById('login-error').textContent = '';
-            }, 5000);
-        }
-
-        // Сохраняем сессию при успешном входе
-        function saveSession() {
-            if (currentUser) {
-                const session = {
-                    ...currentUser,
-                    expires: Date.now() + (8 * 60 * 60 * 1000) // 8 часов
-                };
-                localStorage.setItem('karakol-session', JSON.stringify(session));
-            }
-        }
-
-        // Обработка Enter в форме логина
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-                login();
-            }
-        });
-
         const languages = {
             kg: {
                 voice: 'ru-RU',
                 announcements: {
+                    dayStart: 'Каракол автобекетинде жумуш күнү башталды',
+                    dayEnd: 'Каракол автобекетинде жумуш күнү аяктады',
                     fiveMinutes: '{route} багытына {vehicle} 5 мүнөттөн кийин кетет. Жолоочулар даярданыңыз',
                     boarding: '{route} багытына {vehicle} отургузуу башталды. Жолоочулар отургузууга өтүңүз',
-                    departed: '{route} багытына {vehicle} кетти'
+                    departed: '{route} багытына {vehicle} кетти',
+                    statusChange: '{route} багытындагы {vehicle}тин статусу өзгөрдү'
                 }
             },
             ru: {
                 voice: 'ru-RU',
                 announcements: {
+                    dayStart: 'Рабочий день на автовокзале Каракол начался',
+                    dayEnd: 'Рабочий день на автовокзале Каракол завершен',
                     fiveMinutes: '{vehicle} по направлению {route} отправляется через 5 минут. Пассажиры готовьтесь к посадке',
                     boarding: 'Начинается посадка на {vehicle} по направлению {route}. Пассажиры проходите на посадку',
-                    departed: '{vehicle} по направлению {route} отправился'
+                    departed: '{vehicle} по направлению {route} отправился',
+                    statusChange: 'Статус {vehicle} по направлению {route} изменен'
                 }
             },
             en: {
                 voice: 'en-US',
                 announcements: {
+                    dayStart: 'Working day at Karakol bus station has started',
+                    dayEnd: 'Working day at Karakol bus station has ended',
                     fiveMinutes: '{vehicle} to {route} departs in 5 minutes. Passengers please prepare for boarding',
                     boarding: '{vehicle} to {route} is now boarding. Passengers please proceed to boarding',
-                    departed: '{vehicle} to {route} has departed'
+                    departed: '{vehicle} to {route} has departed',
+                    statusChange: 'Status of {vehicle} to {route} has been changed'
                 }
             }
         };
@@ -590,6 +450,45 @@
             'МААЛЫМАТ ҮЧҮН: +996 3922 5-15-15 • СПРАВКИ ПО ТЕЛЕФОНУ',
             'КООПСУЗДУК ЭРЕЖЕЛЕРИН САКТАҢЫЗ • СОБЛЮДАЙТЕ ПРАВИЛА БЕЗОПАСНОСТИ'
         ];
+
+        function logout() {
+            const keys = [];
+            keys.push('karakol-session');
+            keys.push('karakol-admin-session');
+            keys.forEach(key => localStorage.removeItem(key));
+            showAccessDenied();
+        }
+
+        function goToLogin() {
+            window.location.href = 'index.html';
+        }
+
+        function checkAccess() {
+            const savedSession = JSON.parse(localStorage.getItem('karakol-session') || 'null');
+            if (!savedSession) {
+                showAccessDenied();
+                return false;
+            }
+
+            if (savedSession.expires < Date.now()) {
+                localStorage.removeItem('karakol-session');
+                showAccessDenied();
+                return false;
+            }
+
+            if (savedSession.role !== 'operator') {
+                showAccessDenied();
+                return false;
+            }
+
+            currentUser = savedSession;
+            return true;
+        }
+
+        function showAccessDenied() {
+            document.getElementById('access-denied').style.display = 'flex';
+            document.getElementById('display-screen').style.display = 'none';
+        }
 
         function updateTime() {
             const now = new Date();
@@ -667,7 +566,6 @@
             }
 
             const sorted = [...buses]
-                .filter(bus => bus.status !== 'departed')
                 .sort((a, b) => {
                     const timeA = parseTimeToMinutes(a.time);
                     const timeB = parseTimeToMinutes(b.time);
@@ -715,10 +613,11 @@
             return hours * 60 + minutes;
         }
 
-        function makeTrilingualAnnouncement(type, route, vehicle, busId) {
-            const announceKey = `${busId}_${type}`;
-            if (lastAnnouncedBus === announceKey) return;
-            lastAnnouncedBus = announceKey;
+        function makeTrilingualAnnouncement(type, route = '', vehicle = '', busId = null, isManual = false) {
+            const announceKey = busId ? `${busId}_${type}` : `${type}_${Date.now()}`;
+            
+            if (announcedEvents.has(announceKey) && !isManual) return;
+            announcedEvents.add(announceKey);
             
             console.log(`🔊 Объявление: ${type} для маршрута ${route}`);
             
@@ -726,24 +625,30 @@
             const vehicleTextRu = vehicle === 'bus' ? 'автобус' : 'маршрутка';
             const vehicleTextEn = vehicle === 'bus' ? 'bus' : 'minibus';
             
-            const kgText = languages.kg.announcements[type]
-                .replace('{route}', route)
-                .replace('{vehicle}', vehicleTextKg);
+            // Кыргызский
+            let kgText = languages.kg.announcements[type] || '';
+            if (route && vehicle) {
+                kgText = kgText.replace('{route}', route).replace('{vehicle}', vehicleTextKg);
+            }
             addSpeech(kgText, languages.kg.voice, 'Кыргызский');
             
+            // Русский через 4 секунды
             setTimeout(() => {
-                const ruText = languages.ru.announcements[type]
-                    .replace('{route}', route)
-                    .replace('{vehicle}', vehicleTextRu);
+                let ruText = languages.ru.announcements[type] || '';
+                if (route && vehicle) {
+                    ruText = ruText.replace('{route}', route).replace('{vehicle}', vehicleTextRu);
+                }
                 addSpeech(ruText, languages.ru.voice, 'Русский');
-            }, 6000);
+            }, 4000);
             
+            // Английский через 8 секунд
             setTimeout(() => {
-                const enText = languages.en.announcements[type]
-                    .replace('{route}', route)
-                    .replace('{vehicle}', vehicleTextEn);
+                let enText = languages.en.announcements[type] || '';
+                if (route && vehicle) {
+                    enText = enText.replace('{route}', route).replace('{vehicle}', vehicleTextEn);
+                }
                 addSpeech(enText, languages.en.voice, 'Английский');
-            }, 12000);
+            }, 8000);
         }
 
         function addSpeech(text, voice, language) {
@@ -839,6 +744,7 @@
             }
         }
 
+        // ПРАВИЛЬНАЯ ЛОГИКА СТАТУСОВ: waiting -> boarding (простоять 5 мин) -> departed (через 2 мин исчезнуть)
         function checkAnnouncements() {
             const now = new Date();
             const currentHours = now.getHours();
@@ -852,7 +758,8 @@
                     bus.announcements = {
                         fiveMinutes: false,
                         boarding: false,
-                        departed: false
+                        departed: false,
+                        statusManual: false
                     };
                 }
                 
@@ -860,79 +767,125 @@
                 const busTotalMinutes = busHours * 60 + busMinutes;
                 const diffMinutes = busTotalMinutes - currentTotalMinutes;
 
-                // За 5 минут до отправления
+                // За 5 минут до отправления - объявление, статус остается waiting
                 if (diffMinutes === 5 && !bus.announcements.fiveMinutes && bus.status === 'waiting') {
                     console.log(`📢 Объявление за 5 минут: ${bus.route}`);
                     bus.announcements.fiveMinutes = true;
                     makeTrilingualAnnouncement('fiveMinutes', bus.route, bus.vehicle, bus.id);
                 }
 
-                // При статусе "посадка"
-                if (bus.status === 'boarding' && !bus.announcements.boarding) {
-                    console.log(`📢 Объявление о посадке: ${bus.route}`);
-                    bus.announcements.boarding = true;
-                    makeTrilingualAnnouncement('boarding', bus.route, bus.vehicle, bus.id);
+                // Точно в время отправления - автоматически меняем на boarding
+                if (diffMinutes === 0 && bus.status === 'waiting') {
+                    console.log(`🔄 Автоматический переход в посадку: ${bus.route}`);
+                    bus.status = 'boarding';
+                    bus.boardingStartTime = now; // Запоминаем когда началась посадка
+                    if (!bus.announcements.boarding) {
+                        bus.announcements.boarding = true;
+                        makeTrilingualAnnouncement('boarding', bus.route, bus.vehicle, bus.id);
+                    }
                 }
 
-                // При статусе "отправлен"
-                if (bus.status === 'departed' && !bus.announcements.departed) {
-                    console.log(`📢 Объявление об отправлении: ${bus.route}`);
-                    bus.announcements.departed = true;
-                    makeTrilingualAnnouncement('departed', bus.route, bus.vehicle, bus.id);
+                // Через 5 минут после начала посадки - автоматически меняем на departed
+                if (bus.status === 'boarding' && bus.boardingStartTime) {
+                    const timeSinceBoarding = (now - new Date(bus.boardingStartTime)) / (1000 * 60); // в минутах
+                    if (timeSinceBoarding >= 5 && !bus.announcements.departed) {
+                        console.log(`🔄 Автоматический переход в departed: ${bus.route}`);
+                        bus.status = 'departed';
+                        bus.departedTime = now; // Запоминаем время когда стал departed
+                        bus.announcements.departed = true;  
+                        makeTrilingualAnnouncement('departed', bus.route, bus.vehicle, bus.id);
+                    }
+                }
+
+                // Ручное изменение статуса
+                if (bus.statusChanged && !bus.announcements.statusManual) {
+                    console.log(`📢 Ручное изменение статуса: ${bus.route}`);
+                    bus.announcements.statusManual = true;
+                    makeTrilingualAnnouncement('statusChange', bus.route, bus.vehicle, bus.id, true);
+                    bus.statusChanged = false;
                 }
             });
+            
+            saveToLocalStorage();
         }
 
         function removeOldBuses() {
             const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-            
             const initialCount = buses.length;
+            
+            // Удаляем автобусы которые в статусе departed уже более 2 минут
             buses = buses.filter(bus => {
-                if (bus.status === 'departed') {
-                    const busMinutes = parseTimeToMinutes(bus.time);
-                    const diffMinutes = currentMinutes - busMinutes;
-                    return diffMinutes < 1;
+                if (bus.status === 'departed' && bus.departedTime) {
+                    const timeSinceDeparted = (now - new Date(bus.departedTime)) / (1000 * 60); // в минутах
+                    if (timeSinceDeparted >= 2) {
+                        console.log(`🗑️ Удаляем с главного экрана: ${bus.route} (прошло ${timeSinceDeparted.toFixed(1)} минут после departed)`);
+                        return false; // Удаляем с главного экрана
+                    }
                 }
-                return true;
+                return true; // Оставляем на главном экране
             });
 
             if (buses.length < initialCount) {
-                console.log(`🗑️ Удалено ${initialCount - buses.length} старых автобусов`);
+                console.log(`🗑️ Удалено с главного экрана ${initialCount - buses.length} автобусов`);
                 renderRoutes();
+                saveToLocalStorage();
             }
         }
 
         function loadDataFromStorage() {
             try {
-                const savedData = localStorage.getItem('karakol-bus-station-display');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    const newBuses = data.buses || [];
-                    
-                    // Создаем хэш для сравнения изменений
-                    const newDataHash = JSON.stringify(newBuses.map(b => ({
-                        id: b.id, 
-                        route: b.route,
-                        time: b.time,
-                        status: b.status, 
-                        seats: b.seats,
-                        available: b.available,
-                        carrier: b.carrier,
-                        driver: b.driver,
-                        price: b.price,
-                        vehicle: b.vehicle
-                    })));
-                    
-                    if (newDataHash !== lastDataHash) {
-                        console.log('🔄 Данные обновлены из админ-панели');
-                        buses = newBuses;
-                        renderRoutes();
-                        lastDataHash = newDataHash;
-                    }
+                const savedData = JSON.parse(localStorage.getItem('karakol-bus-station-display') || '{}');
+                const newBuses = savedData.buses || [];
+                
+                // Проверяем события дня
+                if (savedData.dayStarted && !announcedEvents.has('dayStart')) {
+                    console.log('📢 День уже был начат');
+                }
+                
+                if (savedData.dayEnded && !announcedEvents.has('dayEnd')) {
+                    makeTrilingualAnnouncement('dayEnd');
+                    announcedEvents.add('dayEnd');
+                }
+                
+                if (savedData.dayStarted && !savedData.dayEnded && !announcedEvents.has('dayStart')) {
+                    makeTrilingualAnnouncement('dayStart');
+                    announcedEvents.add('dayStart');
+                }
+                
+                const newDataHash = JSON.stringify(newBuses.map(b => ({
+                    id: b.id, 
+                    route: b.route,
+                    time: b.time,
+                    status: b.status, 
+                    seats: b.seats,
+                    available: b.available,
+                    carrier: b.carrier,
+                    driver: b.driver,
+                    price: b.price,
+                    vehicle: b.vehicle
+                })));
+                
+                if (newDataHash !== lastDataHash) {
+                    console.log('🔄 Данные обновлены на главном экране');
+                    buses = newBuses;
+                    renderRoutes();
+                    lastDataHash = newDataHash;
                 }
             } catch (error) {
                 console.error('❌ Ошибка при загрузке данных:', error);
+            }
+        }
+
+        function saveToLocalStorage() {
+            try {
+                const displayData = {
+                    buses: buses,
+                    lastUpdate: new Date().toISOString()
+                };
+                localStorage.setItem('karakol-bus-station-display', JSON.stringify(displayData));
+                console.log('📱 Данные сохранены для отображения');
+            } catch (error) {
+                console.error('❌ Ошибка сохранения:', error);
             }
         }
 
@@ -943,6 +896,10 @@
         });
 
         function init() {
+            if (!checkAccess()) {
+                return;
+            }
+
             console.log('🚌 Главный экран Каракол автобекети запущен');
             
             updateTime();
@@ -954,11 +911,11 @@
             setInterval(updateTicker, 20000);
             
             loadDataFromStorage();
-            setInterval(loadDataFromStorage, 1000); // Каждую секунду для мгновенного обновления
-            setInterval(removeOldBuses, 60000);
+            setInterval(loadDataFromStorage, 2000);
+            setInterval(removeOldBuses, 60000); // Каждую минуту проверяем удаление
             
             setInterval(processSpeech, 1500);
-            setInterval(checkAnnouncements, 15000); // Каждые 15 секунд для точности
+            setInterval(checkAnnouncements, 30000); // Каждые 30 секунд проверяем статусы
             
             if ('speechSynthesis' in window) {
                 speechSynthesis.getVoices();
@@ -970,32 +927,15 @@
             }
         }
 
-        // Проверяем, есть ли сохраненная сессия
         window.addEventListener('load', function() {
-            const savedSession = localStorage.getItem('karakol-session');
-            if (savedSession) {
-                try {
-                    const session = JSON.parse(savedSession);
-                    if (session.expires > Date.now()) {
-                        currentUser = session;
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('display-screen').classList.add('active');
-                        
-                        if (session.role === 'admin') {
-                            document.getElementById('admin-btn').style.display = 'block';
-                        }
-                        
-                        init();
-                        return;
-                    }
-                } catch (e) {
-                    localStorage.removeItem('karakol-session');
-                }
-            }
-            
-            // Показываем экран логина
-            document.getElementById('login-screen').style.display = 'flex';
+            init();
         });
+
+        setInterval(() => {
+            if (!checkAccess()) {
+                return;
+            }
+        }, 300000);
     </script>
 </body>
 </html>

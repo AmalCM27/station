@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каракол Автобекети</title>
+    <title>Каракол Автобекети - Вход</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -15,34 +15,39 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #000;
+            background: #0f172a;
             color: #fff;
             min-height: 100vh;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* LOGIN SCREEN */
-        .login-screen {
-            position: fixed;
+        body::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #1e3a8a, #1e40af, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+            filter: blur(40px);
         }
 
         .login-box {
-            background: rgba(30, 41, 138, 0.9);
-            padding: 40px;
-            border-radius: 20px;
+            position: relative;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 50px;
+            border-radius: 24px;
             text-align: center;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 450px;
+            width: 90%;
         }
 
         .login-logo {
@@ -51,913 +56,232 @@
         }
 
         .login-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 30px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            font-weight: 400;
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            min-width: 300px;
+            gap: 24px;
+            min-width: 320px;
         }
 
         .login-input {
-            padding: 15px 20px;
-            background: rgba(30, 64, 175, 0.3);
-            border: 1px solid #3b82f6;
-            border-radius: 10px;
+            padding: 16px 24px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
             color: #fff;
             font-size: 16px;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
         .login-input::placeholder {
-            color: #94a3b8;
+            color: #64748b;
         }
 
         .login-input:focus {
             outline: none;
-            border-color: #60a5fa;
-            background: rgba(30, 64, 175, 0.5);
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .login-btn {
-            padding: 15px 30px;
-            background: #22c55e;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .login-btn:hover {
-            background: #16a34a;
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .login-error {
             color: #ef4444;
             margin-top: 10px;
             font-weight: 500;
-        }
-
-        /* HEADER */
-        .header {
-            background: #1e3a8a;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid #3b82f6;
-        }
-
-        .station-info {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-        }
-
-        .station-text h1 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .station-text p {
-            font-size: 16px;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        .time-info {
-            text-align: right;
-        }
-
-        .current-time {
-            font-size: 48px;
-            font-weight: 300;
-            color: #fff;
-            font-family: 'Inter', monospace;
-            line-height: 1;
-        }
-
-        .current-date {
-            font-size: 18px;
-            color: #94a3b8;
-            margin-top: 8px;
-        }
-
-        .weather {
-            position: absolute;
-            top: 25px;
-            right: 200px;
-            background: rgba(30, 64, 175, 0.9);
-            padding: 15px 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .weather-temp {
-            font-size: 24px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .weather-city {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 5px;
-        }
-
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #ef4444;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .logout-btn:hover {
-            background: #dc2626;
-        }
-
-        /* ЗАГОЛОВКИ ТАБЛИЦЫ */
-        .table-header {
-            background: #1e293b;
-            padding: 15px 40px;
-            border-bottom: 2px solid #3b82f6;
-            display: grid;
-            grid-template-columns: 250px 120px 160px 80px 100px 80px 180px 150px 120px;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .header-cell {
             font-size: 14px;
-            font-weight: 600;
-            color: #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        /* РЕЙСЫ */
-        .departures {
-            height: calc(100vh - 230px);
-            overflow: hidden;
-            padding: 0;
-        }
-
-        .route {
-            display: grid;
-            grid-template-columns: 250px 120px 160px 80px 100px 80px 180px 150px 120px;
-            gap: 20px;
-            align-items: center;
-            padding: 5px 40px;
-            min-height: 80px;
-            border-bottom: 1px solid #1f2937;
-        }
-
-        .route:nth-child(odd) {
-            background: #111827;
-        }
-
-        .route:nth-child(even) {
-            background: #374151;
-        }
-
-        .route-destination {
-            font-size: 26px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .route-time {
-            font-size: 30px;
-            font-weight: 500;
-            color: #fbbf24;
-            font-family: 'Inter', monospace;
-        }
-
-        .route-status {
-            font-size: 15px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 15px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .status-waiting {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
-            border: 1px solid #fbbf24;
-        }
-
-        .status-boarding {
-            background: rgba(34, 197, 94, 0.2);
+        .login-success {
             color: #22c55e;
-            border: 1px solid #22c55e;
-            animation: pulse 2s infinite;
-        }
-
-        .status-delayed {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid #ef4444;
-        }
-
-        .status-departed {
-            background: rgba(107, 114, 128, 0.2);
-            color: #6b7280;
-            border: 1px solid #6b7280;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .route-vehicle {
-            font-size: 16px;
+            margin-top: 10px;
             font-weight: 500;
-            color: #60a5fa;
+            font-size: 14px;
         }
 
-        .route-seats {
-            font-size: 16px;
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .route-available {
-            font-size: 16px;
-            color: #22c55e;
-            font-weight: 500;
-        }
-
-        .route-carrier {
-            font-size: 15px;
-            color: #d1d5db;
-        }
-
-        .route-driver {
-            font-size: 15px;
-            color: #d1d5db;
-        }
-
-        .route-price {
-            font-size: 18px;
-            font-weight: 600;
-            color: #22c55e;
-        }
-
-        /* БЕГУЩАЯ СТРОКА */
-        .ticker {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #374151;
-            height: 50px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-        }
-
-        .ticker-text {
-            white-space: nowrap;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 500;
-            animation: scroll 45s linear infinite;
-            padding-left: 100%;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 400px;
-            color: #6b7280;
-        }
-
-        .empty-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .empty-text {
-            font-size: 24px;
-        }
-
-        .display-screen {
+        .loading {
             display: none;
+            margin-top: 15px;
         }
 
-        .display-screen.active {
-            display: block;
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-screen" id="login-screen">
-        <div class="login-box">
-            <div class="login-logo">🚌</div>
-            <div class="login-title">КАРАКОЛ АВТОБЕКЕТИ</div>
-            <div class="login-form">
-                <input type="text" class="login-input" id="username" placeholder="Колдонуучу аты • Имя пользователя">
-                <input type="password" class="login-input" id="password" placeholder="Сыр сөз • Пароль">
-                <button class="login-btn" onclick="login()">КИРҮҮ • ВОЙТИ</button>
-                <div class="login-error" id="login-error"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- DISPLAY SCREEN -->
-    <div class="display-screen" id="display-screen">
-        <div class="header">
-            <div class="station-info">
-                <div class="logo">🚌</div>
-                <div class="station-text">
-                    <h1>КАРАКОЛ АВТОБЕКЕТИ</h1>
-                    <p>КЕТҮҮЛӨР • ОТПРАВЛЕНИЯ • DEPARTURES</p>
-                </div>
-            </div>
-            <div class="time-info">
-                <div class="current-time" id="current-time"></div>
-                <div class="current-date" id="current-date"></div>
-            </div>
-            <div class="weather">
-                <div class="weather-temp" id="weather-temp">+18°</div>
-                <div class="weather-city">Каракол</div>
-            </div>
-            <button class="logout-btn" onclick="logout()">ЧЫГУУ</button>
-        </div>
-
-        <div class="table-header">
-            <div class="header-cell">БАГЫТ • НАПРАВЛЕНИЕ</div>
-            <div class="header-cell">УБАКЫТ • ВРЕМЯ</div>
-            <div class="header-cell">АБАЛЫ • СТАТУС</div>
-            <div class="header-cell">ВИД</div>
-            <div class="header-cell">ОРУНДАР</div>
-            <div class="header-cell">БОШТОК</div>
-            <div class="header-cell">ТАШУУЧУ • ПЕРЕВОЗЧИК</div>
-            <div class="header-cell">АЙДООЧУ • ВОДИТЕЛЬ</div>
-            <div class="header-cell">БААСЫ • ЦЕНА</div>
-        </div>
-
-        <div class="departures" id="departures-container">
-            <!-- Рейсы будут добавляться сюда -->
-        </div>
-
-        <div class="ticker">
-            <div class="ticker-text" id="ticker-text">
-                КАРАКОЛ АВТОБЕКЕТИ • КЕТҮҮЛӨР КҮНДӨ 06:00дөн 22:00гө чейин • БИЛЕТТЕРДИ КАССАДА АЛЫҢЫЗ • БАГАЖДЫ КАМАККА ТОПТОО МИЛДЕТТҮҮ • КООПСУЗДУК ЭРЕЖЕЛЕРИН САКТАҢЫЗ
+    <div class="login-box">
+        <div class="login-logo">🚌</div>
+        <div class="login-title">КАРАКОЛ АВТОБЕКЕТИ</div>
+        <div class="login-subtitle">Системага кирүү • Вход в систему</div>
+        <div class="login-form">
+            <input type="text" class="login-input" id="username" placeholder="Колдонуучу аты • Имя пользователя">
+            <input type="password" class="login-input" id="password" placeholder="Сыр сөз • Пароль">
+            <button class="login-btn" onclick="login()" id="login-btn">КИРҮҮ • ВОЙТИ</button>
+            <div class="login-error" id="login-error"></div>
+            <div class="login-success" id="login-success"></div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div style="margin-top: 10px; color: #94a3b8; font-size: 14px;">Кирүү...</div>
             </div>
         </div>
     </div>
 
     <script>
-        let buses = [];
-        let speechQueue = [];
-        let isSpeaking = false;
-        let lastAnnouncedBus = null;
-        let tickerIndex = 0;
-        let lastDataHash = '';
-        let currentUser = null;
-        const MAX_VISIBLE_ROUTES = 10;
-
-        // СИСТЕМА АВТОРИЗАЦИИ
-        const users = {
-            admin: { password: 'admin123', role: 'admin', name: 'Администратор' },
-            operator: { password: 'display123', role: 'display', name: 'Оператор' }
-        };
+        function getUsers() {
+            const savedUsers = JSON.parse(localStorage.getItem('karakol-users') || '{}');
+            if (Object.keys(savedUsers).length === 0) {
+                const defaultUsers = {
+                    admin: { password: 'admin123', role: 'admin', name: 'Администратор' },
+                    operator: { password: 'display123', role: 'operator', name: 'Оператор' }
+                };
+                localStorage.setItem('karakol-users', JSON.stringify(defaultUsers));
+                return defaultUsers;
+            }
+            return savedUsers;
+        }
 
         function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('login-error');
+            const successDiv = document.getElementById('login-success');
+            const loadingDiv = document.getElementById('loading');
+            const loginBtn = document.getElementById('login-btn');
+
+            errorDiv.textContent = '';
+            successDiv.textContent = '';
 
             if (!username || !password) {
-                showLoginError('Колдонуучу аты жана сыр сөздү киргизиңиз!');
+                showError('Колдонуучу аты жана сыр сөздү киргизиңиз!');
                 return;
             }
 
-            const user = users[username];
-            if (!user || user.password !== password) {
-                showLoginError('Туура эмес колдонуучу аты же сыр сөз!');
-                return;
-            }
+            loadingDiv.style.display = 'block';
+            loginBtn.disabled = true;
 
-            currentUser = { ...user, username };
-            
-            if (user.role === 'admin') {
-                // Переход в админ-панель
-                window.location.href = 'admin.html';
-            } else {
-                // Показать главный экран
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('display-screen').classList.add('active');
-                init();
-            }
+            setTimeout(() => {
+                const users = getUsers();
+                const user = users[username];
+
+                if (!user || user.password !== password) {
+                    loadingDiv.style.display = 'none';
+                    loginBtn.disabled = false;
+                    showError('Туура эмес колдонуучу аты же сыр сөз!');
+                    return;
+                }
+
+                const currentUser = { ...user, username };
+                const session = {
+                    ...currentUser,
+                    expires: Date.now() + (8 * 60 * 60 * 1000)
+                };
+
+                if (user.role === 'admin') {
+                    const users = {};
+                    users['karakol-admin-session'] = JSON.stringify(session);
+                    Object.keys(users).forEach(key => localStorage.setItem(key, users[key]));
+                    showSuccess('Админ панелине өтүү...');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                } else {
+                    const users = {};
+                    users['karakol-session'] = JSON.stringify(session);
+                    Object.keys(users).forEach(key => localStorage.setItem(key, users[key]));
+                    showSuccess('Башкы экранга өтүү...');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'display.html';
+                    }, 1000);
+                }
+            }, 800);
         }
 
-        function logout() {
-            currentUser = null;
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('display-screen').classList.remove('active');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('login-error').textContent = '';
-        }
-
-        function showLoginError(message) {
+        function showError(message) {
             document.getElementById('login-error').textContent = message;
             setTimeout(() => {
                 document.getElementById('login-error').textContent = '';
             }, 5000);
         }
 
-        // Обработка Enter в форме логина
+        function showSuccess(message) {
+            document.getElementById('login-success').textContent = message;
+        }
+
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+            if (e.key === 'Enter') {
                 login();
             }
         });
 
-        const languages = {
-            kg: {
-                voice: 'ru-RU',
-                announcements: {
-                    fiveMinutes: '{route} багытына {vehicle} 5 мүнөттөн кийин кетет. Жолоочулар даярданыңыз',
-                    boarding: '{route} багытына {vehicle} отургузуу башталды. Жолоочулар отургузууга өтүңүз',
-                    departed: '{route} багытына {vehicle} кетти'
-                }
-            },
-            ru: {
-                voice: 'ru-RU',
-                announcements: {
-                    fiveMinutes: '{vehicle} по направлению {route} отправляется через 5 минут. Пассажиры готовьтесь к посадке',
-                    boarding: 'Начинается посадка на {vehicle} по направлению {route}. Пассажиры проходите на посадку',
-                    departed: '{vehicle} по направлению {route} отправился'
-                }
-            },
-            en: {
-                voice: 'en-US',
-                announcements: {
-                    fiveMinutes: '{vehicle} to {route} departs in 5 minutes. Passengers please prepare for boarding',
-                    boarding: '{vehicle} to {route} is now boarding. Passengers please proceed to boarding',
-                    departed: '{vehicle} to {route} has departed'
-                }
-            }
-        };
-
-        const tickerMessages = [
-            'КАРАКОЛ АВТОБЕКЕТИ • КЕТҮҮЛӨР КҮНДӨ 06:00дөн 22:00гө чейин',
-            'БИЛЕТТЕРДИ КАССАДА АЛЫҢЫЗ • НОМЕР 1-2 • БИЛЕТЫ В КАССЕ №1-2',
-            'БАГАЖДЫ КАМАККА ТОПТОО МИЛДЕТТҮҮ • БАГАЖ СДАВАТЬ В КАМЕРУ ХРАНЕНИЯ',
-            'МААЛЫМАТ ҮЧҮН: +996 3922 5-15-15 • СПРАВКИ ПО ТЕЛЕФОНУ',
-            'КООПСУЗДУК ЭРЕЖЕЛЕРИН САКТАҢЫЗ • СОБЛЮДАЙТЕ ПРАВИЛА БЕЗОПАСНОСТИ'
-        ];
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('current-time').textContent = 
-                now.toLocaleTimeString('ru-RU', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            document.getElementById('current-date').textContent = 
-                now.toLocaleDateString('ru-RU', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long'
-                });
-        }
-
-        async function updateWeather() {
-            try {
-                const response = await fetch(`https://wttr.in/Karakol?format=j1`);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const temp = Math.round(data.current_condition[0].temp_C);
-                    const sign = temp > 0 ? '+' : '';
-                    document.getElementById('weather-temp').textContent = `${sign}${temp}°`;
-                } else {
-                    useLocalWeather();
-                }
-            } catch (error) {
-                useLocalWeather();
-            }
-        }
-
-        function useLocalWeather() {
-            const now = new Date();
-            const month = now.getMonth() + 1;
-            const hour = now.getHours();
-            let temp;
-            
-            if (month >= 12 || month <= 2) { 
-                temp = Math.floor(Math.random() * 15) - 10;
-                if (hour >= 22 || hour <= 6) temp -= 3;
-            } else if (month >= 3 && month <= 5) { 
-                temp = Math.floor(Math.random() * 20) + 5;
-                if (hour >= 12 && hour <= 16) temp += 3;
-            } else if (month >= 6 && month <= 8) { 
-                temp = Math.floor(Math.random() * 15) + 15;
-                if (hour >= 12 && hour <= 16) temp += 5;
-            } else { 
-                temp = Math.floor(Math.random() * 20) + 0;
-                if (hour >= 22 || hour <= 6) temp -= 2;
-            }
-            
-            const sign = temp > 0 ? '+' : '';
-            document.getElementById('weather-temp').textContent = `${sign}${temp}°`;
-        }
-
-        function updateTicker() {
-            const text = tickerMessages[tickerIndex];
-            document.getElementById('ticker-text').textContent = text;
-            tickerIndex = (tickerIndex + 1) % tickerMessages.length;
-        }
-
-        function renderRoutes() {
-            const container = document.getElementById('departures-container');
-            
-            if (buses.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🚌</div>
-                        <div class="empty-text">Автобустар жок • Нет автобусов</div>
-                    </div>
-                `;
-                return;
-            }
-
-            const sorted = [...buses]
-                .filter(bus => bus.status !== 'departed')
-                .sort((a, b) => {
-                    const timeA = parseTimeToMinutes(a.time);
-                    const timeB = parseTimeToMinutes(b.time);
-                    return timeA - timeB;
-                })
-                .slice(0, MAX_VISIBLE_ROUTES);
-
-            container.innerHTML = sorted.map(bus => `
-                <div class="route">
-                    <div class="route-destination">${bus.route}</div>
-                    <div class="route-time">${bus.time}</div>
-                    <div class="route-status status-${bus.status}">
-                        ${getStatusText(bus.status)}
-                    </div>
-                    <div class="route-vehicle">${getVehicleText(bus.vehicle)}</div>
-                    <div class="route-seats">${bus.seats}</div>
-                    <div class="route-available">${bus.available || bus.seats}</div>
-                    <div class="route-carrier">${bus.carrier}</div>
-                    <div class="route-driver">${bus.driver}</div>
-                    <div class="route-price">${bus.price || '---'} сом</div>
-                </div>
-            `).join('');
-        }
-
-        function getStatusText(status) {
-            const texts = {
-                'waiting': 'Күтүүдө',
-                'boarding': 'Отургузуу',
-                'delayed': 'Кечигүү',
-                'departed': 'Кетти'
-            };
-            return texts[status] || status;
-        }
-
-        function getVehicleText(vehicle) {
-            const texts = {
-                'bus': 'Автобус',
-                'minibus': 'Маршрутка'
-            };
-            return texts[vehicle] || 'Автобус';
-        }
-
-        function parseTimeToMinutes(timeString) {
-            const [hours, minutes] = timeString.split(':').map(Number);
-            return hours * 60 + minutes;
-        }
-
-        function makeTrilingualAnnouncement(type, route, vehicle, busId) {
-            const announceKey = `${busId}_${type}`;
-            if (lastAnnouncedBus === announceKey) return;
-            lastAnnouncedBus = announceKey;
-            
-            console.log(`🔊 Объявление: ${type} для маршрута ${route}`);
-            
-            const vehicleText = getVehicleText(vehicle);
-            
-            const kgText = languages.kg.announcements[type]
-                .replace('{route}', route)
-                .replace('{vehicle}', vehicleText);
-            addSpeech(kgText, languages.kg.voice, 'Кыргызский');
-            
-            setTimeout(() => {
-                const ruText = languages.ru.announcements[type]
-                    .replace('{route}', route)
-                    .replace('{vehicle}', vehicleText);
-                addSpeech(ruText, languages.ru.voice, 'Русский');
-            }, 6000);
-            
-            setTimeout(() => {
-                const enText = languages.en.announcements[type]
-                    .replace('{route}', route)
-                    .replace('{vehicle}', vehicle === 'bus' ? 'Bus' : 'Minibus');
-                addSpeech(enText, languages.en.voice, 'Английский');
-            }, 12000);
-        }
-
-        function addSpeech(text, voice, language) {
-            speechQueue.push({ text, voice, language });
-            console.log(`📝 Добавлено в очередь [${language}]: "${text}"`);
-        }
-
-        function processSpeech() {
-            if (!isSpeaking && speechQueue.length > 0) {
-                const speech = speechQueue.shift();
-                speak(speech.text, speech.voice, speech.language);
-            }
-        }
-
-        function speak(text, voiceLang, language) {
-            if (!('speechSynthesis' in window)) {
-                console.log('❌ Speech synthesis не поддерживается');
-                isSpeaking = false;
-                return;
-            }
-            
-            speechSynthesis.cancel();
-            isSpeaking = true;
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            
-            if (voiceLang === 'en-US') {
-                utterance.lang = 'en-US';
-                utterance.rate = 0.7;
-                utterance.pitch = 1.0;
-            } else {
-                utterance.lang = 'ru-RU';
-                utterance.rate = 0.75;
-                utterance.pitch = 1.0;
-            }
-            
-            const setVoice = () => {
-                const voices = speechSynthesis.getVoices();
-                let selectedVoice = null;
-                
-                if (voiceLang === 'en-US') {
-                    selectedVoice = voices.find(voice => 
-                        voice.lang === 'en-US' && (
-                            voice.name.includes('Google') || 
-                            voice.name.includes('Microsoft') ||
-                            voice.name.includes('Samantha') ||
-                            voice.name.includes('Karen') ||
-                            voice.name.includes('Daniel')
-                        )
-                    ) || voices.find(voice => voice.lang === 'en-US') 
-                      || voices.find(voice => voice.lang.startsWith('en'));
-                } else {
-                    selectedVoice = voices.find(voice => 
-                        voice.lang === 'ru-RU' && (
-                            voice.name.includes('Google') || 
-                            voice.name.includes('Microsoft') ||
-                            voice.name.includes('Yandex')
-                        )
-                    ) || voices.find(voice => voice.lang === 'ru-RU') 
-                      || voices.find(voice => voice.lang.startsWith('ru'));
-                }
-                
-                if (selectedVoice) {
-                    utterance.voice = selectedVoice;
-                    console.log(`🎤 Голос: ${selectedVoice.name} [${language}]`);
-                } else {
-                    console.log(`⚠️ Голос для ${voiceLang} не найден [${language}]`);
-                }
-                
-                utterance.volume = 0.9;
-                
-                utterance.onstart = () => {
-                    console.log(`🔊 Произношу [${language}]: "${text}"`);
-                };
-                
-                utterance.onend = () => {
-                    console.log(`✅ Завершено [${language}]: "${text}"`);
-                    isSpeaking = false;
-                };
-                
-                utterance.onerror = (event) => {
-                    console.error(`❌ Ошибка speech [${language}]:`, event.error);
-                    isSpeaking = false;
-                };
-                
-                speechSynthesis.speak(utterance);
-            };
-            
-            if (speechSynthesis.getVoices().length === 0) {
-                speechSynthesis.addEventListener('voiceschanged', setVoice, { once: true });
-            } else {
-                setVoice();
-            }
-        }
-
-        function checkAnnouncements() {
-            const now = new Date();
-            const currentHours = now.getHours();
-            const currentMinutes = now.getMinutes();
-            const currentTotalMinutes = currentHours * 60 + currentMinutes;
-            
-            console.log(`⏰ Проверка объявлений: ${currentHours}:${currentMinutes.toString().padStart(2, '0')}`);
-            
-            buses.forEach(bus => {
-                if (!bus.announcements) {
-                    bus.announcements = {
-                        fiveMinutes: false,
-                        boarding: false,
-                        departed: false
-                    };
-                }
-                
-                const [busHours, busMinutes] = bus.time.split(':').map(Number);
-                const busTotalMinutes = busHours * 60 + busMinutes;
-                const diffMinutes = busTotalMinutes - currentTotalMinutes;
-
-                // За 5 минут до отправления
-                if (diffMinutes === 5 && !bus.announcements.fiveMinutes && bus.status === 'waiting') {
-                    console.log(`📢 Объявление за 5 минут: ${bus.route}`);
-                    bus.announcements.fiveMinutes = true;
-                    makeTrilingualAnnouncement('fiveMinutes', bus.route, bus.vehicle, bus.id);
-                }
-
-                // При статусе "посадка"
-                if (bus.status === 'boarding' && !bus.announcements.boarding) {
-                    console.log(`📢 Объявление о посадке: ${bus.route}`);
-                    bus.announcements.boarding = true;
-                    makeTrilingualAnnouncement('boarding', bus.route, bus.vehicle, bus.id);
-                }
-
-                // При статусе "отправлен"
-                if (bus.status === 'departed' && !bus.announcements.departed) {
-                    console.log(`📢 Объявление об отправлении: ${bus.route}`);
-                    bus.announcements.departed = true;
-                    makeTrilingualAnnouncement('departed', bus.route, bus.vehicle, bus.id);
-                }
-            });
-        }
-
-        function removeOldBuses() {
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-            
-            const initialCount = buses.length;
-            buses = buses.filter(bus => {
-                if (bus.status === 'departed') {
-                    const busMinutes = parseTimeToMinutes(bus.time);
-                    const diffMinutes = currentMinutes - busMinutes;
-                    return diffMinutes < 1;
-                }
-                return true;
-            });
-
-            if (buses.length < initialCount) {
-                console.log(`🗑️ Удалено ${initialCount - buses.length} старых автобусов`);
-                renderRoutes();
-            }
-        }
-
-        function loadDataFromStorage() {
-            try {
-                const savedData = localStorage.getItem('karakol-bus-station-display');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    const newBuses = data.buses || [];
-                    
-                    // Создаем хэш для сравнения изменений
-                    const newDataHash = JSON.stringify(newBuses.map(b => ({
-                        id: b.id, 
-                        route: b.route,
-                        time: b.time,
-                        status: b.status, 
-                        seats: b.seats,
-                        available: b.available,
-                        carrier: b.carrier,
-                        driver: b.driver,
-                        price: b.price,
-                        vehicle: b.vehicle
-                    })));
-                    
-                    if (newDataHash !== lastDataHash) {
-                        console.log('🔄 Данные обновлены из админ-панели');
-                        buses = newBuses;
-                        renderRoutes();
-                        lastDataHash = newDataHash;
-                    }
-                }
-            } catch (error) {
-                console.error('❌ Ошибка при загрузке данных:', error);
-            }
-        }
-
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'karakol-bus-station-display') {
-                loadDataFromStorage();
-            }
-        });
-
-        function init() {
-            console.log('🚌 Главный экран Каракол автобекети запущен');
-            
-            updateTime();
-            updateWeather();
-            updateTicker();
-            
-            setInterval(updateTime, 1000);
-            setInterval(updateWeather, 600000);
-            setInterval(updateTicker, 20000);
-            
-            loadDataFromStorage();
-            setInterval(loadDataFromStorage, 1000); // Каждую секунду для мгновенного обновления
-            setInterval(removeOldBuses, 60000);
-            
-            setInterval(processSpeech, 1500);
-            setInterval(checkAnnouncements, 15000); // Каждые 15 секунд для точности
-            
-            if ('speechSynthesis' in window) {
-                speechSynthesis.getVoices();
-                if (speechSynthesis.onvoiceschanged !== undefined) {
-                    speechSynthesis.onvoiceschanged = () => {
-                        console.log('🎤 Голоса загружены:', speechSynthesis.getVoices().length);
-                    };
-                }
-            }
-        }
-
-        // Проверяем, есть ли сохраненная сессия
         window.addEventListener('load', function() {
-            const savedSession = localStorage.getItem('karakol-session');
-            if (savedSession) {
-                try {
-                    const session = JSON.parse(savedSession);
-                    if (session.role === 'display' && session.expires > Date.now()) {
-                        currentUser = session;
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('display-screen').classList.add('active');
-                        init();
-                        return;
-                    }
-                } catch (e) {
-                    localStorage.removeItem('karakol-session');
-                }
+            const adminSession = JSON.parse(localStorage.getItem('karakol-admin-session') || 'null');
+            if (adminSession && adminSession.role === 'admin' && adminSession.expires > Date.now()) {
+                window.location.href = 'admin.html';
+                return;
             }
-            
-            // Показываем экран логина
-            document.getElementById('login-screen').style.display = 'flex';
-        });
 
-        // Сохраняем сессию при успешном входе (только для display роли)
-        function saveSession() {
-            if (currentUser && currentUser.role === 'display') {
-                const session = {
-                    ...currentUser,
-                    expires: Date.now() + (8 * 60 * 60 * 1000) // 8 часов
-                };
-                localStorage.setItem('karakol-session', JSON.stringify(session));
+            const operatorSession = JSON.parse(localStorage.getItem('karakol-session') || 'null');
+            if (operatorSession && operatorSession.role === 'operator' && operatorSession.expires > Date.now()) {
+                window.location.href = 'display.html';
+                return;
             }
-        }
+        });
     </script>
 </body>
 </html>
