@@ -4,153 +4,374 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каракол Автобекети - Вход</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0f172a;
-            color: #fff;
+            margin: 0;
+            font-family: 'Roboto', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        body::before {
+        .forms-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            letter-spacing: 1px;
+            color: #fff;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 8px;
+        }
+
+        .forms {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .form-wrapper {
+            animation: hideLayer .3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active {
+            animation: showLayer .3s ease-in forwards;
+        }
+
+        @keyframes showLayer {
+            50% {
+                z-index: 1;
+            }
+            100% {
+                z-index: 1;
+            }
+        }
+
+        @keyframes hideLayer {
+            0% {
+                z-index: 1;
+            }
+            49.999% {
+                z-index: 1;
+            }
+        }
+
+        .switcher {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 0;
+            text-transform: uppercase;
+            font-family: inherit;
+            font-size: 16px;
+            letter-spacing: .5px;
+            color: rgba(255,255,255,0.5);
+            background-color: transparent;
+            border: none;
+            outline: none;
+            transform: translateX(0);
+            transition: all .3s ease-out;
+        }
+
+        .form-wrapper.is-active .switcher-operator {
+            color: #fff;
+            transform: translateX(90px);
+        }
+
+        .form-wrapper.is-active .switcher-admin {
+            color: #fff;
+            transform: translateX(-90px);
+        }
+
+        .underline {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+            width: 100%;
+            height: 2px;
+        }
+
+        .underline::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
-            filter: blur(40px);
+            left: inherit;
+            display: block;
+            width: inherit;
+            height: inherit;
+            background-color: currentColor;
+            transition: transform .2s ease-out;
         }
 
-        .login-box {
+        .switcher-operator .underline::before {
+            transform: translateX(101%);
+        }
+
+        .switcher-admin .underline::before {
+            transform: translateX(-101%);
+        }
+
+        .form-wrapper.is-active .underline::before {
+            transform: translateX(0);
+        }
+
+        .form {
+            overflow: hidden;
+            min-width: 320px;
+            margin-top: 50px;
+            padding: 40px 35px;
+            border-radius: 20px;
+            transform-origin: top;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .form-operator {
+            animation: hideOperator .3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active .form-operator {
+            animation: showOperator .3s ease-in forwards;
+        }
+
+        @keyframes showOperator {
+            0% {
+                background: rgba(215, 231, 241, 0.95);
+                transform: translate(40%, 10px);
+            }
+            50% {
+                transform: translate(0, 0);
+            }
+            100% {
+                background-color: #fff;
+                transform: translate(35%, -20px);
+            }
+        }
+
+        @keyframes hideOperator {
+            0% {
+                background-color: #fff;
+                transform: translate(35%, -20px);
+            }
+            50% {
+                transform: translate(0, 0);
+            }
+            100% {
+                background: rgba(215, 231, 241, 0.95);
+                transform: translate(40%, 10px);
+            }
+        }
+
+        .form-admin {
+            animation: hideAdmin .3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active .form-admin {
+            animation: showAdmin .3s ease-in forwards;
+        }
+
+        @keyframes showAdmin {
+            0% {
+                background: rgba(215, 231, 241, 0.95);
+                transform: translate(-40%, 10px) scaleY(.8);
+            }
+            50% {
+                transform: translate(0, 0) scaleY(.8);
+            }
+            100% {
+                background-color: #fff;
+                transform: translate(-35%, -20px) scaleY(1);
+            }
+        }
+
+        @keyframes hideAdmin {
+            0% {
+                background-color: #fff;
+                transform: translate(-35%, -20px) scaleY(1);
+            }
+            50% {
+                transform: translate(0, 0) scaleY(.8);
+            }
+            100% {
+                background: rgba(215, 231, 241, 0.95);
+                transform: translate(-40%, 10px) scaleY(.8);
+            }
+        }
+
+        .form fieldset {
             position: relative;
-            background: rgba(15, 23, 42, 0.9);
-            padding: 50px;
-            border-radius: 24px;
-            text-align: center;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(20px);
-            max-width: 450px;
-            width: 90%;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            transition: all .3s ease-out;
         }
 
-        .login-logo {
-            font-size: 60px;
-            margin-bottom: 20px;
+        .form-operator fieldset {
+            transform: translateX(-50%);
         }
 
-        .login-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .form-admin fieldset {
+            transform: translateX(50%);
         }
 
-        .login-subtitle {
+        .form-wrapper.is-active fieldset {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity .4s ease-in, transform .35s ease-in;
+        }
+
+        .form legend {
+            position: absolute;
+            overflow: hidden;
+            width: 1px;
+            height: 1px;
+            clip: rect(0 0 0 0);
+        }
+
+        .input-block {
+            margin-bottom: 25px;
+        }
+
+        .input-block label {
+            font-size: 14px;
+            color: #5f6f81;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .input-block input {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
             font-size: 16px;
-            color: #94a3b8;
-            margin-bottom: 40px;
+            color: #3b4465;
+            background: #f5f8fa;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            transition: all 0.3s ease;
             font-weight: 400;
         }
 
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            min-width: 320px;
-        }
-
-        .login-input {
-            padding: 16px 24px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .login-input::placeholder {
-            color: #64748b;
-        }
-
-        .login-input:focus {
+        .input-block input:focus {
             outline: none;
-            border-color: #3b82f6;
-            background: rgba(15, 23, 42, 0.9);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: #fff;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .login-btn {
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
+        .input-block input::placeholder {
+            color: #a0aec0;
+        }
+
+        .form button[type='submit'] {
+            opacity: 0;
+            display: block;
+            width: 100%;
+            margin: 30px 0 10px;
+            padding: 16px;
+            font-size: 18px;
             font-weight: 600;
+            border-radius: 30px;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all .3s ease-out;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        .form-wrapper.is-active .form button[type='submit'] {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all .4s ease-in;
         }
 
-        .login-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .btn-operator {
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-30%);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .login-error {
-            color: #ef4444;
-            margin-top: 10px;
-            font-weight: 500;
-            font-size: 14px;
+        .btn-operator:hover {
+            transform: translateX(0) translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .login-success {
-            color: #22c55e;
-            margin-top: 10px;
-            font-weight: 500;
-            font-size: 14px;
+        .btn-admin {
+            color: #764ba2;
+            background: #fff;
+            box-shadow: inset 0 0 0 3px #764ba2, 0 10px 20px rgba(118, 75, 162, 0.2);
+            transform: translateX(30%);
+        }
+
+        .btn-admin:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateX(0) translateY(-2px);
+            box-shadow: 0 15px 30px rgba(118, 75, 162, 0.4);
         }
 
         .loading {
             display: none;
-            margin-top: 15px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            border-top: 2px solid #3b82f6;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-top: 3px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto;
@@ -160,27 +381,167 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .loading-text {
+            margin-top: 10px;
+            color: #5f6f81;
+            font-size: 14px;
+        }
+
+        .error-message,
+        .success-message {
+            margin-top: 15px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c53030;
+            border: 1px solid #fc8181;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .role-operator {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .role-admin {
+            background: rgba(118, 75, 162, 0.1);
+            color: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .forms {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form {
+                min-width: 280px;
+                padding: 30px 25px;
+            }
+
+            .form-wrapper.is-active .switcher-operator,
+            .form-wrapper.is-active .switcher-admin {
+                transform: translateX(0);
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <div class="login-logo">🚌</div>
-        <div class="login-title">КАРАКОЛ АВТОБЕКЕТИ</div>
-        <div class="login-subtitle">Системага кирүү • Вход в систему</div>
-        <div class="login-form">
-            <input type="text" class="login-input" id="username" placeholder="Колдонуучу аты • Имя пользователя">
-            <input type="password" class="login-input" id="password" placeholder="Сыр сөз • Пароль">
-            <button class="login-btn" onclick="login()" id="login-btn">КИРҮҮ • ВОЙТИ</button>
-            <div class="login-error" id="login-error"></div>
-            <div class="login-success" id="login-success"></div>
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <div style="margin-top: 10px; color: #94a3b8; font-size: 14px;">Кирүү...</div>
+    <section class="forms-section">
+        <div class="logo-container">
+            <div class="logo">🚌</div>
+            <h1 class="section-title">КАРАКОЛ АВТОБЕКЕТИ</h1>
+            <p class="section-subtitle">Системага кирүү • Вход в систему</p>
+        </div>
+        
+        <div class="forms">
+            <div class="form-wrapper is-active">
+                <button type="button" class="switcher switcher-operator">
+                    Оператор
+                    <span class="underline"></span>
+                </button>
+                <form class="form form-operator" id="operator-form">
+                    <fieldset>
+                        <legend>Оператор үчүн кирүү маалыматтары</legend>
+                        <div class="role-badge role-operator">Экран башкаруу</div>
+                        <div class="input-block">
+                            <label for="operator-username">Колдонуучу аты</label>
+                            <input id="operator-username" type="text" placeholder="operator" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="operator-password">Сыр сөз</label>
+                            <input id="operator-password" type="password" placeholder="••••••••" required>
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn-operator">Кирүү</button>
+                    <div class="loading" id="operator-loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Текшерүү...</div>
+                    </div>
+                    <div id="operator-message"></div>
+                </form>
+            </div>
+            
+            <div class="form-wrapper">
+                <button type="button" class="switcher switcher-admin">
+                    Админ
+                    <span class="underline"></span>
+                </button>
+                <form class="form form-admin" id="admin-form">
+                    <fieldset>
+                        <legend>Администратор үчүн кирүү маалыматтары</legend>
+                        <div class="role-badge role-admin">Толук башкаруу</div>
+                        <div class="input-block">
+                            <label for="admin-username">Колдонуучу аты</label>
+                            <input id="admin-username" type="text" placeholder="admin" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="admin-password">Сыр сөз</label>
+                            <input id="admin-password" type="password" placeholder="••••••••" required>
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn-admin">Кирүү</button>
+                    <div class="loading" id="admin-loading">
+                        <div class="spinner"></div>
+                        <div class="loading-text">Текшерүү...</div>
+                    </div>
+                    <div id="admin-message"></div>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 
     <script>
+        // Animation switcher
+        const switchers = [...document.querySelectorAll('.switcher')];
+
+        switchers.forEach(item => {
+            item.addEventListener('click', function() {
+                switchers.forEach(item => item.parentElement.classList.remove('is-active'));
+                this.parentElement.classList.add('is-active');
+            });
+        });
+
+        // Get users from localStorage
         function getUsers() {
             const savedUsers = JSON.parse(localStorage.getItem('karakol-users') || '{}');
             if (Object.keys(savedUsers).length === 0) {
@@ -194,92 +555,126 @@
             return savedUsers;
         }
 
-        function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const errorDiv = document.getElementById('login-error');
-            const successDiv = document.getElementById('login-success');
-            const loadingDiv = document.getElementById('loading');
-            const loginBtn = document.getElementById('login-btn');
-
-            errorDiv.textContent = '';
-            successDiv.textContent = '';
-
-            if (!username || !password) {
-                showError('Колдонуучу аты жана сыр сөздү киргизиңиз!');
-                return;
-            }
-
-            loadingDiv.style.display = 'block';
-            loginBtn.disabled = true;
-
+        // Show message
+        function showMessage(elementId, message, isError = true) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.className = isError ? 'error-message' : 'success-message';
+            messageEl.textContent = message;
+            
             setTimeout(() => {
-                const users = getUsers();
-                const user = users[username];
-
-                if (!user || user.password !== password) {
-                    loadingDiv.style.display = 'none';
-                    loginBtn.disabled = false;
-                    showError('Туура эмес колдонуучу аты же сыр сөз!');
-                    return;
-                }
-
-                const currentUser = { ...user, username };
-                const session = {
-                    ...currentUser,
-                    expires: Date.now() + (8 * 60 * 60 * 1000)
-                };
-
-                if (user.role === 'admin') {
-                    const users = {};
-                    users['karakol-admin-session'] = JSON.stringify(session);
-                    Object.keys(users).forEach(key => localStorage.setItem(key, users[key]));
-                    showSuccess('Админ панелине өтүү...');
-                    
-                    setTimeout(() => {
-                        window.location.href = 'admin.html';
-                    }, 1000);
-                } else {
-                    const users = {};
-                    users['karakol-session'] = JSON.stringify(session);
-                    Object.keys(users).forEach(key => localStorage.setItem(key, users[key]));
-                    showSuccess('Башкы экранга өтүү...');
-                    
-                    setTimeout(() => {
-                        window.location.href = 'display.html';
-                    }, 1000);
-                }
-            }, 800);
-        }
-
-        function showError(message) {
-            document.getElementById('login-error').textContent = message;
-            setTimeout(() => {
-                document.getElementById('login-error').textContent = '';
+                messageEl.textContent = '';
+                messageEl.className = '';
             }, 5000);
         }
 
-        function showSuccess(message) {
-            document.getElementById('login-success').textContent = message;
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                login();
+        // Handle operator login
+        document.getElementById('operator-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('operator-username').value.trim();
+            const password = document.getElementById('operator-password').value;
+            const loading = document.getElementById('operator-loading');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            if (!username || !password) {
+                showMessage('operator-message', 'Бардык талааларды толтуруңуз!');
+                return;
             }
+            
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                const users = getUsers();
+                
+                if (users[username] && users[username].password === password && users[username].role === 'operator') {
+                    const session = {
+                        username: username,
+                        role: users[username].role,
+                        name: users[username].name,
+                        expires: Date.now() + (8 * 60 * 60 * 1000)
+                    };
+                    
+                    localStorage.setItem('karakol-session', JSON.stringify(session));
+                    showMessage('operator-message', 'Ийгиликтүү кирдиңиз! Башкы экранга өтүү...', false);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'display.html';
+                    }, 1500);
+                } else {
+                    showMessage('operator-message', 'Туура эмес маалыматтар!');
+                }
+                
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }, 1000);
         });
 
+        // Handle admin login
+        document.getElementById('admin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('admin-username').value.trim();
+            const password = document.getElementById('admin-password').value;
+            const loading = document.getElementById('admin-loading');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            if (!username || !password) {
+                showMessage('admin-message', 'Бардык талааларды толтуруңуз!');
+                return;
+            }
+            
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                const users = getUsers();
+                
+                if (users[username] && users[username].password === password && users[username].role === 'admin') {
+                    const session = {
+                        username: username,
+                        role: users[username].role,
+                        name: users[username].name,
+                        expires: Date.now() + (24 * 60 * 60 * 1000)
+                    };
+                    
+                    localStorage.setItem('karakol-admin-session', JSON.stringify(session));
+                    showMessage('admin-message', 'Ийгиликтүү кирдиңиз! Админ панелге өтүү...', false);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1500);
+                } else {
+                    showMessage('admin-message', 'Туура эмес маалыматтар!');
+                }
+                
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }, 1000);
+        });
+
+        // Check existing sessions
         window.addEventListener('load', function() {
+            const operatorSession = JSON.parse(localStorage.getItem('karakol-session') || 'null');
+            if (operatorSession && operatorSession.role === 'operator' && operatorSession.expires > Date.now()) {
+                window.location.href = 'display.html';
+                return;
+            }
+
             const adminSession = JSON.parse(localStorage.getItem('karakol-admin-session') || 'null');
             if (adminSession && adminSession.role === 'admin' && adminSession.expires > Date.now()) {
                 window.location.href = 'admin.html';
                 return;
             }
+        });
 
-            const operatorSession = JSON.parse(localStorage.getItem('karakol-session') || 'null');
-            if (operatorSession && operatorSession.role === 'operator' && operatorSession.expires > Date.now()) {
-                window.location.href = 'display.html';
-                return;
+        // Enter key support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const activeForm = document.querySelector('.form-wrapper.is-active form');
+                if (activeForm) {
+                    activeForm.dispatchEvent(new Event('submit'));
+                }
             }
         });
     </script>

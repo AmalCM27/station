@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakol Bus - Modern Booking Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0a0a0a;
+            --dark-surface: #18181b;
+            --dark-border: #27272a;
+            --light-bg: #ffffff;
+            --light-surface: #fafafa;
+            --light-border: #e4e4e7;
+            --text-primary: #18181b;
+            --text-secondary: #71717a;
+            --text-light: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: var(--dark-surface);
+        }
+
+        /* Loading Screen with Animated Bus */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        body.dark-mode .loading-screen {
+            background: var(--dark-bg);
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .bus-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bus-svg {
+            width: 250px;
+            height: 120px;
+            position: absolute;
+            left: -300px;
+            animation: busAccelerate 1.8s cubic-bezier(0.5, 0, 0.8, 0.8) forwards;
+        }
+
+        @keyframes busAccelerate {
+            0% {
+                left: -300px;
+            }
+            40% {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            60% {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            100% {
+                left: 120%;
+                transform: translateX(0);
+            }
+        }
+
+        .wheel {
+            animation: wheelSpin 1.8s cubic-bezier(0.5, 0, 0.8, 0.8) forwards;
+            transform-origin: center;
+        }
+
+        @keyframes wheelSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            40% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(1440deg);
+            }
+        }
+
+        .smoke-container {
+            position: absolute;
+            left: 0;
+            bottom: 30px;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(150, 150, 150, 0.8) 0%, rgba(150, 150, 150, 0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .smoke1 {
+            animation: smokeEffect 1.8s ease-out 0.5s forwards;
+            left: -50px;
+        }
+
+        .smoke2 {
+            animation: smokeEffect 1.8s ease-out 0.6s forwards;
+            left: -70px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .smoke3 {
+            animation: smokeEffect 1.8s ease-out 0.7s forwards;
+            left: -90px;
+            width: 60px;
+            height: 60px;
+        }
+
+        @keyframes smokeEffect {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateX(0);
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2) translateX(-100px);
+            }
+        }
+
+        .road-line {
+            position: absolute;
+            bottom: 20px;
+            height: 3px;
+            background: #333;
+            opacity: 0.3;
+            animation: roadMove 0.5s linear infinite;
+        }
+
+        .road-line1 {
+            width: 50px;
+            left: 0;
+        }
+
+        .road-line2 {
+            width: 50px;
+            left: 150px;
+        }
+
+        .road-line3 {
+            width: 50px;
+            left: 300px;
+        }
+
+        .road-line4 {
+            width: 50px;
+            left: 450px;
+        }
+
+        .road-line5 {
+            width: 50px;
+            left: 600px;
+        }
+
+        @keyframes roadMove {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-150px);
+            }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Modern Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        body.dark-mode .navbar {
+            background: rgba(24, 24, 27, 0.8);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Modern Language Switcher */
+        .language-switcher {
+            display: flex;
+            background: var(--light-surface);
+            padding: 3px;
+            gap: 3px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .language-switcher {
+            background: var(--dark-surface);
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 0.813rem;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Modern Theme Toggle */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--light-border);
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        body.dark-mode .theme-toggle {
+            border-color: var(--dark-border);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Auth Button */
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.938rem;
+        }
+
+        .auth-btn:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 1.5rem 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            font-weight: 500;
+        }
+
+        /* Modern Search Form */
+        .search-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 1.2s ease-out 0.4s both;
+        }
+
+        body.dark-mode .search-container {
+            background: var(--dark-surface);
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: white;
+            padding: 0 8px;
+            font-size: 0.813rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        body.dark-mode .form-label {
+            background: var(--dark-surface);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--light-border);
+            background: transparent;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            color: inherit;
+        }
+
+        body.dark-mode .form-input {
+            border-color: var(--dark-border);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .search-btn:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 5rem 1.5rem;
+            background: var(--light-surface);
+            transition: var(--transition);
+        }
+
+        body.dark-mode .features {
+            background: var(--dark-surface);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--light-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .feature-card {
+            background: var(--dark-bg);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .feature-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Routes Section */
+        .routes {
+            padding: 5rem 1.5rem;
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .route-card {
+            background: var(--light-surface);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+
+        body.dark-mode .route-card {
+            background: var(--dark-surface);
+        }
+
+        .route-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .route-image {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .route-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        .route-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--success);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.813rem;
+            font-weight: 600;
+        }
+
+        .route-info {
+            padding: 1.75rem;
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .route-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .route-arrow {
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+
+        .route-price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .route-details {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.938rem;
+        }
+
+        .route-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        /* Auth Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 440px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+            box-shadow: var(--shadow-xl);
+        }
+
+        body.dark-mode .modal-content {
+            background: var(--dark-surface);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem 2rem 0;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--light-surface);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        body.dark-mode .modal-close {
+            background: var(--dark-bg);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .modal-body {
+            padding: 0 2rem 2rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: var(--light-surface);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        body.dark-mode .auth-tabs {
+            background: var(--dark-bg);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .social-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--light-border);
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            transition: var(--transition);
+            color: inherit;
+        }
+
+        body.dark-mode .social-btn {
+            border-color: var(--dark-border);
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--light-surface);
+            transform: translateY(-2px);
+        }
+
+        body.dark-mode .social-btn:hover {
+            background: var(--dark-bg);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--light-border);
+        }
+
+        body.dark-mode .divider::before,
+        body.dark-mode .divider::after {
+            background: var(--dark-border);
+        }
+
+        .form-submit {
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .form-submit:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: -400px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: right 0.3s ease;
+            max-width: 380px;
+            z-index: 3000;
+        }
+
+        body.dark-mode .toast {
+            background: var(--dark-surface);
+        }
+
+        .toast.show {
+            right: 2rem;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon { color: var(--success); }
+        .toast.error .toast-icon { color: var(--danger); }
+        .toast.info .toast-icon { color: var(--primary); }
+        .toast.warning .toast-icon { color: var(--warning); }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-message {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            padding: 4rem 1.5rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .language-switcher {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid,
+            .routes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .toast {
+                right: 1rem;
+                left: 1rem;
+                max-width: none;
+            }
+
+            .toast.show {
+                right: 1rem;
+            }
+        }
+
+        /* Hidden initially */
+        .hidden {
+            display: none;
+        }
+
+        /* Seat Selection Modal */
+        .seat-selection {
+            padding: 2rem;
+        }
+
+        .bus-layout {
+            max-width: 320px;
+            margin: 0 auto;
+            background: var(--light-surface);
+            border-radius: 20px 20px 10px 10px;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        body.dark-mode .bus-layout {
+            background: var(--dark-bg);
+        }
+
+        .driver-area {
+            width: 60px;
+            height: 60px;
+            background: var(--text-secondary);
+            border-radius: 10px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .seats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .seat {
+            aspect-ratio: 1;
+            border: 2px solid var(--light-border);
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.875rem;
+        }
+
+        body.dark-mode .seat {
+            background: var(--dark-surface);
+            border-color: var(--dark-border);
+        }
+
+        .seat:nth-child(2n) {
+            margin-right: 1rem;
+        }
+
+        .seat:hover:not(.occupied):not(.selected) {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+            transform: scale(1.05);
+        }
+
+        .seat.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .seat.occupied {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-seat {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid var(--light-border);
+        }
+
+        .legend-seat.available {
+            background: white;
+        }
+
+        .legend-seat.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .legend-seat.occupied {
+            background: var(--danger);
+            border-color: var(--danger);
+            opacity: 0.6;
+        }
+
+        .seat-info {
+            background: var(--light-surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        body.dark-mode .seat-info {
+            background: var(--dark-bg);
+        }
+
+        .seat-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .price-label {
+            color: var(--text-secondary);
+        }
+
+        .price-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Voice Assistant Improved */
+        .voice-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+        }
+
+        .voice-assistant:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .voice-assistant.active {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+        }
+
+        .voice-icon {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Bus Tracking */
+        .tracking-map {
+            width: 100%;
+            height: 400px;
+            background: var(--light-surface);
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .tracking-map {
+            background: var(--dark-surface);
+        }
+
+        .bus-tracker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-lg);
+            animation: moveOnRoute 20s linear infinite;
+        }
+
+        @keyframes moveOnRoute {
+            0% { top: 10%; left: 10%; }
+            25% { top: 30%; left: 70%; }
+            50% { top: 60%; left: 50%; }
+            75% { top: 40%; left: 20%; }
+            100% { top: 10%; left: 10%; }
+        }
+
+        .tracking-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+        }
+
+        body.dark-mode .tracking-info {
+            background: var(--dark-bg);
+        }
+
+        .tracking-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .tracking-stat {
+            padding: 0.75rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.813rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen with Animated Bus -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="bus-container">
+            <!-- Road lines -->
+            <div class="road-line road-line1"></div>
+            <div class="road-line road-line2"></div>
+            <div class="road-line road-line3"></div>
+            <div class="road-line road-line4"></div>
+            <div class="road-line road-line5"></div>
+            
+            <!-- SVG Bus -->
+            <svg class="bus-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bus Body -->
+                <rect x="10" y="20" width="170" height="50" rx="10" fill="#2563eb" />
+                <rect x="10" y="20" width="170" height="35" rx="10" fill="#3b82f6" />
+                
+                <!-- Front windshield -->
+                <path d="M 170 20 Q 180 20, 180 30 L 180 50 Q 180 55, 175 55 L 170 55 Z" fill="#1d4ed8" />
+                <path d="M 172 25 Q 178 25, 178 32 L 178 45 Q 178 50, 173 50 L 172 50 Z" fill="#60a5fa" opacity="0.6" />
+                
+                <!-- Windows -->
+                <rect x="25" y="30" width="25" height="15" rx="3" fill="#60a5fa" opacity="0.6" />
+                <rect x="55" y="30" width="25" height="15" rx="3" fill="#60a5fa" opacity="0.6" />
+                <rect x="85" y="30" width="25" height="15" rx="3" fill="#60a5fa" opacity="0.6" />
+                <rect x="115" y="30" width="25" height="15" rx="3" fill="#60a5fa" opacity="0.6" />
+                <rect x="145" y="30" width="20" height="15" rx="3" fill="#60a5fa" opacity="0.6" />
+                
+                <!-- Door -->
+                <rect x="15" y="35" width="3" height="30" fill="#1d4ed8" />
+                
+                <!-- Headlights -->
+                <ellipse cx="175" cy="60" rx="5" ry="4" fill="#fbbf24" />
+                <ellipse cx="175" cy="60" rx="3" ry="2" fill="#fef3c7" />
+                
+                <!-- Bus details -->
+                <rect x="10" y="65" width="170" height="5" fill="#1e293b" />
+                <text x="95" y="50" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">KARAKOL BUS</text>
+                
+                <!-- Wheels with spokes -->
+                <g class="wheel" transform="translate(40, 70)">
+                    <circle cx="0" cy="0" r="12" fill="#1e293b" />
+                    <circle cx="0" cy="0" r="10" fill="#374151" />
+                    <circle cx="0" cy="0" r="8" fill="#4b5563" />
+                    <!-- Wheel spokes -->
+                    <line x1="0" y1="-8" x2="0" y2="8" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-8" y1="0" x2="8" y2="0" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-5.7" y1="-5.7" x2="5.7" y2="5.7" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-5.7" y1="5.7" x2="5.7" y2="-5.7" stroke="#1e293b" stroke-width="1" />
+                    <circle cx="0" cy="0" r="3" fill="#6b7280" />
+                </g>
+                
+                <g class="wheel" transform="translate(140, 70)">
+                    <circle cx="0" cy="0" r="12" fill="#1e293b" />
+                    <circle cx="0" cy="0" r="10" fill="#374151" />
+                    <circle cx="0" cy="0" r="8" fill="#4b5563" />
+                    <!-- Wheel spokes -->
+                    <line x1="0" y1="-8" x2="0" y2="8" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-8" y1="0" x2="8" y2="0" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-5.7" y1="-5.7" x2="5.7" y2="5.7" stroke="#1e293b" stroke-width="1" />
+                    <line x1="-5.7" y1="5.7" x2="5.7" y2="-5.7" stroke="#1e293b" stroke-width="1" />
+                    <circle cx="0" cy="0" r="3" fill="#6b7280" />
+                </g>
+            </svg>
+            
+            <!-- Smoke effects -->
+            <div class="smoke-container">
+                <div class="smoke smoke1"></div>
+                <div class="smoke smoke2"></div>
+                <div class="smoke smoke3"></div>
+            </div>
+        </div>
+        <div class="loading-text" data-translate="loading">Загружаем маршруты...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🚌</div>
+                <span>Karakol Bus</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-link" data-translate="nav-home">Главная</a>
+                <a href="#routes" class="nav-link" data-translate="nav-routes">Маршруты</a>
+                <a href="#my-tickets" class="nav-link" data-translate="nav-tickets">Мои билеты</a>
+                <a href="#tracking" class="nav-link" data-translate="nav-tracking">Отслеживание</a>
+                <a href="#help" class="nav-link" data-translate="nav-help">Помощь</a>
+            </div>
+            
+            <div class="nav-controls">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ru">РУС</button>
+                    <button class="lang-btn" data-lang="kg">КЫР</button>
+                    <button class="lang-btn" data-lang="en">ENG</button>
+                </div>
+                
+                <button class="theme-toggle" id="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                
+                <button class="auth-btn" id="auth-btn">
+                    <span>👤</span>
+                    <span data-translate="login">Войти</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-translate="hero-title">Путешествуйте с комфортом</h1>
+            <p class="hero-subtitle" data-translate="hero-subtitle">Быстрое и удобное бронирование билетов на автобус</p>
+            
+            <div class="search-container">
+                <form id="search-form">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label class="form-label" data-translate="from">Откуда</label>
+                            <input type="text" class="form-input" id="from-input" placeholder="Каракол" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" data-translate="to">Куда</label>
+                            <input type="text" class="form-input" id="to-input" placeholder="Бишкек" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" data-translate="date">Дата</label>
+                            <input type="date" class="form-input" id="date-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" data-translate="passengers">Пассажиры</label>
+                            <input type="number" class="form-input" id="passengers-input" value="1" min="1" max="10" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="search-btn" id="search-btn">
+                        <span>🔍</span>
+                        <span data-translate="search">Найти билеты</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="features-title">Почему выбирают нас</h2>
+                <p class="section-subtitle" data-translate="features-subtitle">Мы делаем путешествия простыми и удобными</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">💳</div>
+                    <h3 class="feature-title" data-translate="feature-1-title">Безопасная оплата</h3>
+                    <p class="feature-desc" data-translate="feature-1-desc">Принимаем все виды карт и электронные кошельки</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">📱</div>
+                    <h3 class="feature-title" data-translate="feature-2-title">Мобильные билеты</h3>
+                    <p class="feature-desc" data-translate="feature-2-desc">Билеты всегда под рукой в вашем телефоне</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🎯</div>
+                    <h3 class="feature-title" data-translate="feature-3-title">Выбор места</h3>
+                    <p class="feature-desc" data-translate="feature-3-desc">Выберите удобное место в автобусе заранее</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🗺️</div>
+                    <h3 class="feature-title" data-translate="feature-4-title">Отслеживание</h3>
+                    <p class="feature-desc" data-translate="feature-4-desc">Следите за движением автобуса в реальном времени</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🎤</div>
+                    <h3 class="feature-title" data-translate="feature-5-title">Голосовой помощник</h3>
+                    <p class="feature-desc" data-translate="feature-5-desc">Напоминания о поездке на вашем языке</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">🛡️</div>
+                    <h3 class="feature-title" data-translate="feature-6-title">Гарантия поездки</h3>
+                    <p class="feature-desc" data-translate="feature-6-desc">100% возврат при отмене рейса</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes -->
+    <section class="routes" id="routes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="routes-title">Популярные направления</h2>
+                <p class="section-subtitle" data-translate="routes-subtitle">Выберите маршрут для быстрого поиска</p>
+            </div>
+            
+            <div class="routes-grid">
+                <div class="route-card" onclick="selectRoute('Каракол', 'Бишкек')">
+                    <div class="route-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="route-gradient"></div>
+                        <span class="route-badge">Популярно</span>
+                    </div>
+                    <div class="route-info">
+                        <div class="route-header">
+                            <h3 class="route-title">
+                                <span>Каракол</span>
+                                <span class="route-arrow">→</span>
+                                <span>Бишкек</span>
+                            </h3>
+                            <div class="route-price">350с</div>
+                        </div>
+                        <div class="route-details">
+                            <div class="route-detail">
+                                <span>⏱️</span>
+                                <span>6 часов</span>
+                            </div>
+                            <div class="route-detail">
+                                <span>🚌</span>
+                                <span>Ежедневно</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="route-card" onclick="selectRoute('Каракол', 'Ош')">
+                    <div class="route-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="route-gradient"></div>
+                        <span class="route-badge">Комфорт+</span>
+                    </div>
+                    <div class="route-info">
+                        <div class="route-header">
+                            <h3 class="route-title">
+                                <span>Каракол</span>
+                                <span class="route-arrow">→</span>
+                                <span>Ош</span>
+                            </h3>
+                            <div class="route-price">800с</div>
+                        </div>
+                        <div class="route-details">
+                            <div class="route-detail">
+                                <span>⏱️</span>
+                                <span>12 часов</span>
+                            </div>
+                            <div class="route-detail">
+                                <span>🚌</span>
+                                <span>3 раза в неделю</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="route-card" onclick="selectRoute('Каракол', 'Алматы')">
+                    <div class="route-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="route-gradient"></div>
+                        <span class="route-badge">Международный</span>
+                    </div>
+                    <div class="route-info">
+                        <div class="route-header">
+                            <h3 class="route-title">
+                                <span>Каракол</span>
+                                <span class="route-arrow">→</span>
+                                <span>Алматы</span>
+                            </h3>
+                            <div class="route-price">1200с</div>
+                        </div>
+                        <div class="route-details">
+                            <div class="route-detail">
+                                <span>⏱️</span>
+                                <span>8 часов</span>
+                            </div>
+                            <div class="route-detail">
+                                <span>🚌</span>
+                                <span>Пн, Ср, Пт</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            
+            <div class="modal-header">
+                <h2 class="modal-title" data-translate="auth-title">Добро пожаловать</h2>
+                <p class="modal-subtitle" data-translate="auth-subtitle">Войдите или создайте аккаунт</p>
+            </div>
+            
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')" data-translate="tab-login">Вход</button>
+                    <button class="auth-tab" onclick="switchAuthTab('register')" data-translate="tab-register">Регистрация</button>
+                </div>
+                
+                <div class="social-auth">
+                    <button class="social-btn" onclick="socialAuth('google')">
+                        <img src="https://www.google.com/favicon.ico" width="20" alt="Google">
+                        <span data-translate="auth-google">Продолжить с Google</span>
+                    </button>
+                    <button class="social-btn" onclick="socialAuth('apple')">
+                        <span style="font-size: 1.25rem;">🍎</span>
+                        <span data-translate="auth-apple">Продолжить с Apple</span>
+                    </button>
+                    <button class="social-btn" onclick="socialAuth('facebook')">
+                        <span style="font-size: 1.25rem; color: #1877f2;">f</span>
+                        <span data-translate="auth-facebook">Продолжить с Facebook</span>
+                    </button>
+                </div>
+                
+                <div class="divider" data-translate="auth-or">или</div>
+                
+                <form class="auth-form" id="auth-form">
+                    <div class="form-group">
+                        <label class="form-label" data-translate="email">Email</label>
+                        <input type="email" class="form-input" id="auth-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" data-translate="password">Пароль</label>
+                        <input type="password" class="form-input" id="auth-password" required>
+                    </div>
+                    
+                    <div class="form-group hidden" id="auth-name-group">
+                        <label class="form-label" data-translate="name">Имя</label>
+                        <input type="text" class="form-input" id="auth-name">
+                    </div>
+                    
+                    <button type="submit" class="form-submit" data-translate="submit-login">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Assistant -->
+    <div class="voice-assistant" id="voice-assistant">
+        <span class="voice-icon">🎤</span>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <div class="toast-content">
+            <div class="toast-title"></div>
+            <div class="toast-message"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О компании</h3>
+                <ul class="footer-links">
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#partners">Партнеры</a></li>
+                    <li><a href="#news">Новости</a></li>
+                    <li><a href="#careers">Карьера</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Помощь</h3>
+                <ul class="footer-links">
+                    <li><a href="#how-to-buy">Как купить билет</a></li>
+                    <li><a href="#refund">Возврат билетов</a></li>
+                    <li><a href="#faq">Частые вопросы</a></li>
+                    <li><a href="#rules">Правила перевозки</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:+996555123456">📞 +996 555 123 456</a></li>
+                    <li><a href="mailto:info@karakolbus.kg">✉️ info@karakolbus.kg</a></li>
+                    <li><a href="#location">📍 г. Каракол, Автовокзал</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Приложение</h3>
+                <ul class="footer-links">
+                    <li><a href="#ios">📱 App Store</a></li>
+                    <li><a href="#android">🤖 Google Play</a></li>
+                    <li><a href="#telegram">💬 Telegram Bot</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Karakol Bus. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentLang = 'ru';
+        let isDarkMode = false;
+        let isAuthenticated = false;
+        let currentUser = null;
+        let authMode = 'login';
+
+        // Translations
+        const translations = {
+            ru: {
+                'loading': 'Загружаем маршруты...',
+                'nav-home': 'Главная',
+                'nav-routes': 'Маршруты',
+                'nav-tickets': 'Мои билеты',
+                'nav-tracking': 'Отслеживание',
+                'nav-help': 'Помощь',
+                'hero-title': 'Путешествуйте с комфортом',
+                'hero-subtitle': 'Быстрое и удобное бронирование билетов на автобус',
+                'from': 'Откуда',
+                'to': 'Куда',
+                'date': 'Дата',
+                'passengers': 'Пассажиры',
+                'search': 'Найти билеты',
+                'login': 'Войти',
+                'logout': 'Выйти',
+                'features-title': 'Почему выбирают нас',
+                'features-subtitle': 'Мы делаем путешествия простыми и удобными',
+                'feature-1-title': 'Безопасная оплата',
+                'feature-1-desc': 'Принимаем все виды карт и электронные кошельки',
+                'feature-2-title': 'Мобильные билеты',
+                'feature-2-desc': 'Билеты всегда под рукой в вашем телефоне',
+                'feature-3-title': 'Выбор места',
+                'feature-3-desc': 'Выберите удобное место в автобусе заранее',
+                'feature-4-title': 'Отслеживание',
+                'feature-4-desc': 'Следите за движением автобуса в реальном времени',
+                'feature-5-title': 'Голосовой помощник',
+                'feature-5-desc': 'Напоминания о поездке на вашем языке',
+                'feature-6-title': 'Гарантия поездки',
+                'feature-6-desc': '100% возврат при отмене рейса',
+                'routes-title': 'Популярные направления',
+                'routes-subtitle': 'Выберите маршрут для быстрого поиска',
+                'auth-title': 'Добро пожаловать',
+                'auth-subtitle': 'Войдите или создайте аккаунт',
+                'tab-login': 'Вход',
+                'tab-register': 'Регистрация',
+                'auth-google': 'Продолжить с Google',
+                'auth-apple': 'Продолжить с Apple',
+                'auth-facebook': 'Продолжить с Facebook',
+                'auth-or': 'или',
+                'email': 'Email',
+                'password': 'Пароль',
+                'name': 'Имя',
+                'submit-login': 'Войти',
+                'submit-register': 'Зарегистрироваться',
+                'welcome': 'Добро пожаловать',
+                'auth-required': 'Для бронирования билетов необходимо войти в систему'
+            },
+            kg: {
+                'loading': 'Маршруттарды жүктөп жатабыз...',
+                'nav-home': 'Башкы',
+                'nav-routes': 'Маршруттар',
+                'nav-tickets': 'Менин билеттерим',
+                'nav-tracking': 'Көзөмөлдөө',
+                'nav-help': 'Жардам',
+                'hero-title': 'Ыңгайлуу саякаттаңыз',
+                'hero-subtitle': 'Автобус билеттерин тез жана ыңгайлуу брондоо',
+                'from': 'Кайдан',
+                'to': 'Кайда',
+                'date': 'Дата',
+                'passengers': 'Жүргүнчүлөр',
+                'search': 'Билет издөө',
+                'login': 'Кирүү',
+                'logout': 'Чыгуу',
+                'features-title': 'Эмне үчүн бизди тандашат',
+                'features-subtitle': 'Биз саякаттарды жөнөкөй жана ыңгайлуу кылабыз',
+                'feature-1-title': 'Коопсуз төлөм',
+                'feature-1-desc': 'Бардык карталарды жана электрондук капчыктарды кабыл алабыз',
+                'feature-2-title': 'Мобилдик билеттер',
+                'feature-2-desc': 'Билеттер дайыма телефонуңузда',
+                'feature-3-title': 'Орун тандоо',
+                'feature-3-desc': 'Автобуста ыңгайлуу орунду алдын ала тандаңыз',
+                'feature-4-title': 'Көзөмөлдөө',
+                'feature-4-desc': 'Автобустун кыймылын реалдуу убакытта көзөмөлдөңүз',
+                'feature-5-title': 'Үн жардамчысы',
+                'feature-5-desc': 'Сиздин тилиңизде саякат жөнүндө эскертүүлөр',
+                'feature-6-title': 'Саякат кепилдиги',
+                'feature-6-desc': 'Рейс жокко чыгарылганда 100% кайтаруу',
+                'routes-title': 'Популярдуу багыттар',
+                'routes-subtitle': 'Тез издөө үчүн маршрутту тандаңыз',
+                'auth-title': 'Кош келиңиз',
+                'auth-subtitle': 'Кириңиз же аккаунт түзүңүз',
+                'tab-login': 'Кирүү',
+                'tab-register': 'Каттоо',
+                'auth-google': 'Google менен улантуу',
+                'auth-apple': 'Apple менен улантуу',
+                'auth-facebook': 'Facebook менен улантуу',
+                'auth-or': 'же',
+                'email': 'Email',
+                'password': 'Сырсөз',
+                'name': 'Аты',
+                'submit-login': 'Кирүү',
+                'submit-register': 'Катталуу',
+                'welcome': 'Кош келиңиз',
+                'auth-required': 'Билет брондоо үчүн системага кирүү керек'
+            },
+            en: {
+                'loading': 'Loading routes...',
+                'nav-home': 'Home',
+                'nav-routes': 'Routes',
+                'nav-tickets': 'My Tickets',
+                'nav-tracking': 'Tracking',
+                'nav-help': 'Help',
+                'hero-title': 'Travel in Comfort',
+                'hero-subtitle': 'Quick and convenient bus ticket booking',
+                'from': 'From',
+                'to': 'To',
+                'date': 'Date',
+                'passengers': 'Passengers',
+                'search': 'Find tickets',
+                'login': 'Login',
+                'logout': 'Logout',
+                'features-title': 'Why Choose Us',
+                'features-subtitle': 'We make travel simple and convenient',
+                'feature-1-title': 'Secure Payment',
+                'feature-1-desc': 'We accept all types of cards and e-wallets',
+                'feature-2-title': 'Mobile Tickets',
+                'feature-2-desc': 'Tickets always at hand on your phone',
+                'feature-3-title': 'Seat Selection',
+                'feature-3-desc': 'Choose a comfortable seat in advance',
+                'feature-4-title': 'Tracking',
+                'feature-4-desc': 'Track bus movement in real time',
+                'feature-5-title': 'Voice Assistant',
+                'feature-5-desc': 'Trip reminders in your language',
+                'feature-6-title': 'Trip Guarantee',
+                'feature-6-desc': '100% refund if trip is cancelled',
+                'routes-title': 'Popular Routes',
+                'routes-subtitle': 'Select a route for quick search',
+                'auth-title': 'Welcome',
+                'auth-subtitle': 'Sign in or create an account',
+                'tab-login': 'Login',
+                'tab-register': 'Register',
+                'auth-google': 'Continue with Google',
+                'auth-apple': 'Continue with Apple',
+                'auth-facebook': 'Continue with Facebook',
+                'auth-or': 'or',
+                'email': 'Email',
+                'password': 'Password',
+                'name': 'Name',
+                'submit-login': 'Login',
+                'submit-register': 'Register',
+                'welcome': 'Welcome',
+                'auth-required': 'Please login to book tickets'
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loader after bus animation completes
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hide');
+                // Initialize after loading
+                initializeApp();
+            }, 1500); // Reduced to 1.5 seconds to match animation
+        });
+
+        function initializeApp() {
+            // Set minimum date to today
+            const dateInput = document.getElementById('date-input');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+            dateInput.value = today;
+
+            // Load saved preferences
+            loadPreferences();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Update language
+            updateLanguage();
+            
+            // Check authentication
+            checkAuth();
+            
+            // Initialize voice assistant
+            initVoiceAssistant();
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            // Language switcher
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchLanguage(this.getAttribute('data-lang'));
+                });
+            });
+            
+            // Auth button
+            document.getElementById('auth-btn').addEventListener('click', handleAuthClick);
+            
+            // Search form
+            document.getElementById('search-form').addEventListener('submit', handleSearch);
+            
+            // Auth form
+            document.getElementById('auth-form').addEventListener('submit', handleAuthSubmit);
+            
+            // Voice assistant
+            document.getElementById('voice-assistant').addEventListener('click', toggleVoiceAssistant);
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-icon');
+            icon.textContent = isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            localStorage.setItem('language', lang);
+            updateLanguage();
+            
+            // Voice announcement
+            speak(translations[currentLang]['welcome']);
+        }
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        function loadPreferences() {
+            // Dark mode
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.body.classList.add('dark-mode');
+                document.querySelector('.theme-icon').textContent = '☀️';
+            }
+            
+            // Language
+            const savedLang = localStorage.getItem('language');
+            if (savedLang && translations[savedLang]) {
+                currentLang = savedLang;
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-lang="${savedLang}"]`).classList.add('active');
+            }
+        }
+
+        function checkAuth() {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                isAuthenticated = true;
+                updateAuthButton();
+            }
+        }
+
+        function updateAuthButton() {
+            const authBtn = document.getElementById('auth-btn');
+            if (isAuthenticated && currentUser) {
+                authBtn.innerHTML = `
+                    <span>👤</span>
+                    <span>${currentUser.name}</span>
+                `;
+            } else {
+                authBtn.innerHTML = `
+                    <span>👤</span>
+                    <span data-translate="login">${translations[currentLang]['login']}</span>
+                `;
+            }
+        }
+
+        function handleAuthClick() {
+            if (isAuthenticated) {
+                // Show user menu or logout
+                if (confirm('Выйти из аккаунта?')) {
+                    logout();
+                }
+            } else {
+                showAuthModal();
+            }
+        }
+
+        function showAuthModal() {
+            document.getElementById('auth-modal').classList.add('show');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('show');
+        }
+
+        function switchAuthTab(tab) {
+            authMode = tab;
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[onclick="switchAuthTab('${tab}')"]`).classList.add('active');
+            
+            const nameGroup = document.getElementById('auth-name-group');
+            const submitBtn = document.querySelector('.form-submit');
+            
+            if (tab === 'register') {
+                nameGroup.classList.remove('hidden');
+                submitBtn.textContent = translations[currentLang]['submit-register'];
+            } else {
+                nameGroup.classList.add('hidden');
+                submitBtn.textContent = translations[currentLang]['submit-login'];
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const name = document.getElementById('auth-name').value;
+            
+            if (authMode === 'register' && !name) {
+                showToast('error', 'Ошибка', 'Введите ваше имя');
+                return;
+            }
+            
+            // Simulate authentication
+            currentUser = {
+                email: email,
+                name: name || email.split('@')[0],
+                id: Date.now()
+            };
+            
+            isAuthenticated = true;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            
+            closeAuthModal();
+            updateAuthButton();
+            
+            // Welcome message
+            showToast('success', translations[currentLang]['welcome'], currentUser.name);
+            speak(`${translations[currentLang]['welcome']}, ${currentUser.name}!`);
+            
+            // Set reminder for demo
+            setTimeout(() => {
+                if (isAuthenticated) {
+                    speak('Напоминаем, что ваш автобус отправляется через 1 час');
+                    showToast('info', 'Напоминание', 'Ваш автобус отправляется через 1 час');
+                }
+            }, 10000);
+        }
+
+        function socialAuth(provider) {
+            showToast('info', 'Авторизация', `Вход через ${provider}...`);
+            
+            // Simulate social auth
+            setTimeout(() => {
+                currentUser = {
+                    email: `user@${provider}.com`,
+                    name: `${provider} User`,
+                    id: Date.now()
+                };
+                
+                isAuthenticated = true;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                
+                closeAuthModal();
+                updateAuthButton();
+                
+                showToast('success', translations[currentLang]['welcome'], currentUser.name);
+                speak(`${translations[currentLang]['welcome']}, ${currentUser.name}!`);
+            }, 1500);
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            currentUser = null;
+            localStorage.removeItem('user');
+            updateAuthButton();
+            showToast('info', 'Выход', 'Вы вышли из системы');
+        }
+
+        function handleSearch(e) {
+            e.preventDefault();
+            
+            if (!isAuthenticated) {
+                showToast('warning', 'Авторизация', translations[currentLang]['auth-required']);
+                showAuthModal();
+                return;
+            }
+            
+            const from = document.getElementById('from-input').value;
+            const to = document.getElementById('to-input').value;
+            const date = document.getElementById('date-input').value;
+            const passengers = document.getElementById('passengers-input').value;
+            
+            // Save search params
+            const searchParams = { from, to, date, passengers };
+            localStorage.setItem('searchParams', JSON.stringify(searchParams));
+            
+            showToast('info', 'Поиск', 'Ищем доступные рейсы...');
+            
+            // Redirect to results page
+            setTimeout(() => {
+                window.location.href = 'search-results.html';
+            }, 1000);
+        }
+
+        function selectRoute(from, to) {
+            document.getElementById('from-input').value = from;
+            document.getElementById('to-input').value = to;
+            
+            // Smooth scroll to search form
+            document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Voice Assistant
+        let voiceRecognition = null;
+        let isListening = false;
+
+        function initVoiceAssistant() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                voiceRecognition = new SpeechRecognition();
+                voiceRecognition.lang = currentLang === 'kg' ? 'ky-KG' : currentLang === 'en' ? 'en-US' : 'ru-RU';
+                voiceRecognition.continuous = false;
+                voiceRecognition.interimResults = false;
+                
+                voiceRecognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    processVoiceCommand(transcript);
+                };
+                
+                voiceRecognition.onerror = function(event) {
+                    console.error('Voice recognition error:', event.error);
+                    stopListening();
+                };
+                
+                voiceRecognition.onend = function() {
+                    stopListening();
+                };
+            }
+        }
+
+        function toggleVoiceAssistant() {
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        }
+
+        function startListening() {
+            if (!voiceRecognition) {
+                showToast('error', 'Ошибка', 'Голосовой ввод не поддерживается');
+                return;
+            }
+            
+            isListening = true;
+            document.getElementById('voice-assistant').classList.add('active');
+            voiceRecognition.start();
+            speak('Слушаю вас');
+        }
+
+        function stopListening() {
+            isListening = false;
+            document.getElementById('voice-assistant').classList.remove('active');
+            if (voiceRecognition) {
+                voiceRecognition.stop();
+            }
+        }
+
+        function processVoiceCommand(command) {
+            const lowerCommand = command.toLowerCase();
+            
+            if (lowerCommand.includes('бишкек')) {
+                selectRoute('Каракол', 'Бишкек');
+                speak('Выбран маршрут Каракол - Бишкек');
+            } else if (lowerCommand.includes('ош')) {
+                selectRoute('Каракол', 'Ош');
+                speak('Выбран маршрут Каракол - Ош');
+            } else if (lowerCommand.includes('алматы')) {
+                selectRoute('Каракол', 'Алматы');
+                speak('Выбран маршрут Каракол - Алматы');
+            } else {
+                speak('Не понял команду. Попробуйте еще раз');
+            }
+        }
+
+        // Enhanced Speech Synthesis
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Language and voice settings
+                if (currentLang === 'kg') {
+                    // For Kyrgyz, we'll use Russian voice with adjusted settings
+                    // In production, you would integrate with Akylai AI API
+                    utterance.lang = 'ru-RU';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.1;
+                } else if (currentLang === 'en') {
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.95;
+                    utterance.pitch = 1.0;
+                } else {
+                    utterance.lang = 'ru-RU';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1.0;
+                }
+                
+                utterance.volume = 0.9;
+                
+                // Select best available voice
+                const voices = speechSynthesis.getVoices();
+                const preferredVoices = {
+                    'ru-RU': ['Google русский', 'Microsoft Irina', 'Yandex'],
+                    'en-US': ['Google US English', 'Microsoft David', 'Samantha'],
+                    'ky-KG': ['Google русский'] // Fallback for Kyrgyz
+                };
+                
+                const langCode = utterance.lang;
+                const preferred = preferredVoices[langCode] || [];
+                
+                for (let voiceName of preferred) {
+                    const voice = voices.find(v => v.name.includes(voiceName));
+                    if (voice) {
+                        utterance.voice = voice;
+                        break;
+                    }
+                }
+                
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Toast notifications
+        function showToast(type, title, message) {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('.toast-icon');
+            const titleEl = toast.querySelector('.toast-title');
+            const messageEl = toast.querySelector('.toast-message');
+            
+            // Set type
+            toast.className = `toast ${type} show`;
+            
+            // Set icon
+            const icons = {
+                'success': '✅',
+                'error': '❌',
+                'info': 'ℹ️',
+                'warning': '⚠️'
+            };
+            icon.textContent = icons[type] || 'ℹ️';
+            
+            // Set content
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            // Auto hide
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Ensure voices are loaded
+        if ('speechSynthesis' in window) {
+            speechSynthesis.onvoiceschanged = function() {
+                // Voices loaded
+            };
+        }
+    </script>
+</body>
+</html>
