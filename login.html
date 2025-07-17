@@ -10,16 +10,27 @@
         *::before,
         *::after {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             margin: 0;
             font-family: 'Roboto', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .forms-section {
@@ -27,13 +38,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            padding: 20px;
+            overflow: visible;
+            margin: auto;
         }
 
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             animation: fadeInDown 0.8s ease-out;
         }
 
@@ -63,16 +74,18 @@
         }
 
         .section-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
+            font-size: 15px;
+            color: rgba(255,255,255,0.9);
             margin-top: 8px;
+            letter-spacing: 0.3px;
         }
 
         .forms {
             display: flex;
-            align-items: flex-start;
-            margin-top: 30px;
+            align-items: center;
+            margin-top: 15px;
             position: relative;
+            gap: 1rem;
         }
 
         .form-wrapper {
@@ -118,6 +131,16 @@
             outline: none;
             transform: translateX(0);
             transition: all .3s ease-out;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .switcher:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .form-wrapper.is-active .switcher-operator {
@@ -170,8 +193,40 @@
             margin-top: 50px;
             padding: 40px 35px;
             border-radius: 20px;
-            transform-origin: top;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform-origin: center center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease-out;
+            transform: translateY(0);
+            will-change: transform, box-shadow;
+        }
+
+        .form-operator:hover {
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 40px rgba(102, 126, 234, 0.2),
+                0 10px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-admin:hover {
+            background: rgba(255, 255, 255, 0.98);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 40px rgba(118, 75, 162, 0.2),
+                0 10px 20px rgba(118, 75, 162, 0.1);
+        }
+
+        /* Удаляем эффекты, вызывающие тряску */
+        .form::before,
+        .form::after,
+        .form-operator:hover::before,
+        .form-admin:hover::before,
+        .form-operator:hover::after,
+        .form-admin:hover::after {
+            display: none;
         }
 
         .form-operator {
@@ -295,18 +350,20 @@
             padding: 15px 20px;
             font-size: 16px;
             color: #3b4465;
-            background: #f5f8fa;
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
+            background: rgba(245, 248, 250, 0.8);
+            border: 2px solid transparent;
+            border-radius: 12px;
             transition: all 0.3s ease;
             font-weight: 400;
+            backdrop-filter: blur(5px);
         }
 
         .input-block input:focus {
             outline: none;
             background: #fff;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
         }
 
         .input-block input::placeholder {
@@ -335,30 +392,71 @@
             transition: all .4s ease-in;
         }
 
+        .btn-operator, .btn-admin {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
         .btn-operator {
             color: #fff;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transform: translateX(-30%);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-operator:hover {
-            transform: translateX(0) translateY(-2px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
         }
 
         .btn-admin {
             color: #764ba2;
             background: #fff;
-            box-shadow: inset 0 0 0 3px #764ba2, 0 10px 20px rgba(118, 75, 162, 0.2);
             transform: translateX(30%);
+            box-shadow: inset 0 0 0 2px #764ba2;
+        }
+
+        .btn-operator:before, .btn-admin:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn-operator:before {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-admin:before {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .btn-operator:hover, .btn-admin:hover {
+            transform: translateX(0) translateY(-2px);
+        }
+
+        .btn-operator:hover {
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
         }
 
         .btn-admin:hover {
             color: #fff;
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: translateX(0) translateY(-2px);
-            box-shadow: 0 15px 30px rgba(118, 75, 162, 0.4);
+            box-shadow: 0 15px 30px rgba(118, 75, 162, 0.3);
+        }
+
+        .btn-operator:hover:before, .btn-admin:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-operator:not(:hover):before, .btn-admin:not(:hover):before {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .loading {
@@ -431,6 +529,12 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 20px;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .role-badge:hover {
+            transform: scale(1);
         }
 
         .role-operator {
@@ -468,8 +572,6 @@
 <body>
     <section class="forms-section">
         <div class="logo-container">
-            <div class="logo">🚌</div>
-            <h1 class="section-title">КАРАКОЛ АВТОБЕКЕТИ</h1>
             <p class="section-subtitle">Системага кирүү • Вход в систему</p>
         </div>
         
