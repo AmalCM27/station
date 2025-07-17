@@ -33,6 +33,79 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .language-switcher .current-lang {
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background .3s ease;
+        }
+        
+        .language-switcher .current-lang:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-switcher .current-lang .lang-text {
+            margin-left: 8px;
+        }
+        
+        .language-switcher .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            margin-top: 8px;
+            padding: 5px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: fadeIn .2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .language-switcher.active .lang-dropdown {
+            display: block;
+        }
+
+        .language-switcher .lang-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #333;
+            font-weight: 500;
+            transition: background .2s ease;
+        }
+
+        .language-switcher .lang-option:hover {
+            background: #f0f0f0;
+        }
+
+        .language-switcher .lang-option .lang-text {
+            margin-left: 8px;
+        }
+        /* End Language Switcher Styles */
+
         .forms-section {
             display: flex;
             flex-direction: column;
@@ -497,17 +570,6 @@
             animation: fadeIn 0.3s ease-out;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .error-message {
             background: #fee;
             color: #c53030;
@@ -570,34 +632,54 @@
     </style>
 </head>
 <body>
+    <div class="language-switcher" id="language-switcher">
+        <div class="current-lang">
+            <span class="lang-flag" id="current-lang-flag"></span>
+            <span class="lang-text" id="current-lang-text"></span>
+        </div>
+        <div class="lang-dropdown">
+            <div class="lang-option" data-lang="kg">
+                <span class="lang-flag">🇰🇬</span>
+                <span class="lang-text">Кыргызча</span>
+            </div>
+            <div class="lang-option" data-lang="ru">
+                <span class="lang-flag">🇷🇺</span>
+                <span class="lang-text">Русский</span>
+            </div>
+            <div class="lang-option" data-lang="en">
+                <span class="lang-flag">🇬🇧</span>
+                <span class="lang-text">English</span>
+            </div>
+        </div>
+    </div>
     <section class="forms-section">
         <div class="logo-container">
-            <p class="section-subtitle">Системага кирүү • Вход в систему</p>
+            <p class="section-subtitle" data-translate="login_title"></p>
         </div>
         
         <div class="forms">
             <div class="form-wrapper is-active">
                 <button type="button" class="switcher switcher-operator">
-                    Оператор
+                    <span data-translate="operator"></span>
                     <span class="underline"></span>
                 </button>
                 <form class="form form-operator" id="operator-form">
                     <fieldset>
-                        <legend>Оператор үчүн кирүү маалыматтары</legend>
-                        <div class="role-badge role-operator">Экран башкаруу</div>
+                        <legend data-translate="operator_legend"></legend>
+                        <div class="role-badge role-operator" data-translate="operator_badge"></div>
                         <div class="input-block">
-                            <label for="operator-username">Колдонуучу аты</label>
-                            <input id="operator-username" type="text" placeholder="operator" required>
+                            <label for="operator-username" data-translate="username"></label>
+                            <input id="operator-username" type="text" data-translate-placeholder="username_placeholder" required>
                         </div>
                         <div class="input-block">
-                            <label for="operator-password">Сыр сөз</label>
-                            <input id="operator-password" type="password" placeholder="••••••••" required>
+                            <label for="operator-password" data-translate="password"></label>
+                            <input id="operator-password" type="password" data-translate-placeholder="password_placeholder" required>
                         </div>
                     </fieldset>
-                    <button type="submit" class="btn-operator">Кирүү</button>
+                    <button type="submit" class="btn-operator" data-translate="login_button"></button>
                     <div class="loading" id="operator-loading">
                         <div class="spinner"></div>
-                        <div class="loading-text">Текшерүү...</div>
+                        <div class="loading-text" data-translate="loading_text"></div>
                     </div>
                     <div id="operator-message"></div>
                 </form>
@@ -605,26 +687,26 @@
             
             <div class="form-wrapper">
                 <button type="button" class="switcher switcher-admin">
-                    Админ
+                    <span data-translate="admin"></span>
                     <span class="underline"></span>
                 </button>
                 <form class="form form-admin" id="admin-form">
                     <fieldset>
-                        <legend>Администратор үчүн кирүү маалыматтары</legend>
-                        <div class="role-badge role-admin">Толук башкаруу</div>
+                        <legend data-translate="admin_legend"></legend>
+                        <div class="role-badge role-admin" data-translate="admin_badge"></div>
                         <div class="input-block">
-                            <label for="admin-username">Колдонуучу аты</label>
-                            <input id="admin-username" type="text" placeholder="admin" required>
+                            <label for="admin-username" data-translate="username"></label>
+                            <input id="admin-username" type="text" data-translate-placeholder="username_placeholder_admin" required>
                         </div>
                         <div class="input-block">
-                            <label for="admin-password">Сыр сөз</label>
-                            <input id="admin-password" type="password" placeholder="••••••••" required>
+                            <label for="admin-password" data-translate="password"></label>
+                            <input id="admin-password" type="password" data-translate-placeholder="password_placeholder" required>
                         </div>
                     </fieldset>
-                    <button type="submit" class="btn-admin">Кирүү</button>
+                    <button type="submit" class="btn-admin" data-translate="login_button"></button>
                     <div class="loading" id="admin-loading">
                         <div class="spinner"></div>
-                        <div class="loading-text">Текшерүү...</div>
+                        <div class="loading-text" data-translate="loading_text"></div>
                     </div>
                     <div id="admin-message"></div>
                 </form>
@@ -633,6 +715,106 @@
     </section>
 
     <script>
+        // --- TRANSLATION LOGIC ---
+        const translations = {
+            kg: {
+                login_title: "Системага кирүү",
+                operator: "Оператор",
+                admin: "Админ",
+                operator_legend: "Оператор үчүн кирүү маалыматтары",
+                admin_legend: "Администратор үчүн кирүү маалыматтары",
+                operator_badge: "Экран башкаруу",
+                admin_badge: "Толук башкаруу",
+                username: "Колдонуучу аты",
+                password: "Сыр сөз",
+                username_placeholder: "operator",
+                username_placeholder_admin: "admin",
+                password_placeholder: "••••••••",
+                login_button: "Кирүү",
+                loading_text: "Текшерүү...",
+                error_fill_fields: "Бардык талааларды толтуруңуз!",
+                error_wrong_credentials: "Туура эмес маалыматтар!",
+                success_login: "Ийгиликтүү кирдиңиз! Багыттоо...",
+                redirect_operator: "Ийгиликтүү кирдиңиз! Башкы экранга өтүү...",
+                redirect_admin: "Ийгиликтүү кирдиңиз! Админ панелге өтүү..."
+            },
+            ru: {
+                login_title: "Вход в систему",
+                operator: "Оператор",
+                admin: "Админ",
+                operator_legend: "Данные для входа Оператора",
+                admin_legend: "Данные для входа Администратора",
+                operator_badge: "Управление экраном",
+                admin_badge: "Полное управление",
+                username: "Имя пользователя",
+                password: "Пароль",
+                username_placeholder: "operator",
+                username_placeholder_admin: "admin",
+                password_placeholder: "••••••••",
+                login_button: "Войти",
+                loading_text: "Проверка...",
+                error_fill_fields: "Заполните все поля!",
+                error_wrong_credentials: "Неверные данные!",
+                success_login: "Вы успешно вошли! Перенаправление...",
+                redirect_operator: "Вы успешно вошли! Переход на главный экран...",
+                redirect_admin: "Вы успешно вошли! Переход в админ-панель..."
+            },
+            en: {
+                login_title: "System Login",
+                operator: "Operator",
+                admin: "Admin",
+                operator_legend: "Operator Login Details",
+                admin_legend: "Administrator Login Details",
+                operator_badge: "Display Control",
+                admin_badge: "Full Control",
+                username: "Username",
+                password: "Password",
+                username_placeholder: "operator",
+                username_placeholder_admin: "admin",
+                password_placeholder: "••••••••",
+                login_button: "Login",
+                loading_text: "Checking...",
+                error_fill_fields: "Please fill in all fields!",
+                error_wrong_credentials: "Invalid credentials!",
+                success_login: "Login successful! Redirecting...",
+                redirect_operator: "Login successful! Redirecting to display...",
+                redirect_admin: "Login successful! Redirecting to admin panel..."
+            }
+        };
+
+        const langData = {
+            kg: { flag: '🇰🇬', text: 'KG' },
+            ru: { flag: '🇷🇺', text: 'RU' },
+            en: { flag: '🇬🇧', text: 'EN' }
+        };
+
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'kg';
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.textContent = translations[lang][key] || el.textContent;
+            });
+
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-translate-placeholder');
+                el.placeholder = translations[lang][key] || el.placeholder;
+            });
+
+            const { flag, text } = langData[lang];
+            document.getElementById('current-lang-flag').textContent = flag;
+            document.getElementById('current-lang-text').textContent = text;
+            
+            const langSwitcher = document.getElementById('language-switcher');
+            langSwitcher.classList.remove('active');
+        }
+
+        // --- END TRANSLATION LOGIC ---
+
         // Animation switcher
         const switchers = [...document.querySelectorAll('.switcher')];
 
@@ -658,8 +840,9 @@
         }
 
         // Show message
-        function showMessage(elementId, message, isError = true) {
+        function showMessage(elementId, messageKey, isError = true) {
             const messageEl = document.getElementById(elementId);
+            const message = translations[currentLanguage][messageKey] || messageKey;
             messageEl.className = isError ? 'error-message' : 'success-message';
             messageEl.textContent = message;
             
@@ -679,7 +862,7 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             
             if (!username || !password) {
-                showMessage('operator-message', 'Бардык талааларды толтуруңуз!');
+                showMessage('operator-message', 'error_fill_fields');
                 return;
             }
             
@@ -698,13 +881,13 @@
                     };
                     
                     localStorage.setItem('karakol-session', JSON.stringify(session));
-                    showMessage('operator-message', 'Ийгиликтүү кирдиңиз! Башкы экранга өтүү...', false);
+                    showMessage('operator-message', 'redirect_operator', false);
                     
                     setTimeout(() => {
                         window.location.href = 'display.html';
                     }, 1500);
                 } else {
-                    showMessage('operator-message', 'Туура эмес маалыматтар!');
+                    showMessage('operator-message', 'error_wrong_credentials');
                 }
                 
                 loading.style.display = 'none';
@@ -722,7 +905,7 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             
             if (!username || !password) {
-                showMessage('admin-message', 'Бардык талааларды толтуруңуз!');
+                showMessage('admin-message', 'error_fill_fields');
                 return;
             }
             
@@ -741,13 +924,13 @@
                     };
                     
                     localStorage.setItem('karakol-admin-session', JSON.stringify(session));
-                    showMessage('admin-message', 'Ийгиликтүү кирдиңиз! Админ панелге өтүү...', false);
+                    showMessage('admin-message', 'redirect_admin', false);
                     
                     setTimeout(() => {
                         window.location.href = 'admin.html';
                     }, 1500);
                 } else {
-                    showMessage('admin-message', 'Туура эмес маалыматтар!');
+                    showMessage('admin-message', 'error_wrong_credentials');
                 }
                 
                 loading.style.display = 'none';
@@ -755,8 +938,31 @@
             }, 1000);
         });
 
-        // Check existing sessions
+        // Check existing sessions and set up page
         window.addEventListener('load', function() {
+            // Language Switcher Logic
+            const langSwitcher = document.getElementById('language-switcher');
+            const currentLangDiv = langSwitcher.querySelector('.current-lang');
+            
+            currentLangDiv.addEventListener('click', () => {
+                langSwitcher.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    setLanguage(option.getAttribute('data-lang'));
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!langSwitcher.contains(e.target)) {
+                    langSwitcher.classList.remove('active');
+                }
+            });
+
+            setLanguage(currentLanguage);
+
+            // Session check
             const operatorSession = JSON.parse(localStorage.getItem('karakol-session') || 'null');
             if (operatorSession && operatorSession.role === 'operator' && operatorSession.expires > Date.now()) {
                 window.location.href = 'display.html';
